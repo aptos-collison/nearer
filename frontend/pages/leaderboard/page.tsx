@@ -15,11 +15,11 @@ export const LeaderboardPage = () => {
         <Button
           size={"sm"}
           variant={"ghost"}
-          className="bg-yellow-200 active:bg-yellow-100 text-black rounded-full h-7"
+          className="bg-teal-200 active:bg-teal-100 text-black rounded-full h-7"
         >
           Last week
         </Button>
-        <Button size={"sm"} variant={"ghost"} className="hover:bg-yellow-200 active:bg-yellow-100 rounded-full h-7">
+        <Button size={"sm"} variant={"ghost"} className="hover:bg-teal-200 active:bg-teal-100 rounded-full h-7">
           All time
         </Button>
       </div>

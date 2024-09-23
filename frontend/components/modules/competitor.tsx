@@ -32,7 +32,7 @@ export const Competitor = () => {
         <CardContent className="grid grid-cols-2 gap-10 items-center justify-center p-10">
           {/* Level 1 */}
           <div className="flex flex-col gap-3 cursor-pointer">
-            <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 1</p>
+            <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 1</p>
             <p className="text-xl font-semibold">Introduction to Aptos Architecture</p>
             <p className="text-sm text-gray-300">
               Explore the foundational components of the Aptos blockchain, including its modular architecture and key
@@ -54,7 +54,7 @@ export const Competitor = () => {
 
           {/* Level 2 */}
           <div className="flex flex-col gap-3 cursor-pointer ml-6">
-            <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 2</p>
+            <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 2</p>
             <p className="text-xl font-semibold">Building on Move Language</p>
             <p className="text-sm text-gray-300">
               Gain insights into the Move programming language used in Aptos. Learn the syntax, features, and how to
@@ -76,7 +76,7 @@ export const Competitor = () => {
 
           {/* Level 3 */}
           <div className="flex flex-col gap-3 cursor-pointer mt-4">
-            <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 3</p>
+            <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 3</p>
             <p className="text-xl font-semibold">Aptos Wallets and User Management</p>
             <p className="text-sm text-gray-300">
               Discover how to set up and manage wallets on Aptos. Understand key concepts like private keys, seed
@@ -98,7 +98,7 @@ export const Competitor = () => {
 
           {/* Level 4 */}
           <div className="flex flex-col gap-3 cursor-pointer mt-4 ml-6">
-            <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 4</p>
+            <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 4</p>
             <p className="text-xl font-semibold">Understanding Aptos Governance</p>
             <p className="text-sm text-gray-300">
               Learn about the governance mechanisms of the Aptos ecosystem. Understand how decisions are made and how to

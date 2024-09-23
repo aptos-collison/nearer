@@ -39,7 +39,7 @@ export const Garage = () => {
         />
         <Button
           onClick={handleSend}
-          className="ml-2 bg-yellow-300 hover:bg-yellow-100 text-black font-medium rounded-md py-2 px-5"
+          className="ml-2 bg-teal-300 hover:bg-teal-100 text-black font-medium rounded-md py-2 px-5"
         >
           Send
         </Button>

@@ -53,7 +53,7 @@ export const Onboarding = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <Progress value={progress} className="w-full text-yellow-400" />
+      <Progress value={progress} className="w-full text-teal-400" />
 
       <p>{questions[currentStep].question}</p>
 
@@ -61,7 +61,7 @@ export const Onboarding = () => {
         {questions[currentStep].options.map((option, index) => (
           <Card 
             key={index} 
-            className={`cursor-pointer ${selectedOption === index ? "bg-yellow-50" : "bg-white"}`}
+            className={`cursor-pointer ${selectedOption === index ? "bg-teal-50" : "bg-white"}`}
             onClick={() => setSelectedOption(index)}
           >
             <CardHeader>
@@ -73,7 +73,7 @@ export const Onboarding = () => {
 
       <div className="flex justify-end">
         <Button 
-          className="w-24 rounded-full bg-yellow-500 text-lg font-medium" 
+          className="w-24 rounded-full bg-teal-500 text-lg font-medium" 
           onClick={handleNext}
           disabled={selectedOption === null} // Disable if no option is selected
         >

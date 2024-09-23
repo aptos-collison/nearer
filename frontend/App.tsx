@@ -14,13 +14,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <CardContent className="flex flex-col gap-10 pt-6">
-              <WalletDetails />
-              <NetworkInfo />
-              <AccountInfo />
-              <TransferAPT />
-              <MessageBoard />
-            </CardContent> */
-}

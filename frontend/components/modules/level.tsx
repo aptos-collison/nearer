@@ -88,7 +88,7 @@ export const Level = () => {
                 cy={radius}
               />
               <circle
-                stroke="yellow"
+                stroke="teal"
                 fill="transparent"
                 strokeWidth={strokeWidth}
                 strokeDasharray={circumference}
@@ -119,7 +119,7 @@ export const Level = () => {
             {currentQuestion.options?.map((option, index) => (
               <Card
                 key={index}
-                className={`cursor-pointer ${selectedOption === index ? "bg-yellow-100" : "bg-white"}`}
+                className={`cursor-pointer ${selectedOption === index ? "bg-teal-100" : "bg-white"}`}
                 onClick={() => setSelectedOption(index)}
               >
                 <CardHeader>
@@ -135,7 +135,7 @@ export const Level = () => {
             {currentQuestion.options?.map((option, index) => (
               <Card
                 key={index}
-                className={`cursor-pointer ${selectedOption === index ? "bg-yellow-100" : "bg-white"}`}
+                className={`cursor-pointer ${selectedOption === index ? "bg-teal-100" : "bg-white"}`}
                 onClick={() => setSelectedOption(index)}
               >
                 <CardHeader>
@@ -155,11 +155,11 @@ export const Level = () => {
           </div>
         )}
 
-        <Progress value={progress} className="h-3 w-full text-yellow-400" />
+        <Progress value={progress} className="h-3 w-full text-teal-400" />
 
         <div className="flex justify-end">
           <Button
-            className="w-24 rounded-full bg-yellow-500 text-lg font-medium"
+            className="w-24 rounded-full bg-teal-500 text-lg font-medium"
             onClick={handleNext}
             disabled={currentQuestion?.type === "multiple" && selectedOption === null}
           >

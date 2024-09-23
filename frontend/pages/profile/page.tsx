@@ -94,7 +94,7 @@ export const ProfilePage = () => {
           <CardContent className="flex flex-col gap-2 items-center justify-center py-20">
             <p className="font-semibold text-lg">Start riding through the modules</p>
             <p className="font-normal text-sm">Learn everything you need to thrive onchain!</p>
-            <Button size={"sm"} className="bg-yellow-400 text-black rounded-full font-semibold ">
+            <Button size={"sm"} className="bg-teal-400 text-black rounded-full font-semibold ">
               Start learning
             </Button>
           </CardContent>

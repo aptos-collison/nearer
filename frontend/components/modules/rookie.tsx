@@ -31,7 +31,7 @@ export const Rookie = () => {
     
     {/* Level 1 */}
     <div className="flex flex-col gap-3 cursor-pointer">
-      <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 1</p>
+      <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 1</p>
       <p className="text-xl font-semibold">Getting Started with Aptos</p>
       <p className="text-sm text-gray-300">
         Learn the basics of blockchain technology and how Aptos fits into the ecosystem. Set up your wallet and familiarize yourself with its features.
@@ -52,7 +52,7 @@ export const Rookie = () => {
 
     {/* Level 2 */}
     <div className="flex flex-col gap-3 cursor-pointer ml-6">
-      <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 2</p>
+      <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 2</p>
       <p className="text-xl font-semibold">Understanding Smart Contracts</p>
       <p className="text-sm text-gray-300">
         Discover what smart contracts are and how they work on the Aptos platform. Learn to create simple contracts using Aptos tools.
@@ -73,7 +73,7 @@ export const Rookie = () => {
 
     {/* Level 3 */}
     <div className="flex flex-col gap-3 cursor-pointer mt-4">
-      <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 3</p>
+      <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 3</p>
       <p className="text-xl font-semibold">Exploring Aptos Ecosystem</p>
       <p className="text-sm text-gray-300">
         Dive into the various components of the Aptos ecosystem, including dApps and services. Understand their roles and how they interact.
@@ -94,7 +94,7 @@ export const Rookie = () => {
 
     {/* Level 4 */}
     <div className="flex flex-col gap-3 cursor-pointer mt-4 ml-6">
-      <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">Level 4</p>
+      <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">Level 4</p>
       <p className="text-xl font-semibold">Participating in the Aptos Community</p>
       <p className="text-sm text-gray-300">
         Engage with the Aptos community. Learn how to participate in forums, contribute to discussions, and stay updated with news and events.

@@ -14,8 +14,8 @@ export const LeaderBoard = () => {
       <div className="flex justify-between items-center">
         <p className="text-gray-400">RECENT LEARNERS</p>
         <div onClick={handleNavigate} className="flex items-center space-x-2 cursor-pointer">
-          <p className="text-yellow-300">LEADERBOARD</p>
-          <img src="/public/icons/front.svg" className="bg-yellow-300" />
+          <p className="text-teal-300">LEADERBOARD</p>
+          <img src="/public/icons/front.svg" className="bg-teal-300" />
         </div>
       </div>
 

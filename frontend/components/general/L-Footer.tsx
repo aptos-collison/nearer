@@ -5,10 +5,9 @@ export function LFooter () {
     <>
       <div className="flex justify-between items-start my-6 px-20 ">
         <div>
-          <p className="text-yellow-400 font-semibold text-xl">TurboGo</p>
+          <p className="text-teal-400 font-semibold text-xl">APT-link</p>
           <p className="text-sm w-48 lg:w-96">
-            Your easy guide to all things onchain. Learn, earn and race through terrains on Aptos, one adventure at a
-            time.
+            Create and get shareable dapp links on any web environment. Access all the possiblities on Aptos.
           </p>
         </div>
         <div className="flex space-x-3 items-center">

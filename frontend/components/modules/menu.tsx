@@ -43,7 +43,7 @@ export const Menu = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Card onClick={handleRookie} className="bg-transparent text-white cursor-pointer">
             <CardHeader className="flex flex-col gap-2">
-              <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">ROOKIE</p>
+              <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">ROOKIE</p>
               <p>Aptos Colombia</p>
               <p>
                 Start your journey in the Aptos ecosystem by setting up your wallet and navigating the Apt-terrains.
@@ -56,7 +56,7 @@ export const Menu = () => {
 
           <Card onClick={handleCompetitor} className="bg-transparent text-white cursor-pointer">
             <CardHeader className="flex flex-col gap-2">
-              <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">COMPETITOR</p>
+              <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">COMPETITOR</p>
               <p>Arena de Madrid</p>
               <p>Explore deeper waves in the ecosystem. Catch up on DeFi, NFTs, and various aspects of it.</p>
             </CardHeader>
@@ -67,7 +67,7 @@ export const Menu = () => {
 
           <Card onClick={handleChampion} className="bg-transparent text-white cursor-pointer">
             <CardHeader className="flex flex-col gap-2">
-              <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">CHAMPION</p>
+              <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">CHAMPION</p>
               <p>Times Square, Manhattan</p>
               <p>Dive into advanced lessons on smart contracts and token standards in the Aptos ecosystem.</p>
             </CardHeader>
@@ -78,7 +78,7 @@ export const Menu = () => {
 
           <Card onClick={handleLegend} className="bg-transparent text-white cursor-pointer">
             <CardHeader className="flex flex-col gap-2">
-              <p className="px-2 py-1 bg-yellow-200 font-semibold rounded-lg w-fit text-black">LEGEND</p>
+              <p className="px-2 py-1 bg-teal-200 font-semibold rounded-lg w-fit text-black">LEGEND</p>
               <p>Thailand Beaches</p>
               <p>Discover the intricacies of Aptos's governance and community engagement modules.</p>
             </CardHeader>
