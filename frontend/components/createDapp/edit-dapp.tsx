@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import EditElement from '../general/EditElement';
-import templatesJson from '../../utils/Templates.json';
+import React, { useState, useEffect } from "react";
+import EditElement from "../general/EditElement";
+import templatesJson from "../../utils/Templates.json";
 // import { saveAs } from 'file-saver';
-import { Loader } from 'lucide-react';
+import { Loader } from "lucide-react";
 
 interface Template {
   html: string;
@@ -33,18 +33,18 @@ const EditDapp: React.FC<EditDappProps> = ({
 }) => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [editingElement, setEditingElement] = useState<HTMLElement | null>(null);
-  const [bgColor, setBgColor] = useState<string>('#ffffff');
-  const [textColor, setTextColor] = useState<string>('#333333');
-  const [text, setText] = useState<string>('Your text here');
+  const [bgColor, setBgColor] = useState<string>("#ffffff");
+  const [textColor, setTextColor] = useState<string>("#333333");
+  const [text, setText] = useState<string>("Your text here");
   const [editMode, setEditMode] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [tokenName, setTokenName] = useState<string>('');
-  const [referrer, setReferrer] = useState<string>('');
-  const [destinationAddress, setDestinationAddress] = useState<string>('');
-  const [destinationDecimals, setDestinationDecimals] = useState<string>('');
-  const [recipient, setRecipient] = useState<string>('0x000000000000000000000000000000000');
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [tokenName, setTokenName] = useState<string>("");
+  const [referrer, setReferrer] = useState<string>("");
+  const [destinationAddress, setDestinationAddress] = useState<string>("");
+  const [destinationDecimals, setDestinationDecimals] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("0x000000000000000000000000000000000");
 
   useEffect(() => {
     if (currentBlinkObject.templateName) {
@@ -59,10 +59,10 @@ const EditDapp: React.FC<EditDappProps> = ({
 
   const handleElementClick = (element: HTMLElement) => {
     setEditingElement(element);
-    setBgColor(element.style.backgroundColor || '#ffffff');
-    setTextColor(element.style.color || '#333333');
-    setText(element.textContent || 'Your text here');
-  
+    setBgColor(element.style.backgroundColor || "#ffffff");
+    setTextColor(element.style.color || "#333333");
+    setText(element.textContent || "Your text here");
+
     if (element instanceof HTMLImageElement) {
       setShowTooltip(true);
       setImageUrl(element.src);
@@ -70,7 +70,7 @@ const EditDapp: React.FC<EditDappProps> = ({
       setShowTooltip(false);
     }
   };
-  
+
   const handleBgColorChange = (newColor: string) => {
     setBgColor(newColor);
     if (editingElement) {
@@ -108,13 +108,13 @@ const EditDapp: React.FC<EditDappProps> = ({
   };
 
   const createBlink = async () => {
-    const editedHtml = document.querySelector('.templateContainer')!.innerHTML;
+    const editedHtml = document.querySelector(".templateContainer")!.innerHTML;
     const htmlContent = `
       ${editedHtml}
     `;
 
     const modifiedJs = templates[selectedTemplate!].js
-      .replace('referrer = null', `referrer = "${referrer}";`)
+      .replace("referrer = null", `referrer = "${referrer}";`)
       .replace(
         /destinationToken = \{[\s\S]*?\}/,
         `destinationToken = { 
@@ -122,19 +122,16 @@ const EditDapp: React.FC<EditDappProps> = ({
           address: "${destinationAddress}",
           decimals: ${destinationDecimals},
           image: "https://cdn3d.iconscout.com/3d/premium/thumb/usdc-10229270-8263869.png?f=webp"
-        };`
+        };`,
       )
-      .replace(
-        /const recipient = '0x53FA684bDd93da5324BDc8B607F8E35eC79ccF5A';/,
-        `const recipient = '${recipient}';`
-      );
+      .replace(/const recipient = '0x53FA684bDd93da5324BDc8B607F8E35eC79ccF5A';/, `const recipient = '${recipient}';`);
 
     const iFrame = { iframe: { html: htmlContent, js: modifiedJs } };
-    const res = await fetch('http://localhost:8000/storeToIpfs', {
-      method: 'POST',
+    const res = await fetch("http://localhost:8000/storeToIpfs", {
+      method: "POST",
       body: JSON.stringify(iFrame),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -151,7 +148,7 @@ const EditDapp: React.FC<EditDappProps> = ({
   };
 
   const handleDownloadClick = () => {
-    const editedHtml = document.querySelector('.templateContainer')!.innerHTML;
+    const editedHtml = document.querySelector(".templateContainer")!.innerHTML;
     const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
@@ -169,7 +166,7 @@ const EditDapp: React.FC<EditDappProps> = ({
     `;
 
     const modifiedJs = templates[selectedTemplate!].js
-      .replace('var referrer;', `var referrer = '${referrer}';`)
+      .replace("var referrer;", `var referrer = '${referrer}';`)
       .replace(
         /destinationToken = \{(.|\n)*?\};/,
         `destinationToken = { 
@@ -177,11 +174,11 @@ const EditDapp: React.FC<EditDappProps> = ({
           address: "${destinationAddress}",
           decimals: ${destinationDecimals},
           image: "https://cdn3d.iconscout.com/3d/premium/thumb/usdc-10229270-8263869.png?f=webp"
-        };`
+        };`,
       );
 
     const iFrame = { iframe: { html: htmlContent, js: modifiedJs } };
-    const blob = new Blob([JSON.stringify(iFrame, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(iFrame, null, 2)], { type: "application/json" });
     // saveAs(blob, 'blinkTemplate.json');
   };
 
@@ -191,8 +188,9 @@ const EditDapp: React.FC<EditDappProps> = ({
       <p className="text-lg">Click on the element you want to edit and change its color, text, or image</p>
       {isLoading ? (
         <div className="flex justify-center items-center mt-20 flex-col">
-          <Loader />
-          <p>Deploying Your Ethereum Blink To IPFS</p>
+          {/* <Loader /> */}
+          <img src="/public/icons/loader.svg" className="animate-spin h-12 w-12" alt="Loading" />
+          <p>Deploying Your APT-Link To IPFS</p>
         </div>
       ) : (
         <>
@@ -274,7 +272,7 @@ const EditDapp: React.FC<EditDappProps> = ({
               </>
             )}
           </div>
-          {selectedTemplate === 'swap' && (
+          {selectedTemplate === "swap" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
               <h5 className="text-lg font-bold mb-2">Edit Swap Fields</h5>
               <label className="block mb-1">Referrer</label>
@@ -307,7 +305,7 @@ const EditDapp: React.FC<EditDappProps> = ({
               />
             </div>
           )}
-          {selectedTemplate === 'donation' && (
+          {selectedTemplate === "donation" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
               <h5 className="text-lg font-bold mb-2 text-center">Edit Donation Fields</h5>
               <label className="block mb-1">Recipient</label>

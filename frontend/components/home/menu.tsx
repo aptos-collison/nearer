@@ -33,23 +33,27 @@ export const Menu: React.FC = () => {
     />,
   ];
 
+  const sectionTitles = ["Create Your Dapp", "Edit Your Dapp", "Deploy Your Dapp"];
+
+  const sectionDescriptions = [
+    "Leverage existing templates to get started in minutes.",
+    "Customize your Dapp to taste.",
+    "Review your configurations and hit deploy when you’re ready!",
+  ];
+
+  const sectionImages = ["/public/icons/person.png", "/public/icons/edit-dapp.png", "/public/icons/deploy-dapp.png"];
+
   return (
     <>
       <div className="flex justify-between items-center mx-auto px-4 mt-6">
         <div>
-          <p className="text-5xl font-medium md:w-[90%]">Leverage existing templates to get started in minutes</p>
-          <p className="text-base text-gray-400 max-w-md mt-4">
-            Customize your dapp to taste. Only hit deploy when you're satisfied with the look and feel of your new
-            Dapp!
-          </p>
+          <p className="text-5xl font-medium md:w-[90%]">{sectionTitles[currentSection]}</p>
+          <p className="text-base text-gray-400 max-w-md mt-4">{sectionDescriptions[currentSection]}</p>
         </div>
-        <img src="/public/icons/person.png" className="w-1/3 rounded-md" />
+        <img src={sectionImages[currentSection]} className="w-1/3 rounded-md" alt="Current Section Image" />
       </div>
 
-      <div className="space-y-2 mt-2">
-        {/* Render the current section based on the currentSection state */}
-        {sections[currentSection]}
-      </div>
+      <div className="space-y-2 mt-2">{sections[currentSection]}</div>
     </>
   );
 };

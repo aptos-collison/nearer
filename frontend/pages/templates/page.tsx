@@ -5,7 +5,7 @@ import { Menu } from "@/components/home/menu";
 export const ModulesPage = () => {
   return (
     <div>
-      {/* <Menu /> */}
+      <Menu />
       <Assistant />
     </div>
   );

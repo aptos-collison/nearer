@@ -28,6 +28,6 @@
       "@/*": ["./frontend/*"]
     }
   },
-  "include": ["frontend/**/*", "vite-env.d.ts"],
+  "include": ["frontend/**/*", "vite-env.d.ts", "global.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
