@@ -56,11 +56,11 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
         </div>
       ))} */}
 
-        <Swap />
-        <NFT />
-        <Donate />
         <Payment />
         <Marketplace />
+        <Donate />
+        <Swap />
+        <NFT />
         <Polls />
       </div>
 

@@ -90,7 +90,7 @@ const Donate: React.FC = () => {
           alt="Background Image"
           className="w-full h-auto max-h-52 rounded-sm mb-2"
         />
-        <div className=" p-2 flex flex-col gap-2">
+        <div className=" py-2 px-1 flex flex-col gap-2">
         <Label className="text-gray-700">Donate to cause:</Label>
           <div className="flex items-center border border-gray-300 rounded-none p-2">
             <img
