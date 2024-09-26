@@ -27,10 +27,10 @@ const Payment = () => {
 
   return (
     <div>
-      <p className="text-lg font-medium text-gray-400 ">Social Payment Template</p>
+      <p className="text-lg font-medium text-gray-400 ">Creator Payment Template</p>
       <div className="bg-white rounded-none p-4 w-full shadow-md mx-auto border-gray-400 h-[460px]">
         <img
-          src="https://utfs.io/f/PKy8oE1GN2J3ovmAor45P1iTwAUWSgurlXmB0cxH485C3q2s"
+          src="https://utfs.io/f/PKy8oE1GN2J3QgJ0elMB4oh9KpZbJwuajRl6c2XWTSfEVm85"
           alt="Payment aptos"
           className="w-full h-auto max-h-48 object-contain mb-4"
         />

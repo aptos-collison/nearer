@@ -55,7 +55,7 @@ const NFT = () => {
             <Input
               name="amount"
               type="number"
-              placeholder="Enter Amount"
+              placeholder="Quantity to Mint"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className="flex-1 bg-transparent  text-black rounded-none"
