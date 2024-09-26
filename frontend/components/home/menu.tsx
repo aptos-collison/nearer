@@ -33,24 +33,21 @@ export const Menu: React.FC = () => {
     />,
   ];
 
-  const sectionTitles = ["Create Your Dapp", "Edit Your Dapp", "Deploy Your Dapp"];
+  const sectionTitles = ["Create Your First Aptos Blink", "Edit Your Dapp", "Deploy Your Dapp"];
 
   const sectionDescriptions = [
-    "Leverage existing templates to get started in minutes.",
+    "Leverage our available blink templates to get started creating your Aptos blink within minutes.",
     "Customize your Dapp to taste.",
     "Review your configurations and hit deploy when you’re ready!",
   ];
 
-  const sectionImages = ["/public/icons/person.png", "/public/icons/edit-dapp.png", "/public/icons/deploy-dapp.png"];
-
   return (
     <>
-      <div className="flex justify-between items-center mx-auto px-4 mt-6">
+      <div className="mt-6">
         <div>
-          <p className="text-5xl font-medium md:w-[90%]">{sectionTitles[currentSection]}</p>
-          <p className="text-base text-gray-400 max-w-md mt-4">{sectionDescriptions[currentSection]}</p>
+          <p className="text-3xl font-medium ">{sectionTitles[currentSection]}</p>
+          <p className="text-base text-gray-400 mt-3">{sectionDescriptions[currentSection]}</p>
         </div>
-        <img src={sectionImages[currentSection]} className="w-1/3 rounded-md" alt="Current Section Image" />
       </div>
 
       <div className="space-y-2 mt-2">{sections[currentSection]}</div>

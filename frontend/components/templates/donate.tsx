@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 const Donate: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState<string>('');
@@ -78,43 +80,43 @@ const Donate: React.FC = () => {
   };
 
   return (
-    <div className="relative bg-white rounded-lg p-4 w-full max-w-md shadow-md mt-4">
+    <div className="relative bg-white rounded-none p-4 w-full max-w-md shadow-md h-[460px]">
       <img
-        src="https://t4.ftcdn.net/jpg/05/76/12/63/360_F_576126362_ll2tqdvXs27cDRRovBTmFCkPM9iX68iL.jpg"
+        src="https://utfs.io/f/PKy8oE1GN2J3NcDS9MmqTwZLGavY36FuE8XmyPAoRIOJCQBK"
         alt="Background Image"
-        className="w-full rounded-lg mb-2"
+        className="w-full h-auto max-h-52 rounded-sm mb-4"
       />
-      <div className="bg-gray-100 rounded-lg p-4 flex flex-col gap-2">
-        <div className="flex items-center border border-gray-300 rounded-lg p-2">
+      <div className="border-2 border-gray-300 rounded-none p-4 flex flex-col gap-2">
+        <div className="flex items-center border border-gray-300 rounded-none p-2">
           <img
-            src="https://etherscan.io/token/images/apecoin_32.png"
-            alt="APE"
-            className="w-6 h-6 mr-2"
+            src="https://utfs.io/f/PKy8oE1GN2J3ovmAor45P1iTwAUWSgurlXmB0cxH485C3q2s"
+            alt="APTOS"
+            className="w-5 h-5 mr-2"
           />
-          <input
+          <Input
             type="number"
             value={donationAmount}
             onChange={(e) => setDonationAmount(e.target.value)}
-            placeholder="Enter donation amount"
-            className="flex-1 bg-transparent focus:outline-none"
+            placeholder="Enter amount"
+            className="flex-1 bg-transparent focus:outline-none placeholder:text-sm rounded-none"
           />
         </div>
-        <button
+        <Button
           onClick={handleClick}
           disabled={loading}
-          className={`bg-blue-500 text-white font-bold py-2 rounded-lg w-full transition duration-300 ${loading ? 'bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse' : ''} ${success ? 'bg-green-500' : ''}`}
+          className={`bg-teal-500 text-white font-bold py-2 rounded-sm w-full transition duration-300 ${loading ? 'bg-gradient-to-r from-teal-400 to-pink-400 animate-pulse' : ''} ${success ? 'bg-green-500' : ''}`}
         >
-          {loading ? 'Donating...' : (success ? <span className="text-white text-2xl mr-2">✓</span> : 'Donate APE')}
-        </button>
+          {loading ? 'Donating...' : (success ? <span className="text-white text-2xl mr-2">✓</span> : 'Donate APTOS')}
+        </Button>
         <div className="flex justify-between mt-2">
           {predefinedAmounts.map((amount) => (
-            <button
+            <Button
               key={amount}
               onClick={() => handlePredefinedDonation(amount)}
-              className="flex-1 mx-1 bg-blue-200 text-blue-800 font-semibold py-1 rounded-lg"
+              className="flex-1 mx-1 bg-teal-300 text-teal-800 text-xs font-semibold p-1 rounded-sm"
             >
-              Donate {amount} APE
-            </button>
+              Donate {amount}
+            </Button>
           ))}
         </div>
       </div>
