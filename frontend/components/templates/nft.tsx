@@ -26,46 +26,50 @@ const NFT = () => {
   };
 
   return (
-    <div className="bg-white rounded-none p-4 w-full shadow-md mx-auto border-gray-400 h-[460px]">
-      <div className="bg-gray-700 rounded-sm">
-        <img
-          src="https://utfs.io/f/PKy8oE1GN2J3pihxJUVwi394rogIqdXzW56n8bYJTPQ1MAjv"
-          alt="NFT aptos"
-          className="w-full h-auto max-h-48 object-contain mb-4 rounded-lg"
-        />
-      </div>
+    <div>
+      <p className="text-lg font-medium text-gray-400 ">NFT Template</p>
 
-      <div className="border-2 border-gray-300 rounded-none p-3 flex flex-col ">
-        <div>
-          <Label className="text-gray-700">Mint to:</Label>
-          <Input
-            name="address"
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="flex-1 bg-transparent  text-black rounded-none"
-          />
-        </div>
-        <div className="mt-1">
-          <Label className="text-gray-700">Quantity:</Label>
-          <Input
-            name="amount"
-            type="number"
-            placeholder="Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="flex-1 bg-transparent  text-black rounded-none"
+      <div className="bg-white rounded-none p-4 w-full shadow-md mx-auto border-gray-400 h-[460px]">
+        <div className="bg-[#313939] rounded-sm">
+          <img
+            src="https://utfs.io/f/PKy8oE1GN2J3pihxJUVwi394rogIqdXzW56n8bYJTPQ1MAjv"
+            alt="NFT aptos"
+            className="w-full h-auto max-h-52 object-contain mb-4 rounded-lg"
           />
         </div>
 
-        <Button
-          onClick={handleNFT}
-          disabled={loading}
-          className={`mt-3 bg-teal-500 text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-green-500" : ""}`}
-        >
-          {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
-        </Button>
+        <div className=" px-1 py-2 flex flex-col ">
+          <div>
+            <Label className="text-gray-700">Mint to:</Label>
+            <Input
+              name="address"
+              type="text"
+              placeholder="Enter Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="flex-1 bg-transparent  text-black rounded-none"
+            />
+          </div>
+          <div className="mt-1">
+            <Label className="text-gray-700">Quantity:</Label>
+            <Input
+              name="amount"
+              type="number"
+              placeholder="Enter Amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="flex-1 bg-transparent  text-black rounded-none"
+            />
+          </div>
+
+          <Button
+            onClick={handleNFT}
+            disabled={loading}
+            className={`mt-3 bg-teal-500 text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-green-500" : ""}`}
+          >
+            {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
+          </Button>
+        </div>
       </div>
     </div>
   );

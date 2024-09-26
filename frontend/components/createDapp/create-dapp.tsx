@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import templatesJson from "../../utils/Templates.json";
-import Bridge from "../templates/mint";
-import Swap from "../templates/swap";
+import Swap from "../templates/swap-token";
 import Donate from "../templates/donate";
 import NFT from "../templates/nft";
 import Marketplace from "../templates/marketplace";
 import Payment from "../templates/payment";
+import Polls from "../templates/poll";
 
 interface Template {
   html: string;
@@ -56,15 +56,15 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
         </div>
       ))} */}
 
-        <Bridge />
+        <Swap />
         <NFT />
-        {/* <Swap /> */}
         <Donate />
-        <Marketplace />
         <Payment />
+        <Marketplace />
+        <Polls />
       </div>
 
-      <div className="flex justify-end w-full p-4">
+      <div className="flex justify-center w-full mt-8">
         <button
           className={`text-white text-lg py-2 rounded-lg cursor-pointer 
           ${currentBlinkObjectState ? "bg-blue-500" : "bg-black"} w-64 h-12`}
