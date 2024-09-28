@@ -15,9 +15,11 @@ const Polls: React.FC = () => {
   const [scores, setScores] = useState<number[]>([]);
   const [newCandidate, setNewCandidate] = useState("");
   const [winner, setWinner] = useState<string | null>(null);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(0);
 
   const { account, signAndSubmitTransaction } = useWallet();
+
+  const [storeAddress, setStoreAddress] = useState<string | undefined>(account?.address);
 
   const formatTime = useCallback((time: number): string => {
     const hours = String(Math.floor(time / 60)).padStart(2, "0");
@@ -231,7 +233,7 @@ const Polls: React.FC = () => {
                         className="bg-teal-400 text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
                       >
                         <span>{candidate}</span>
-                        <span className="hidden hover:block">{votePercentage}</span>
+                        <span>{votePercentage}</span>
                       </Button>
                     );
                   })}

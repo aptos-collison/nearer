@@ -23,7 +23,7 @@ export function TransferAPT() {
     queryFn: async () => {
       try {
         if (account === null) {
-          console.error("Account not available");
+          console.error("Account not connected");
         }
 
         const balance = await getAccountAPTBalance({ accountAddress: account!.address });
