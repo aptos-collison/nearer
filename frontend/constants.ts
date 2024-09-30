@@ -3,3 +3,9 @@ export const MODULE_ADDRESS = import.meta.env.VITE_MODULE_ADDRESS;
 
 // customise this addr
 export const VOTING_MODULE_ADDRESS = "0xdd71645e95789f143af6fd1b3ed37164378faea32691a56eb51b7d605fe16962";
+
+// Module for Token Minting
+// TOKEN MINTING MODULE
+export const T_MINTING_MODULE = "0x2b57f5d66f3679e669ce68ca9d31f8acc2a828b9a6055f40f6878b2218c9405e";
+// Addr for Tokens
+export const FA_ADDRESS = "";

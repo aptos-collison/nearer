@@ -17,6 +17,8 @@ const Polls: React.FC = () => {
   const [winner, setWinner] = useState<string | null>(null);
   const [timer, setTimer] = useState(60);
 
+  const storeAddr = ""; // This is the addr of the campaign creator should be added to show where the voting campaign is stored. show init when the link is created.
+
   const { account, signAndSubmitTransaction } = useWallet();
 
   const formatTime = useCallback((time: number): string => {
@@ -32,12 +34,12 @@ const Polls: React.FC = () => {
   };
 
   const fetchScores = async () => {
-    if (!account) return null;
+    if (!storeAddr) return null;
     try {
       const result = await aptosClient().view<[string[], string[]]>({
         payload: {
           function: `${VOTING_MODULE_ADDRESS}::Voting::view_current_scores`,
-          functionArguments: [account.address],
+          functionArguments: [storeAddr],
         },
       });
       return result;
