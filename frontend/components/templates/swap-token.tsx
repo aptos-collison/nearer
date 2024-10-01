@@ -14,6 +14,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { checkIfFund, uploadFile } from "@/utils/Irys";
 import { createAsset } from "@/entry-functions/create_asset";
 import { useGetAssetMetadata } from "@/hooks/useGetAssetMetadata";
+import { toast } from "@/hooks/use-toast";
+// import { toast } from "../ui/use-toast";
 
 const DynamicMint = () => {
   const fas = useGetAssetMetadata();
@@ -118,6 +120,10 @@ const DynamicMint = () => {
       setTokenHash(response.hash);
 
       if (committedTransactionResponse.success) {
+        toast({
+          title: "Success",
+          description: `Transaction succeeded, hash: ${committedTransactionResponse.hash}`,
+        });
         setSuccess(true);
       }
     } catch (error) {
@@ -173,11 +179,15 @@ const DynamicMint = () => {
     <div>
       <p className="text-lg font-medium text-gray-400">Create and Mint Token</p>
       <div className="space-y-6 p-4 mx-auto overflow-y-auto h-[460px] bg-white border-gray-400 text-black">
-        <img
-          src={asset?.icon_uri ? asset.icon_uri : "https://utfs.io/f/PKy8oE1GN2J3w6bQu3oTGjD39YCQS6grBNLTs0O8fHmZ51cK"}
-          alt={`${asset?.name} icon`}
-          className="w-full h-auto max-h-[100px] object-contain mb-4 rounded-full"
-        />
+        <div className=" flex  items-center justify-center bg-gray-200 rounded-sm">
+          <img
+            src={
+              asset?.icon_uri ? asset.icon_uri : "https://utfs.io/f/PKy8oE1GN2J3w6bQu3oTGjD39YCQS6grBNLTs0O8fHmZ51cK"
+            }
+            alt={`${asset?.name} icon`}
+            className=" max-w-24 h-auto max-h-[100px] object-contain mb-4 rounded-full overflow-hidden"
+          />
+        </div>
 
         {isCreatingToken ? (
           <>

@@ -20,3 +20,8 @@ export const convertAmountFromOnChainToHumanReadable = (value: number, decimal: 
   return value / Math.pow(10, decimal);
 };
 
+export const dateToSeconds = (date: Date | undefined) => {
+  if (!date) return;
+  const dateInSeconds = Math.floor(+date / 1000);
+  return dateInSeconds;
+};

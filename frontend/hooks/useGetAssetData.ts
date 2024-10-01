@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { aptosClient } from "@/utils/aptosClient";
 import { convertAmountFromOnChainToHumanReadable } from "@/utils/helpers";
 // Internal constants
-import { FA_ADDRESS } from "@/constants";
 import { getUserMintBalance } from "@/view-functions/getUserMintBalance";
+import { FA_ADDRESS } from "@/constants";
 import { getMintEnabled } from "@/view-functions/getMintEnabled";
 
 export interface FungibleAsset {

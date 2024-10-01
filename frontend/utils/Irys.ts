@@ -71,3 +71,20 @@ export const uploadFile = async (aptosWallet: WalletContextState, fileToUpload: 
     throw new Error(`Error uploading file ${e}`);
   }
 };
+
+export const uploadFolder = async (aptosWallet: WalletContextState, files: File[]) => {
+  const webIrys = await getWebIrys(aptosWallet);
+
+  try {
+    const receipt = await webIrys.uploadFolder(files); //returns the manifest ID
+
+    console.log(
+      `Files uploaded. Manifest Id=${receipt.manifestId} Receipt Id=${receipt.id}
+      access with: https://gateway.irys.xyz/${receipt.manifestId}/<image-name>`,
+    );
+    return `https://gateway.irys.xyz/${receipt.manifestId}`;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    throw new Error(`Error uploading folder ${e}`);
+  }
+};

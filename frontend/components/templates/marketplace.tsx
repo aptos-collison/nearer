@@ -70,7 +70,7 @@ const Marketplace = () => {
             disabled={loading}
             className={`mt-3 bg-teal-500 text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-green-500" : ""}`}
           >
-            {loading ? "Purchasing..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Purchase NFT"}
+            {loading ? "Purchasing..." : success ? <span className="text-white text-2xl mr-2">✓ Coming Soon</span> : "Purchase NFT"}
           </Button>
         </div>
       </div>

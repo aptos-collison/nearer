@@ -17,9 +17,9 @@ const Polls: React.FC = () => {
   const [winner, setWinner] = useState<string | null>(null);
   const [timer, setTimer] = useState(60);
 
-  const storeAddr = ""; // This is the addr of the campaign creator should be added to show where the voting campaign is stored. show init when the link is created.
-
   const { account, signAndSubmitTransaction } = useWallet();
+
+  const storeAddr = account?.address; // This is the addr of the campaign creator should be added to show where the voting campaign is stored. show init when the link is created.
 
   const formatTime = useCallback((time: number): string => {
     const hours = String(Math.floor(time / 60)).padStart(2, "0");
