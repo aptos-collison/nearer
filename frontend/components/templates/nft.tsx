@@ -1,9 +1,8 @@
-import { FormEvent, useRef, useState } from "react";
-import { Button, buttonVariants } from "../ui/button";
+import { FormEvent, useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
-import { isAptosConnectWallet, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { DateTimeInput } from "../ui/date-time-input";
 import { LabeledInput } from "../ui/labeled-input";
 import { ConfirmButton } from "../ui/confirm-button";
@@ -48,7 +47,7 @@ const NFT = () => {
   const [publicMintLimitPerAccount, setPublicMintLimitPerAccount] = useState<number>(1);
   const [publicMintFeePerNFT, setPublicMintFeePerNFT] = useState<number>();
 
-  const { userMintBalance = 0, collection, totalMinted = 0, maxSupply = 1 } = data ?? {};
+  const { collection, totalMinted = 0, maxSupply = 1 } = data ?? {};
 
   // Internal state
   const [isUploading, setIsUploading] = useState(false);
@@ -115,8 +114,7 @@ const NFT = () => {
     // if (!account || !data?.isMintActive) return;
     if (!collection?.collection_id) return;
 
-        console.log("clicked");
-
+    console.log("clicked");
 
     const response = await signAndSubmitTransaction(
       mintNFT({ collectionId: collection.collection_id, amount: amount }),
@@ -127,57 +125,57 @@ const NFT = () => {
   };
 
   // Local Ref
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // const isCollectionCreated = false;
-  const { account, wallet, signAndSubmitTransaction } = useWallet();
+  const { account, signAndSubmitTransaction } = useWallet();
 
   console.log(`collection map`, collections);
   return (
-    <div>
-      <p className="text-lg font-medium text-gray-400">
-        {isCollectionCreated ? "NFT Template" : "Create New Collection"}
-      </p>
+    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-black h-[460px] overflow-y-auto font-vt323">
+      <div className="h-6 bg-orange-500 w-full flex justify-between px-2 ">
+        <p className="text-base font-semibold text-black">
+          {isCollectionCreated ? "NFT Template" : "Create New Collection"}
+        </p>
+        <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
+      </div>
 
-      <div className="bg-white rounded-none p-4 w-full shadow-md mx-auto border-gray-400 h-[460px] overflow-y-auto">
-        <div className="bg-[#313939] rounded-sm">
+      <div className="p-3">
+        <div className="rounded-sm">
           <img
             src={
               isCollectionCreated?.cdn_asset_uris?.cdn_image_uri ??
               "https://utfs.io/f/PKy8oE1GN2J3pihxJUVwi394rogIqdXzW56n8bYJTPQ1MAjv"
             }
             alt="NFT aptos"
-            className="w-full h-auto max-h-52 object-contain mb-4 rounded-lg"
+            className="w-full h-auto max-h-40 object-contain mb-2 "
           />
         </div>
 
         {isCollectionCreated ? (
           <>
-            <div className="flex flex-col gap-3 bg-gray-50 p-2 rounded-lg">
+            <div className="flex flex-col gap-2 p-2 rounded-lg">
               <div>
-                <p className="text-sm font-medium text-gray-500">NFT Name</p>
-                <p className="text-xl text-gray-600 font-bold ">
-                  {isCollectionCreated?.collection_name}
-                </p>
-                <p className="text-xs text-gray-500">{isCollectionCreated?.description}</p>
+                <p className="text-sm font-medium text-gray-800">NFT Name</p>
+                <p className="text-xl text-black font-bold ">{isCollectionCreated?.collection_name}</p>
+                <p className="text-xs text-gray-800">{isCollectionCreated?.description}</p>
               </div>
 
-              <div>
-                <p className="text-sm font-medium text-gray-500">Your Balance</p>
-                <p className="text-xl text-gray-600 font-bold ">
-                  {clampNumber(totalMinted)} / {clampNumber(maxSupply)} Minted
-                </p>
-                <p className="text-xs text-gray-500">Current holdings</p>
-              </div>
+              <div className="flex space-x-12 items-center">
+                <div>
+                  <p className="text-sm font-medium text-gray-800">Your Balance</p>
+                  <p className="text-xl text-black font-bold ">
+                    {clampNumber(totalMinted)} / {clampNumber(maxSupply)} Minted
+                  </p>
+                </div>
 
-              <div>
-                <p className="text-sm font-medium text-gray-500">Total Supply</p>
-                <p className="text-xl font-bold text-gray-600">{maxSupply}</p>
-                <p className="text-xs text-gray-500">Minted / Max Supply</p>
+                <div>
+                  <p className="text-sm font-medium text-gray-800">Total Supply</p>
+                  <p className="text-xl font-bold text-black">{maxSupply} Available</p>
+                </div>
               </div>
             </div>
             <div className="px-1 py-2 flex flex-col">
-              <Label className="text-gray-700">Quantity:</Label>
+              <Label className="text-black font-semibold">Quantity:</Label>
               <Input
                 id="mint-amount"
                 type="number"
@@ -185,13 +183,13 @@ const NFT = () => {
                 onChange={(e) => setAmount(parseInt(e.target.value))}
                 className="flex-1 bg-transparent text-black rounded-none mt-1"
               />
-              <Button
+              <button
                 onClick={handleNFT}
                 disabled={loading}
-                className={`mt-3 bg-teal-500 text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-green-500" : ""}`}
+                className={`mt-3 text-black text-xl bg-transparent font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-orange-500" : ""}`}
               >
                 {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
-              </Button>
+              </button>
             </div>
           </>
         ) : (
@@ -261,7 +259,7 @@ const NFT = () => {
 
             <ConfirmButton
               title="Create Collection"
-              className="self-start w-full bg-teal-400"
+              className="self-start w-full bg-orange-400"
               onSubmit={onCreateCollection}
               disabled={!account || !files?.length || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
               confirmMessage={

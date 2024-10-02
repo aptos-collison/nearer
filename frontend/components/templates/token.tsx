@@ -176,16 +176,20 @@ const DynamicMint = () => {
   console.log(tokenHash);
 
   return (
-    <div>
-      <p className="text-lg font-medium text-gray-400">Create and Mint Token</p>
-      <div className="space-y-6 p-4 mx-auto overflow-y-auto h-[460px] bg-white border-gray-400 text-black">
-        <div className=" flex  items-center justify-center bg-gray-200 rounded-sm">
+    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+      <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+        <p className="text-base font-semibold text-black">Creator Payment Template</p>
+        <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
+      </div>
+
+      <div className="p-4">
+        <div className=" flex  items-center justify-center rounded-sm">
           <img
             src={
               asset?.icon_uri ? asset.icon_uri : "https://utfs.io/f/PKy8oE1GN2J3w6bQu3oTGjD39YCQS6grBNLTs0O8fHmZ51cK"
             }
             alt={`${asset?.name} icon`}
-            className=" max-w-24 h-auto max-h-[100px] object-contain mb-4 rounded-full overflow-hidden"
+            className=" max-w-24 h-auto max-h-40 object-contain mb-4 rounded-full overflow-hidden"
           />
         </div>
 
@@ -324,8 +328,8 @@ const DynamicMint = () => {
                 loading
                   ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse"
                   : success
-                    ? "bg-green-500"
-                    : "bg-teal-600 hover:bg-teal-800"
+                    ? "bg-orange-500"
+                    : "bg-orange-600 hover:bg-orange-800"
               } text-white font-bold py-2 px-4 rounded`}
             >
               {loading ? "Processing..." : success ? "✓ Done!" : isCreatingToken ? "Create Token" : "Mint Token"}
@@ -333,10 +337,10 @@ const DynamicMint = () => {
           </>
         ) : (
           <>
-            <div className="space-y-8">
+            <div className="space-y-2">
               <div className="flex flex-col gap-6">
                 <div>
-                  <Label htmlFor="quantity" className=" font-medium text-gray-700">
+                  <Label htmlFor="quantity" className=" font-medium text-black text-lg">
                     Quantity to Mint
                   </Label>
                   <Input
@@ -346,55 +350,60 @@ const DynamicMint = () => {
                     value={formData.quantity}
                     onChange={handleInputChange}
                     placeholder="Enter quantity to mint"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    className="bg-transparent text-black rounded-none mt-1"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 bg-gray-50 p-2 rounded-lg">
+              <div className="flex flex-col gap-3 p-2 rounded-lg">
+               
+
+                <div className="flex space-x-3 items-center text-start justify-between">
+
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Mint Limit</p>
-                  <p className="text-xl font-bold ">
+                  <p className="font-medium text-gray-700">Mint Limit</p>
+                  <p className="text-xl font-bold text-black ">
                     {Math.min(userMintBalance, maxSupply - currentSupply)}
-                    <span className=" font-medium text-gray-600 ml-1">{asset?.symbol}</span>
+                    <span className=" font-medium text-gray-900 ml-1">{asset?.symbol}</span>
                   </p>
-                  <p className="text-xs text-gray-500">Maximum you can mint</p>
+                  <p className="text-xs text-gray-700">Maximum to mint</p>
                 </div>
 
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Your Balance</p>
-                  <p className="text-xl font-bold ">
-                    {yourBalance}
-                    <span className=" font-medium text-gray-600 ml-1">{asset?.symbol}</span>
-                  </p>
-                  <p className="text-xs text-gray-500">Current holdings</p>
-                </div>
+                  <div>
+                    <p className="font-medium text-gray-700">Your Balance</p>
+                    <p className="text-xl font-bold text-black ">
+                      {yourBalance}
+                      <span className=" font-medium text-gray-900 ml-1">{asset?.symbol}</span>
+                    </p>
+                    <p className="text-xs text-gray-700">Your Balance</p>
+                  </div>
 
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Total Supply</p>
-                  <p className="text-xl font-bold ">
-                    {currentSupply} / {maxSupply}
-                  </p>
-                  <p className="text-xs text-gray-500">Minted / Max Supply</p>
+                  <div>
+                    <p className="font-medium text-gray-700">Total Supply</p>
+                    <p className="text-xl font-bold text-black ">
+                      {currentSupply} / {maxSupply}
+                    </p>
+                    <p className="text-xs text-gray-700">Minted/Max Supply</p>
+                  </div>
                 </div>
               </div>
 
               <div className="flex flex-col space-y-4">
-                <Button
+                <button
                   onClick={mintFA}
                   disabled={loading}
                   className={`w-full ${
                     loading
                       ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse"
                       : success
-                        ? "bg-green-500"
-                        : "bg-teal-600 hover:bg-teal-800"
-                  } text-white font-bold py-2 px-4 rounded`}
+                        ? ""
+                        : ""
+                  } text-black text-xl font-bold py-1 px-4 rounded border border-black `}
                 >
                   {loading ? "Minting..." : success ? "✓ Minted Successfully!" : "Mint Tokens"}
-                </Button>
+                </button>
 
-                <div className="flex justify-between items-center text-sm text-gray-600">
+                <div className="flex justify-between items-center text-gray-900">
                   <span>Token Address:</span>
                   <a
                     className="text-blue-500 hover:underline truncate max-w-[200px]"

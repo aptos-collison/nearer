@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import templatesJson from "../../utils/Templates.json";
-import Swap from "../templates/swap-token";
+import Swap from "../templates/token";
 import Donate from "../templates/donate";
 import NFT from "../templates/nft";
 import Marketplace from "../templates/marketplace";

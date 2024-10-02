@@ -10,8 +10,8 @@ export function Header() {
 
   return (
     <>
-      <div className="w-full bg-teal-200 p-1">
-        <p className="text-sm text-center text-black">
+      <div className="w-full bg-orange-100 p-1">
+        <p className="text-sm text-center text-black font-semibold">
           We appreciate you exploring our beta! Your feedback helps us grow and improve.
         </p>
       </div>
