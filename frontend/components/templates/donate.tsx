@@ -136,7 +136,7 @@ const Donate: React.FC = () => {
               onClick={handleClick}
               disabled={loading}
               className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${
-                loading ? "bg-gradient-to-r from-teal-400 to-pink-400 animate-pulse" : ""
+                loading ? "bg-gradient-to-r from-[#89e219] to-pink-400 animate-pulse" : ""
               } ${success ? "bg-[#89e219]" : ""}`}
             >
               {loading ? "Donating..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Donate APTOS"}

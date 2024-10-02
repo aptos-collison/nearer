@@ -178,7 +178,7 @@ const DynamicMint = () => {
   return (
     <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
       <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
-        <p className="text-base font-semibold text-black">Creator Payment Template</p>
+        <p className="text-base font-semibold text-black">Token Template</p>
         <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
       </div>
 

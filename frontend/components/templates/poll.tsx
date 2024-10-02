@@ -235,7 +235,7 @@ const Polls: React.FC = () => {
                           key={index}
                           onClick={() => handleVote(candidate)}
                           disabled={loading}
-                          className="bg-teal-400 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
+                          className="bg-[#89e219] text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
                         >
                           <span>{candidate}</span>
                           <span className="hidden hover:block">{votePercentage}</span>
@@ -259,7 +259,7 @@ const Polls: React.FC = () => {
               {timer > 0 ? (
                 <div className="bg-gray-900 rounded-none p-3">
                   <h1 className="font-medium text-white">Current Timer</h1>
-                  <span className="font-semibold text-lg text-teal-200">{formatTime(timer)}</span>
+                  <span className="font-semibold text-lg text-[#89e219]">{formatTime(timer)}</span>
                 </div>
               ) : (
                 <h1 className="font-bold text-lg">No Active Timer</h1>

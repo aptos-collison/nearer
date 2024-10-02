@@ -12,11 +12,11 @@ export const Features = () => {
   return (
     <>
       <div className="bg-black p-6">
-        <p className="text-center text-4xl font-semibold w-2/4 mx-auto mt-6">Discover Key Use Cases for APT-Links</p>
+        <p className="text-center text-gray-100 text-4xl font-semibold w-2/4 mx-auto mt-6">Discover Key Use Cases for APT-Links</p>
         <div className="grid grid-cols-2 gap-3 mt-6">
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Bridging Assets</CardTitle>
+              <CardTitle className="text-gray-200">Bridging Assets</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex space-x-1 items-center mb-3">
@@ -31,45 +31,45 @@ export const Features = () => {
               </p>
             </CardContent>
           </Card>
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Token Transfers</CardTitle>
+              <CardTitle className="text-gray-200">Token Transfers</CardTitle>
             </CardHeader>
             <CardContent>
               <img src="/icons/token.svg" className="h-12 w-12 bg-[#89e219] p-2 rounded-sm  ml-1 mb-3" />
               Create dapps enabling token transfer between wallets, enhancing your trading and investment experience.
             </CardContent>
           </Card>
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Simple Swaps</CardTitle>
+              <CardTitle className="text-gray-200">Simple Swaps</CardTitle>
             </CardHeader>
             <CardContent>
               <img src="/icons/swap.svg" className="h-12 w-12 bg-[#89e219] p-2 rounded-sm  ml-1 mb-3" />
               Create dapps to swap tokens on any platform with minimal fees for a convenient trading experience.
             </CardContent>
           </Card>
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Faucets for Developers</CardTitle>
+              <CardTitle className="text-gray-200">Faucets for Developers</CardTitle>
             </CardHeader>
             <CardContent>
               <img src="/icons/faucet.svg" className="h-12 w-12 bg-[#89e219] p-2 rounded-sm  ml-1 mb-3" />
               Build and share faucet dapps to enable developers access your protocol's test tokens across any web platform.
             </CardContent>
           </Card>
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Easy Donations</CardTitle>
+              <CardTitle className="text-gray-200">Easy Donations</CardTitle>
             </CardHeader>
             <CardContent>
               <img src="/icons/donation.svg" className="h-12 w-12 bg-[#89e219] p-2 rounded-sm  ml-1 mb-3" />
               Create dapps to support your favorite projects and causes with secure, simple donation options leveraging APT Link.
             </CardContent>
           </Card>
-          <Card className="bg-transparent text-gray-400 border-gray-800 border-2 rounded-none">
+          <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>
-              <CardTitle className="text-white">Social Payments</CardTitle>
+              <CardTitle className="text-gray-200">Social Payments</CardTitle>
             </CardHeader>
             <CardContent>
               <img src="/icons/payment.svg" className="h-12 w-12 bg-[#89e219] p-2 rounded-sm  ml-1 mb-3" />

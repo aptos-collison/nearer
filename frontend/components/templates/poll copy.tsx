@@ -191,7 +191,7 @@ const Polls: React.FC = () => {
               <Button
                 onClick={handleInitialize}
                 disabled={loading || !newCandidate}
-                className="bg-teal-400 text-white font-bold py-2 rounded-sm w-full mt-2"
+                className="bg-[#89e219] text-white font-bold py-2 rounded-sm w-full mt-2"
               >
                 Initialize Poll
               </Button>
@@ -211,7 +211,7 @@ const Polls: React.FC = () => {
                     <Button
                       onClick={() => handleAddCandidate()}
                       disabled={loading || !newCandidate}
-                      className="bg-teal-400 text-white font-bold py-2 rounded-sm"
+                      className="bg-[#89e219] text-white font-bold py-2 rounded-sm"
                     >
                       Add
                     </Button>
@@ -230,7 +230,7 @@ const Polls: React.FC = () => {
                         key={index}
                         onClick={() => handleVote(candidate)}
                         disabled={loading}
-                        className="bg-teal-400 text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
+                        className="bg-[#89e219] text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
                       >
                         <span>{candidate}</span>
                         <span>{votePercentage}</span>

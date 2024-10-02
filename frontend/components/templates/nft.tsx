@@ -259,7 +259,7 @@ const NFT = () => {
 
             <ConfirmButton
               title="Create Collection"
-              className="self-start w-full bg-teal-400"
+              className="self-start w-full bg-[#89e219]"
               onSubmit={onCreateCollection}
               disabled={!account || !files?.length || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
               confirmMessage={
