@@ -326,7 +326,7 @@ const DynamicMint = () => {
               disabled={loading}
               className={`w-full ${
                 loading
-                  ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse"
+                  ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse"
                   : success
                     ? "bg-orange-500"
                     : "bg-orange-600 hover:bg-orange-800"
@@ -394,7 +394,7 @@ const DynamicMint = () => {
                   disabled={loading}
                   className={`w-full ${
                     loading
-                      ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse"
+                      ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse"
                       : success
                         ? ""
                         : ""

@@ -78,9 +78,9 @@ const Payment: React.FC = () => {
 
       <div className="p-4">
         <img
-          src="https://utfs.io/f/PKy8oE1GN2J3QgJ0elMB4oh9KpZbJwuajRl6c2XWTSfEVm85"
+          src="https://utfs.io/f/PKy8oE1GN2J3iS1sSBQCJO38NcHlzUmSsbgKxnkEpThFroXI"
           alt="Payment aptos"
-          className="w-full h-auto max-h-44 object-contain mb-4"
+          className="w-full h-auto max-h-44 object-contain mb-4 rounded-sm"
         />
         <div className="py-3 px-1 flex flex-col mt-3">
           <Label className="text-black font-semibold text-lg">Service Rendered:</Label>
@@ -106,7 +106,7 @@ const Payment: React.FC = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse" : ""}`}
           >
             {loading ? "Paying..." : "Send Payment"}
           </button>

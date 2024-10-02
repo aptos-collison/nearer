@@ -72,7 +72,7 @@ const Marketplace = () => {
           <button
             onClick={handleNFT}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-pink-400 animate-pulse" : ""} ${success ? "bg-orange-500" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse" : ""} ${success ? "bg-orange-500" : ""}`}
           >
             {loading ? (
               "Purchasing..."
