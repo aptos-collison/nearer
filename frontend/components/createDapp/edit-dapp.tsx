@@ -243,17 +243,17 @@ const EditDapp: React.FC<EditDappProps> = ({
                   Edit
                 </button>
                 <button
-                  className="bg-[#89e219] text-white font-semibold py-2 px-4 rounded hover:bg-teal-600"
+                  className="bg-[#89e219] text-white font-semibold py-2 px-4 rounded hover:bg-[#5ed63d]"
                   onClick={handleDeployClick}
                 >
                   Deploy
                 </button>
-                <button
+                {/* <button
                   className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-600"
                   onClick={handleDownloadClick}
                 >
                   Download Template
-                </button>
+                </button> */}
               </>
             ) : (
               <>

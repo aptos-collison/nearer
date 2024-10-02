@@ -106,7 +106,7 @@ const Payment: React.FC = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-teal-300 to-white animate-pulse" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse" : ""}`}
           >
             {loading ? "Paying..." : "Send Payment"}
           </button>
