@@ -176,8 +176,8 @@ const DynamicMint = () => {
   console.log(tokenHash);
 
   return (
-    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
-      <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+    <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
         <p className="text-base font-semibold text-black">Creator Payment Template</p>
         <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
       </div>
@@ -326,10 +326,10 @@ const DynamicMint = () => {
               disabled={loading}
               className={`w-full ${
                 loading
-                  ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse"
+                  ? "bg-gradient-to-r from-teal-300 to-white animate-pulse"
                   : success
-                    ? "bg-orange-500"
-                    : "bg-orange-600 hover:bg-orange-800"
+                    ? "bg-[#89e219]"
+                    : "bg-teal-600 hover:bg-teal-800"
               } text-white font-bold py-2 px-4 rounded`}
             >
               {loading ? "Processing..." : success ? "✓ Done!" : isCreatingToken ? "Create Token" : "Mint Token"}
@@ -394,7 +394,7 @@ const DynamicMint = () => {
                   disabled={loading}
                   className={`w-full ${
                     loading
-                      ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse"
+                      ? "bg-gradient-to-r from-teal-300 to-white animate-pulse"
                       : success
                         ? ""
                         : ""

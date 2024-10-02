@@ -103,8 +103,8 @@ const Donate: React.FC = () => {
 
   return (
    
-      <div className="relative bg-orange-50 rounded-none border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
-        <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+      <div className="relative bg-white rounded-none border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
+        <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
           <p className="text-base font-semibold text-black">Donation Template</p>
           <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
         </div>
@@ -136,8 +136,8 @@ const Donate: React.FC = () => {
               onClick={handleClick}
               disabled={loading}
               className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${
-                loading ? "bg-gradient-to-r from-orange-400 to-pink-400 animate-pulse" : ""
-              } ${success ? "bg-orange-500" : ""}`}
+                loading ? "bg-gradient-to-r from-teal-400 to-pink-400 animate-pulse" : ""
+              } ${success ? "bg-[#89e219]" : ""}`}
             >
               {loading ? "Donating..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Donate APTOS"}
             </button>

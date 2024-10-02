@@ -131,8 +131,8 @@ const NFT = () => {
 
   console.log(`collection map`, collections);
   return (
-    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] overflow-y-auto font-vt323">
-      <div className="h-6 bg-orange-500 w-full flex justify-between px-2 ">
+    <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] overflow-y-auto font-vt323">
+      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2 ">
         <p className="text-base font-semibold text-black">
           {isCollectionCreated ? "NFT Template" : "Create New Collection"}
         </p>
@@ -186,7 +186,7 @@ const NFT = () => {
               <button
                 onClick={handleNFT}
                 disabled={loading}
-                className={`mt-3 text-black text-xl bg-transparent font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse" : ""} ${success ? "bg-orange-500" : ""}`}
+                className={`mt-3 text-black text-xl bg-transparent font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-teal-300 to-white animate-pulse" : ""} ${success ? "bg-[#89e219]" : ""}`}
               >
                 {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
               </button>
@@ -259,7 +259,7 @@ const NFT = () => {
 
             <ConfirmButton
               title="Create Collection"
-              className="self-start w-full bg-orange-400"
+              className="self-start w-full bg-teal-400"
               onSubmit={onCreateCollection}
               disabled={!account || !files?.length || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
               confirmMessage={

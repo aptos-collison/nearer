@@ -47,8 +47,8 @@ export const Menu: React.FC = () => {
     <>
       <div className="mt-6">
         <div>
-          <p className="text-3xl font-medium ">{sectionTitles[currentSection]}</p>
-          <p className="text-base text-gray-400 mt-3">{sectionDescriptions[currentSection]}</p>
+          <p className="text-3xl font-semibold ">{sectionTitles[currentSection]}</p>
+          <p className="text-base text-gray-700 mt-3">{sectionDescriptions[currentSection]}</p>
         </div>
       </div>
 

@@ -58,8 +58,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-white;
-    background-image: url('/icons/black.png'); 
+    @apply bg-[#fffcf2] text-black;
+    /* background-image: url('/icons/black.png');  */
     background-size: cover; /* Ensure it covers the entire area */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent repeating */

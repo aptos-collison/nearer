@@ -170,8 +170,8 @@ const Polls: React.FC = () => {
 
   return (
   
-      <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
-        <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+      <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+        <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
           <p className="text-base font-semibold text-black">Create Poll Template</p>
           <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
         </div>
@@ -235,7 +235,7 @@ const Polls: React.FC = () => {
                           key={index}
                           onClick={() => handleVote(candidate)}
                           disabled={loading}
-                          className="bg-orange-400 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
+                          className="bg-teal-400 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
                         >
                           <span>{candidate}</span>
                           <span className="hidden hover:block">{votePercentage}</span>
@@ -259,7 +259,7 @@ const Polls: React.FC = () => {
               {timer > 0 ? (
                 <div className="bg-gray-900 rounded-none p-3">
                   <h1 className="font-medium text-white">Current Timer</h1>
-                  <span className="font-semibold text-lg text-orange-200">{formatTime(timer)}</span>
+                  <span className="font-semibold text-lg text-teal-200">{formatTime(timer)}</span>
                 </div>
               ) : (
                 <h1 className="font-bold text-lg">No Active Timer</h1>

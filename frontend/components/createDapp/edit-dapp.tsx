@@ -222,7 +222,7 @@ const EditDapp: React.FC<EditDappProps> = ({
                     className="p-2 border border-gray-300 rounded mb-2"
                   />
                   <div className="flex justify-between">
-                    <button onClick={updateImageUrl} className="bg-orange-500 text-white p-1 rounded">
+                    <button onClick={updateImageUrl} className="bg-[#89e219] text-white p-1 rounded">
                       Post
                     </button>
                     <button onClick={cancelImageUpdate} className="bg-red-500 text-white p-1 rounded">
@@ -243,7 +243,7 @@ const EditDapp: React.FC<EditDappProps> = ({
                   Edit
                 </button>
                 <button
-                  className="bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600"
+                  className="bg-[#89e219] text-white font-semibold py-2 px-4 rounded hover:bg-teal-600"
                   onClick={handleDeployClick}
                 >
                   Deploy

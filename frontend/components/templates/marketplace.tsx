@@ -26,8 +26,8 @@ const Marketplace = () => {
   };
 
   return (
-    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-black border-2 h-[460px] font-vt323 overflow-y-auto">
-      <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+    <div className="bg-white rounded-none w-full shadow-md mx-auto border-black border-2 h-[460px] font-vt323 overflow-y-auto">
+      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
         <p className="text-base font-semibold text-black">NFT Marketplace Template</p>
         <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
       </div>
@@ -72,7 +72,7 @@ const Marketplace = () => {
           <button
             onClick={handleNFT}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse" : ""} ${success ? "bg-orange-500" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-teal-300 to-white animate-pulse" : ""} ${success ? "bg-[#89e219]" : ""}`}
           >
             {loading ? (
               "Purchasing..."

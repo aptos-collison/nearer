@@ -145,7 +145,7 @@ const Swap: React.FC = () => {
       <button
         onClick={doSwap}
         disabled={loading}
-        className={`w-full py-2 rounded-lg text-white font-bold transition duration-300 ${loading ? 'bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse' : 'bg-blue-500 hover:bg-blue-600'}`}
+        className={`w-full py-2 rounded-lg text-white font-bold transition duration-300 ${loading ? 'bg-gradient-to-r from-teal-300 to-white animate-pulse' : 'bg-blue-500 hover:bg-blue-600'}`}
       >
         {loading ? 'Executing swap...' : 'Buy USDC'}
       </button>

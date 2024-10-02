@@ -70,15 +70,15 @@ const Payment: React.FC = () => {
   };
 
   return (
-    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
-      <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
+    <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
         <p className="text-base font-semibold text-black">Creator Payment Template</p>
         <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
       </div>
 
       <div className="p-4">
         <img
-          src="https://utfs.io/f/PKy8oE1GN2J3iS1sSBQCJO38NcHlzUmSsbgKxnkEpThFroXI"
+          src="https://utfs.io/f/PKy8oE1GN2J3QgJ0elMB4oh9KpZbJwuajRl6c2XWTSfEVm85"
           alt="Payment aptos"
           className="w-full h-auto max-h-44 object-contain mb-4 rounded-sm"
         />
@@ -106,7 +106,7 @@ const Payment: React.FC = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-orange-300 to-orange-50 animate-pulse" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-teal-300 to-white animate-pulse" : ""}`}
           >
             {loading ? "Paying..." : "Send Payment"}
           </button>
