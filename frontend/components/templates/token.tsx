@@ -329,7 +329,7 @@ const DynamicMint = () => {
                   ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse"
                   : success
                     ? "bg-[#89e219]"
-                    : "bg-teal-600 hover:bg-teal-800"
+                    : "bg-[#89e219] hover:bg-[#58cc02]"
               } text-white font-bold py-2 px-4 rounded`}
             >
               {loading ? "Processing..." : success ? "✓ Done!" : isCreatingToken ? "Create Token" : "Mint Token"}
