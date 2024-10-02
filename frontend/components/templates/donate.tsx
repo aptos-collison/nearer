@@ -102,8 +102,8 @@ const Donate: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="relative bg-orange-50 rounded-none border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323">
+   
+      <div className="relative bg-orange-50 rounded-none border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
         <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
           <p className="text-base font-semibold text-black">Donation Template</p>
           <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
@@ -155,7 +155,7 @@ const Donate: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 

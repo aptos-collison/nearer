@@ -11,7 +11,7 @@ export function Header() {
   return (
     <>
       <div className="w-full bg-orange-100 p-1">
-        <p className="text-sm text-center text-black font-semibold">
+        <p className="text-sm text-center text-black font-medium">
           We appreciate you exploring our beta! Your feedback helps us grow and improve.
         </p>
       </div>

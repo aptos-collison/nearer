@@ -169,7 +169,7 @@ const Polls: React.FC = () => {
   }, [account, updateCandidatesAndScores]);
 
   return (
-    <div>
+  
       <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
         <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
           <p className="text-base font-semibold text-black">Create Poll Template</p>
@@ -268,7 +268,7 @@ const Polls: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+   
   );
 };
 

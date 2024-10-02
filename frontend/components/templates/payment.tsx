@@ -70,7 +70,7 @@ const Payment: React.FC = () => {
   };
 
   return (
-    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323">
+    <div className="bg-orange-50 rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
       <div className="h-6 bg-orange-500 w-full flex justify-between px-2">
         <p className="text-base font-semibold text-black">Creator Payment Template</p>
         <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
