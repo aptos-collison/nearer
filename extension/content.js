@@ -9,9 +9,8 @@ function injectScript(code) {
   };
 }
 
-
 const makeid = () => {
-  return Math.floor(Math.random() * 100000000)
+  return Math.floor(Math.random() * 100000000);
 }
 
 function updateIds(htmlString, number) {
@@ -39,80 +38,142 @@ function updateIdsInJsCode(jsCode, number) {
   });
 }
 
-async function replaceBlkTags() {
-  // Find all span elements containing <blk ... blk> or &lt;blk ... blk&gt;
-  const spans = document.querySelectorAll('span');
+function reloadAptosSdk() {
+  const existingScript = document.querySelector('script[src="https://unpkg.com/aptos@1.3.16/dist/index.global.js"]');
+  if (existingScript) {
+    existingScript.remove();
+  }
 
-  const fetchPromises = [];
-  spans.forEach(span => {
-    const blkRegex = /(&lt;|<)blk\s*(.*?)\s*blk(&gt;|>)/g;
-    let match;
-    while ((match = blkRegex.exec(span.innerHTML)) !== null) {
-      let url = null;
-      const match2 = match;
-      const url1 = match[2].trim();
+  const aptosSdkScript = document.createElement("script");
+  aptosSdkScript.src = "https://unpkg.com/aptos@1.3.16/dist/index.global.js";
+  
+  aptosSdkScript.onload = function () {
+    console.log("Aptos SDK reloaded");
+  };
 
-      if (url1.startsWith("http"))
-        url = url1;
-      else if (url1.startsWith("ipfs://"))
-        url = "https://ipfs.io/ipfs/" + url1.substring("ipfs://".length);
+  aptosSdkScript.onerror = function(error) {
+    console.error('Error loading Aptos SDK:', error);
+  };
 
-      console.log(`Fetching URL: ${url}`);  // Debugging information
-      if (!url)
-        continue;
-
-      fetchPromises.push(
-        fetch(url)
-          .then(response => {
-            if (response.ok) {
-              return response.json().then(result => {
-                const { html, js } = result.iframe;
-                return { span, match: match2, htmlText: html, jsCode: js };
-              });
-            } else {
-              console.error(`Failed to fetch ${url}: ${response.statusText}`);
-              return null;
-            }
-          })
-          .catch(error => {
-            console.error(`Error fetching ${url}:`, error);
-            return null;
-          })
-      );
-    }
-  });
-
-  const results = await Promise.all(fetchPromises);
-
-  results.forEach(result => {
-    if (result) {
-      const randomNumber = makeid();
-      const newHtml = updateIds(result.htmlText, randomNumber);
-
-      // Replace only the matched content within the span
-      const spanHtml = result.span.innerHTML;
-      console.log(spanHtml);
-      console.log(result);
-      console.log(result.match);
-      console.log(spanHtml.replace(result.match[0], newHtml))
-      result.span.innerHTML = spanHtml.replace(result.match[0], newHtml);
-
-      setTimeout(() => {
-        const newJS = updateIdsInJsCode(result.jsCode, randomNumber);
-        injectScript(newJS);
-      }, 500);
-    }
-  });
+  document.head.appendChild(aptosSdkScript);
 }
 
-(function () {
-  const script = document.createElement('script');
-  script.src = 'https://cdn.ethers.io/lib/ethers-5.2.umd.min.js';
-  script.onload = function () {
-    // You can put additional code here if needed to run after ethers is loaded
-  };
-  document.head.appendChild(script);
-})();
+async function replaceBlkTags() {
+  try {
+    const spans = document.querySelectorAll('span');
+    const fetchPromises = [];
+
+    spans.forEach(span => {
+      const blkRegex = /(&lt;|<)blk\s*(.*?)\s*blk(&gt;|>)/g;
+      let match;
+
+      while ((match = blkRegex.exec(span.innerHTML)) !== null) {
+        if (!match || match.length < 3) continue;
+
+        let url = null;
+        const matchText = match[0]; // Store the full matched text
+        const url1 = match[2].trim();
+
+        if (url1.startsWith("http")) {
+          url = url1;
+        } else if (url1.startsWith("ipfs://")) {
+          url = "https://ipfs.io/ipfs/" + url1.substring("ipfs://".length);
+        }
+
+        if (!url) continue;
+
+        console.log(`Fetching URL: ${url}`);
+
+        fetchPromises.push(
+          fetch(url)
+            .then(response => {
+              if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+              return response.json();
+            })
+            .then(result => {
+              if (!result?.iframe?.html || !result?.iframe?.js) {
+                throw new Error('Invalid response format');
+              }
+              reloadAptosSdk(); // Reload the Aptos SDK after fetching
+
+              return {
+                span,
+                matchText,
+                htmlText: result.iframe.html,
+                jsCode: result.iframe.js
+              };
+            })
+            .catch(error => {
+              console.error(`Error processing ${url}:`, error);
+              return null;
+            })
+        );
+      }
+    });
+
+    if (fetchPromises.length === 0) return;
+
+    const results = await Promise.all(fetchPromises);
+
+    results.forEach(result => {
+      if (!result || !result.matchText) return;
+
+      try {
+        const randomNumber = makeid();
+        const newHtml = updateIds(result.htmlText, randomNumber);
+
+        // Replace the matched content
+        result.span.innerHTML = result.span.innerHTML.replace(result.matchText, newHtml);
+
+        // Modify the JS code to be wallet-agnostic
+        let newJS = updateIdsInJsCode(result.jsCode, randomNumber);
+        
+        // Add wallet detection logic
+        newJS = `
+          const detectWallet = async () => {
+            if (window.aptos) return window.aptos;
+            if (window.petra) return window.petra;
+            if (window.martian) return window.martian;
+            if (window.pontem) return window.pontem;
+            if (window.fewcha) return window.fewcha;
+            return null;
+          };
+
+          const waitForAptosWallet = async () => {
+            return new Promise((resolve) => {
+              const checkWallet = async () => {
+                const wallet = await detectWallet();
+                if (wallet) {
+                  resolve(wallet);
+                } else {
+                  setTimeout(checkWallet, 100);
+                }
+              };
+              checkWallet();
+            });
+          };
+
+          ${newJS}
+        `;
+
+        setTimeout(() => {
+          try {
+            injectScript(newJS);
+          } catch (error) {
+            console.error('Error injecting script:', error);
+          }
+        }, 500);
+      } catch (error) {
+        console.error('Error processing result:', error);
+      }
+    });
+  } catch (error) {
+    console.error('Error in replaceBlkTags:', error);
+  }
+}
+
+// Initialize script with only Aptos SDK
+reloadAptosSdk(); // Load the Aptos SDK initially
 
 // Run the function every 1 second
 setInterval(replaceBlkTags, 1000);

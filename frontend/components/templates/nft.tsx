@@ -131,16 +131,9 @@ const NFT = () => {
 
   console.log(`collection map`, collections);
   return (
-    <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] overflow-y-auto font-vt323">
-      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2 ">
-        <p className="text-base font-semibold text-black">
-          {isCollectionCreated ? "NFT Template" : "Create New Collection"}
-        </p>
-        <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
-      </div>
-
+    <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] overflow-y-auto font-vt323">
       <div className="p-3">
-        <div className="rounded-sm">
+        <div className="rounded-sm mt-2">
           <img
             src={
               isCollectionCreated?.cdn_asset_uris?.cdn_image_uri ??
@@ -186,7 +179,7 @@ const NFT = () => {
               <button
                 onClick={handleNFT}
                 disabled={loading}
-                className={`mt-3 text-black text-xl bg-transparent font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse" : ""} ${success ? "bg-[#89e219]" : ""}`}
+                className={`mt-3 text-black text-xl bg-transparent font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-white animate-pulse" : ""} ${success ? "bg-blue-500" : ""}`}
               >
                 {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
               </button>
@@ -259,7 +252,7 @@ const NFT = () => {
 
             <ConfirmButton
               title="Create Collection"
-              className="self-start w-full bg-[#89e219]"
+              className="self-start w-full bg-blue-500"
               onSubmit={onCreateCollection}
               disabled={!account || !files?.length || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
               confirmMessage={

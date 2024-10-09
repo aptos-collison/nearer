@@ -21,7 +21,7 @@ export default defineConfig({
       },
       protocolImports: true, // Polyfill node: protocol imports
     }),
-  ],
+  ], 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./frontend"),

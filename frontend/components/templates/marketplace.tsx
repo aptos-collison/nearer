@@ -26,33 +26,28 @@ const Marketplace = () => {
   };
 
   return (
-    <div className="bg-white rounded-none w-full shadow-md mx-auto border-black border-2 h-[460px] font-vt323 overflow-y-auto">
-      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
-        <p className="text-base font-semibold text-black">NFT Marketplace Template</p>
-        <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
-      </div>
-
+    <div className="bg-white rounded-md w-full shadow-md mx-auto border-black border-2 h-[460px] font-vt323 overflow-y-auto">
       <div className="p-4 ">
         <div className="grid grid-cols-2 gap-2">
           <img
             src="https://utfs.io/f/PKy8oE1GN2J3ImEUxfLevETDAcJq1nugYV4XWR2yULbo7PO9"
             alt="NFT aptos"
-            className="w-full h-32 object-cover rounded-sm"
+            className="w-full h-36 object-cover rounded-sm"
           />
           <img
             src="https://utfs.io/f/PKy8oE1GN2J3KOWGsVvRh3M9zZEHBsUJXb2rmgqjVN7dGF0A"
             alt="NFT aptos"
-            className="w-full h-32 object-cover rounded-sm"
+            className="w-full h-36 object-cover rounded-sm"
           />
           <img
             src="https://utfs.io/f/PKy8oE1GN2J34Ea4iszOtmS4gyWw60ueoFxcn1br78fIZYvJ"
             alt="NFT aptos"
-            className="w-full h-32 object-cover rounded-sm"
+            className="w-full h-36 object-cover rounded-sm"
           />
           <img
             src="https://utfs.io/f/PKy8oE1GN2J3SBvM9TJRHgldbCZqO68FamQULKyreIx24zPN"
             alt="NFT aptos"
-            className="w-full h-32 object-cover rounded-sm"
+            className="w-full h-36 object-cover rounded-sm"
           />
         </div>
 
@@ -72,7 +67,7 @@ const Marketplace = () => {
           <button
             onClick={handleNFT}
             disabled={loading}
-            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse" : ""} ${success ? "bg-[#89e219]" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-white animate-pulse" : ""} ${success ? "bg-blue-500" : ""}`}
           >
             {loading ? (
               "Purchasing..."

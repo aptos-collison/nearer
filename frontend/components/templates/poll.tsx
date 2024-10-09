@@ -169,106 +169,99 @@ const Polls: React.FC = () => {
   }, [account, updateCandidatesAndScores]);
 
   return (
-  
-      <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
-        <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
-          <p className="text-base font-semibold text-black">Create Poll Template</p>
-          <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
-        </div>
+    <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+      <div className="p-4">
+        <img
+          src="https://utfs.io/f/PKy8oE1GN2J3cXPyS4JnrjPmytFlpWZ2Y3gkRdK087boqXfG"
+          alt="Poll"
+          className="w-full h-auto max-h-40 object-contain mb-2"
+        />
 
-        <div className="p-4">
-          <img
-            src="https://utfs.io/f/PKy8oE1GN2J3cXPyS4JnrjPmytFlpWZ2Y3gkRdK087boqXfG"
-            alt="Poll"
-            className="w-full h-auto max-h-40 object-contain mb-2"
-          />
+        <div className="py-2 px-1 flex flex-col gap-4">
+          {!isInitialized ? (
+            <div>
+              <Label className="text-black text-lg">Initialize Poll:</Label>
+              <Input
+                value={newCandidate}
+                onChange={(e) => setNewCandidate(e.target.value)}
+                placeholder="Enter first candidate"
+                className="mt-1 text-black bg-transparent rounded-none"
+              />
+              <button
+                onClick={handleInitialize}
+                disabled={loading || !newCandidate}
+                className=" text-black text-xl border border-black font-bold py-1 rounded-sm w-full mt-2"
+              >
+                Initialize Poll
+              </button>
+            </div>
+          ) : (
+            <>
+              {candidates.length < 4 && (
+                <div>
+                  <Label className="text-black">Add Candidate:</Label>
+                  <div className="flex gap-2 mt-1">
+                    <Input
+                      value={newCandidate}
+                      onChange={(e) => setNewCandidate(e.target.value)}
+                      placeholder="Enter candidate name"
+                      className="text-black rounded-none bg-transparent"
+                    />
+                    <button
+                      onClick={() => handleAddCandidate()}
+                      disabled={loading || !newCandidate}
+                      className=" text-black font-bold py-1 px-4 border border-black rounded-sm"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              )}
 
-          <div className="py-2 px-1 flex flex-col gap-4">
-            {!isInitialized ? (
               <div>
-                <Label className="text-black text-lg">Initialize Poll:</Label>
-                <Input
-                  value={newCandidate}
-                  onChange={(e) => setNewCandidate(e.target.value)}
-                  placeholder="Enter first candidate"
-                  className="mt-1 text-black bg-transparent rounded-none"
-                />
-                <button
-                  onClick={handleInitialize}
-                  disabled={loading || !newCandidate}
-                  className=" text-black text-xl border border-black font-bold py-1 rounded-sm w-full mt-2"
-                >
-                  Initialize Poll
-                </button>
+                <Label className="text-black">Vote for a candidate:</Label>
+                <div className="space-y-2 mt-2">
+                  {candidates.map((candidate, index) => {
+                    const totalVotes = scores.reduce((sum, score) => sum + score, 0);
+                    const votePercentage = calculatePercentage(scores[index] || 0, totalVotes);
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => handleVote(candidate)}
+                        disabled={loading}
+                        className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
+                      >
+                        <span>{candidate}</span>
+                        <span className="hidden hover:block">{votePercentage}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <button
+                onClick={handleDeclareWinner}
+                disabled={loading || timer > 0}
+                className=" text-black border border-black font-bold py-1 rounded-sm w-full"
+              >
+                Declare Winner
+              </button>
+            </>
+          )}
+
+          <div className="text-center text-gray-800 mt-4">
+            {timer > 0 ? (
+              <div className="bg-gray-900 rounded-none p-3">
+                <h1 className="font-medium text-white">Current Timer</h1>
+                <span className="font-semibold text-lg text-blue-500">{formatTime(timer)}</span>
               </div>
             ) : (
-              <>
-                {candidates.length < 4 && (
-                  <div>
-                    <Label className="text-black">Add Candidate:</Label>
-                    <div className="flex gap-2 mt-1">
-                      <Input
-                        value={newCandidate}
-                        onChange={(e) => setNewCandidate(e.target.value)}
-                        placeholder="Enter candidate name"
-                        className="text-black rounded-none bg-transparent"
-                      />
-                      <button
-                        onClick={() => handleAddCandidate()}
-                        disabled={loading || !newCandidate}
-                        className=" text-black font-bold py-1 px-4 border border-black rounded-sm"
-                      >
-                        Add
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <Label className="text-black">Vote for a candidate:</Label>
-                  <div className="space-y-2 mt-2">
-                    {candidates.map((candidate, index) => {
-                      const totalVotes = scores.reduce((sum, score) => sum + score, 0);
-                      const votePercentage = calculatePercentage(scores[index] || 0, totalVotes);
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => handleVote(candidate)}
-                          disabled={loading}
-                          className="bg-[#89e219] text-white font-bold py-2 rounded-sm w-full flex justify-between items-center"
-                        >
-                          <span>{candidate}</span>
-                          <span className="hidden hover:block">{votePercentage}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleDeclareWinner}
-                  disabled={loading || timer > 0}
-                  className=" text-black border border-black font-bold py-1 rounded-sm w-full"
-                >
-                  Declare Winner
-                </button>
-              </>
+              <h1 className="font-bold text-lg">No Active Timer</h1>
             )}
-
-            <div className="text-center text-gray-800 mt-4">
-              {timer > 0 ? (
-                <div className="bg-gray-900 rounded-none p-3">
-                  <h1 className="font-medium text-white">Current Timer</h1>
-                  <span className="font-semibold text-lg text-[#89e219]">{formatTime(timer)}</span>
-                </div>
-              ) : (
-                <h1 className="font-bold text-lg">No Active Timer</h1>
-              )}
-            </div>
           </div>
         </div>
       </div>
-   
+    </div>
   );
 };
 

@@ -71,7 +71,7 @@ export const AssistantPage = () => {
         {messages.map((msg, index) => (
           <div key={index} className={`flex justify-${msg.sender === "user" ? "end" : "start"} w-full mb-3`}>
             <div
-              className={`flex items-start space-x-2 ${msg.sender === "user" ? "bg-[#89e219]" : "bg-primary"} p-2 rounded-lg shadow`}
+              className={`flex items-start space-x-2 ${msg.sender === "user" ? "bg-blue-200" : "bg-blue-50"} p-2 rounded-lg shadow`}
             >
               <img src={`/icons/${msg.sender === "user" ? "profile" : "AI"}.svg`} className="h-6 w-6" />
               <p className={msg.sender === "user" ? "text-black" : "text-gray-400"}>{msg.content}</p>
@@ -88,10 +88,10 @@ export const AssistantPage = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 border rounded-2xl p-2 border-gray-300 bg-transparent active:border-none"
+          className="flex-1 border rounded-2xl p-2 text-slate-100 border-gray-300 bg-transparent active:border-none"
           onKeyPress={handleKeyPress}
         />
-        <Button onClick={handleSend} className="ml-2 bg-[#89e219] hover:bg-[#58cc02] text-black rounded-full py-2 px-5">
+        <Button onClick={handleSend} className="ml-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full py-2 px-5">
           <p> Send message</p>
         </Button>
       </div>

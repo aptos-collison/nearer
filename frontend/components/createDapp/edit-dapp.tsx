@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import EditElement from "../general/EditElement";
-import templatesJson from "../../utils/Templates.json";
-// import { saveAs } from 'file-saver';
 import { Loader } from "lucide-react";
+import templatesJson from "../../utils/Templates.json";
 
 interface Template {
   html: string;
@@ -21,7 +19,6 @@ interface EditDappProps {
   setCurrentBlinkObject: (blinkObject: any) => void;
   handleNextClick: () => void;
   setNewIPFShash: (hash: string) => void;
-  newIPFShash: string;
 }
 
 const EditDapp: React.FC<EditDappProps> = ({
@@ -29,7 +26,6 @@ const EditDapp: React.FC<EditDappProps> = ({
   // setCurrentBlinkObject,
   handleNextClick,
   setNewIPFShash,
-  // newIPFShash,
 }) => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [editingElement, setEditingElement] = useState<HTMLElement | null>(null);
@@ -40,15 +36,16 @@ const EditDapp: React.FC<EditDappProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [tokenName, setTokenName] = useState<string>("");
-  const [referrer, setReferrer] = useState<string>("");
-  const [destinationAddress, setDestinationAddress] = useState<string>("");
-  const [destinationDecimals, setDestinationDecimals] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("0x000000000000000000000000000000000");
+  const [price, setPrice] = useState<string>("");
+  const [supply, setSupply] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("0x000000000000");
 
   useEffect(() => {
     if (currentBlinkObject.templateName) {
       setSelectedTemplate(currentBlinkObject.templateName);
+      // Extract initial values from the template
+      const template = templates[currentBlinkObject.templateName];
+      // setRecipient(extractRecipient(template.js));
     }
   }, [currentBlinkObject]);
 
@@ -61,7 +58,7 @@ const EditDapp: React.FC<EditDappProps> = ({
     setEditingElement(element);
     setBgColor(element.style.backgroundColor || "#ffffff");
     setTextColor(element.style.color || "#333333");
-    setText(element.textContent || "Your text here");
+    setText(element.textContent || "Select a text to edit");
 
     if (element instanceof HTMLImageElement) {
       setShowTooltip(true);
@@ -97,8 +94,8 @@ const EditDapp: React.FC<EditDappProps> = ({
   };
 
   const updateImageUrl = () => {
-    if (editingElement) {
-      (editingElement as HTMLImageElement).src = imageUrl;
+    if (editingElement instanceof HTMLImageElement) {
+      editingElement.src = imageUrl;
     }
     setShowTooltip(false);
   };
@@ -108,23 +105,13 @@ const EditDapp: React.FC<EditDappProps> = ({
   };
 
   const createBlink = async () => {
-    const editedHtml = document.querySelector(".templateContainer")!.innerHTML;
-    const htmlContent = `
-      ${editedHtml}
-    `;
+    if (!selectedTemplate) return;
 
-    const modifiedJs = templates[selectedTemplate!].js
-      .replace("referrer = null", `referrer = "${referrer}";`)
-      .replace(
-        /destinationToken = \{[\s\S]*?\}/,
-        `destinationToken = { 
-          name: "${tokenName}",
-          address: "${destinationAddress}",
-          decimals: ${destinationDecimals},
-          image: "https://cdn3d.iconscout.com/3d/premium/thumb/usdc-10229270-8263869.png?f=webp"
-        };`,
-      )
-      .replace(/const recipient = '0x53FA684bDd93da5324BDc8B607F8E35eC79ccF5A';/, `const recipient = '${recipient}';`);
+    const editedHtml = document.querySelector(".templateContainer")?.innerHTML || "";
+    const htmlContent = `${editedHtml}`;
+
+    const template = templates[selectedTemplate];
+    const modifiedJs = updateTemplateJs(template.js);
 
     const iFrame = { iframe: { html: htmlContent, js: modifiedJs } };
     const res = await fetch("http://localhost:8000/storeToIpfs", {
@@ -147,50 +134,23 @@ const EditDapp: React.FC<EditDappProps> = ({
     setIsLoading(false);
   };
 
-  const handleDownloadClick = () => {
-    const editedHtml = document.querySelector(".templateContainer")!.innerHTML;
-    const htmlContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Component</title>
-</head>
-<body>
-  <div class="templateContainer">
-    ${editedHtml}
-  </div>
-</body>
-</html>
-    `;
+  const updateTemplateJs = (js: string): string => {
+    let updatedJs = js;
+    updatedJs = updatedJs.replace(/const RECIPIENT = "[^"]*"/, `const RECIPIENT = "${recipient}"`);
+    return updatedJs;
+  };
 
-    const modifiedJs = templates[selectedTemplate!].js
-      .replace("var referrer;", `var referrer = '${referrer}';`)
-      .replace(
-        /destinationToken = \{(.|\n)*?\};/,
-        `destinationToken = { 
-          name: "${tokenName}",
-          address: "${destinationAddress}",
-          decimals: ${destinationDecimals},
-          image: "https://cdn3d.iconscout.com/3d/premium/thumb/usdc-10229270-8263869.png?f=webp"
-        };`,
-      );
-
-    const iFrame = { iframe: { html: htmlContent, js: modifiedJs } };
-    const blob = new Blob([JSON.stringify(iFrame, null, 2)], { type: "application/json" });
-    // saveAs(blob, 'blinkTemplate.json');
+  const extractRecipient = (js: string): string => {
+    const match = js.match(/const RECIPIENT = "([^"]*)"/);
+    return match ? match[1] : "";
   };
 
   return (
-    <div className="p-4 zoom-75">
-      <h4 className="text-xl font-bold">Edit Your Blink</h4>
-      <p className="text-lg">Click on the element you want to edit and change its color, text, or image</p>
+    <div className="">
       {isLoading ? (
         <div className="flex justify-center items-center mt-20 flex-col">
-          {/* <Loader /> */}
-          <img src="/icons/loader.svg" className="animate-spin h-12 w-12" alt="Loading" />
-          <p>Deploying Your APT-Link To IPFS</p>
+          <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" />
+          <p className="text-white">Deploying Your APT-Link To IPFS</p>
         </div>
       ) : (
         <>
@@ -202,15 +162,36 @@ const EditDapp: React.FC<EditDappProps> = ({
                 onClick={(e) => handleElementClick(e.target as HTMLElement)}
               />
               {editMode && (
-                <EditElement
-                  bgColor={bgColor}
-                  textColor={textColor}
-                  text={text}
-                  onBgColorChange={handleBgColorChange}
-                  onTextColorChange={handleTextColorChange}
-                  onTextChange={handleTextChange}
-                  createBlink={createBlink}
-                />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-2">Edit Element</h3>
+                  <div className="mb-2">
+                    <label className="block text-sm font-medium text-gray-700">Background Color</label>
+                    <input
+                      type="color"
+                      value={bgColor}
+                      onChange={(e) => handleBgColorChange(e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <label className="block text-sm font-medium text-gray-700">Text Color</label>
+                    <input
+                      type="color"
+                      value={textColor}
+                      onChange={(e) => handleTextColorChange(e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <label className="block text-sm font-medium text-gray-700">Text Content</label>
+                    <input
+                      type="text"
+                      value={text}
+                      onChange={(e) => handleTextChange(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                    />
+                  </div>
+                </div>
               )}
               {showTooltip && (
                 <div className="absolute bg-white p-2 rounded shadow-md">
@@ -223,48 +204,42 @@ const EditDapp: React.FC<EditDappProps> = ({
                   />
                   <div className="flex justify-between">
                     <button onClick={updateImageUrl} className="bg-[#89e219] text-white p-1 rounded">
-                      Post
+                      Update
                     </button>
                     <button onClick={cancelImageUpdate} className="bg-red-500 text-white p-1 rounded">
-                      ×
+                      Cancel
                     </button>
                   </div>
                 </div>
               )}
             </div>
           )}
-          <div className="mt-4 flex gap-4">
+          <div className="mt-4 flex gap-4 justify-center">
             {!editMode ? (
               <>
                 <button
-                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+                  className="bg-blue-500 text-white font-semibold py-2 px-14 rounded hover:bg-blue-600"
                   onClick={() => setEditMode(true)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-[#89e219] text-white font-semibold py-2 px-4 rounded hover:bg-[#5ed63d]"
+                  className="bg-[#89e219] text-white font-semibold py-2 px-10 rounded hover:bg-[#5ed63d]"
                   onClick={handleDeployClick}
                 >
                   Deploy
                 </button>
-                {/* <button
-                  className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-600"
-                  onClick={handleDownloadClick}
-                >
-                  Download Template
-                </button> */}
               </>
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+                  className="bg-blue-500 text-white font-semibold py-2 px-14 rounded hover:bg-blue-600"
                   onClick={() => setEditMode(false)}
                 >
                   Save
                 </button>
                 <button
-                  className="bg-gray-300 text-black font-semibold py-2 px-4 rounded hover:bg-gray-400"
+                  className="bg-gray-300 text-black font-semibold py-2 px-10 rounded hover:bg-gray-400"
                   onClick={() => setEditMode(false)}
                 >
                   Cancel
@@ -272,47 +247,55 @@ const EditDapp: React.FC<EditDappProps> = ({
               </>
             )}
           </div>
-          {selectedTemplate === "swap" && (
-            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
-              <h5 className="text-lg font-bold mb-2">Edit Swap Fields</h5>
-              <label className="block mb-1">Referrer</label>
-              <input
-                type="text"
-                value={referrer}
-                onChange={(e) => setReferrer(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
-              <label className="block mb-1">Token Name</label>
-              <input
-                type="text"
-                value={tokenName}
-                onChange={(e) => setTokenName(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
-              <label className="block mb-1">Token Address</label>
-              <input
-                type="text"
-                value={destinationAddress}
-                onChange={(e) => setDestinationAddress(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
-              <label className="block mb-1">Token Decimals</label>
-              <input
-                type="number"
-                value={destinationDecimals}
-                onChange={(e) => setDestinationDecimals(e.target.value)}
-                className="p-2 border border-gray-300 rounded w-full"
-              />
-            </div>
-          )}
+
           {selectedTemplate === "donation" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
-              <h5 className="text-lg font-bold mb-2 text-center">Edit Donation Fields</h5>
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Donation Field</h5>
               <label className="block mb-1">Recipient</label>
               <input
                 type="text"
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+            </div>
+          )}
+
+          {selectedTemplate === "payment" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Payment Field</h5>
+              <label className="block mb-1">Recipient</label>
+              <input
+                type="text"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+            </div>
+          )}
+
+          {selectedTemplate === "marketplace" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Payment Field</h5>
+              <label className="block mb-1">NFT Address</label>
+              <input
+                type="text"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+              <label className="block mb-1">Price</label>
+              <input
+                type="text"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+              <label className="block mb-1">Max Supply</label>
+              <input
+                type="text"
+                value={supply}
+                onChange={(e) => setSupply(e.target.value)}
                 className="p-2 border border-gray-300 rounded mb-2 w-full"
               />
             </div>

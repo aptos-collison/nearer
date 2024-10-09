@@ -105,7 +105,7 @@ const NFT = () => {
             <Button
               onClick={handleNFT}
               disabled={loading}
-              className={`mt-3 bg-[#89e219] text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse" : ""} ${success ? "bg-[#89e219]" : ""}`}
+              className={`mt-3 bg-blue-500 text-white font-bold py-3 rounded-sm w-full transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-white animate-pulse" : ""} ${success ? "bg-blue-500" : ""}`}
             >
               {loading ? "Minting..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Mint NFT"}
             </Button>

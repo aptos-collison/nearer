@@ -58,6 +58,8 @@ const DeployDapp: React.FC<DeployDappProps> = ({
     }
   };
 
+  //<blk ipfs://QmcApc3Zx4yoo9UxGWsg2QfoKDYAdLz92E4zXPePdzo4NH blk> 
+
   return (
     <div className="p-5 zoom-75">
       <h4 className="text-lg font-bold">Your Blink Is Ready</h4>

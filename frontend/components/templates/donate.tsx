@@ -102,60 +102,53 @@ const Donate: React.FC = () => {
   };
 
   return (
-   
-      <div className="relative bg-white rounded-none border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
-        <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
-          <p className="text-base font-semibold text-black">Donation Template</p>
-          <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
-        </div>
-
-        <div className="p-4">
-          <img
-            src="https://utfs.io/f/PKy8oE1GN2J3NcDS9MmqTwZLGavY36FuE8XmyPAoRIOJCQBK"
-            alt="Background Image"
-            className="w-full h-auto max-h-44 rounded-sm mb-2"
-          />
-          <div className=" py-2 px-1 flex flex-col gap-2">
-            <Label className="text-black text-lg">Donate to cause:</Label>
-            <div className="flex items-center border border-gray-300 rounded-none p-2">
-              <img
-                src="https://utfs.io/f/PKy8oE1GN2J3ovmAor45P1iTwAUWSgurlXmB0cxH485C3q2s"
-                alt="APTOS"
-                className="w-5 h-5 mr-2"
-              />
-              <Input
-                name="donationAmount"
-                type="number"
-                value={donationAmount}
-                onChange={(e) => setDonationAmount(e.target.value)}
-                placeholder="Enter amount"
-                className="flex-1 bg-transparent focus:outline-none placeholder:text-sm rounded-none text-gray-800"
-              />
-            </div>
-            <button
-              onClick={handleClick}
-              disabled={loading}
-              className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${
-                loading ? "bg-gradient-to-r from-[#89e219] to-pink-400 animate-pulse" : ""
-              } ${success ? "bg-[#89e219]" : ""}`}
-            >
-              {loading ? "Donating..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Donate APTOS"}
-            </button>
-            <div className="flex justify-between mt-2">
-              {predefinedAmounts.map((amount) => (
-                <button
-                  key={amount}
-                  onClick={() => handlePredefinedDonation(amount)}
-                  className="mx-1 text-black font-bold py-1 rounded-sm w-full border border-black "
-                >
-                  Donate {amount}
-                </button>
-              ))}
-            </div>
+    <div className="relative bg-white rounded-md border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
+      <div className="p-4">
+        <img
+          src="https://utfs.io/f/PKy8oE1GN2J3NcDS9MmqTwZLGavY36FuE8XmyPAoRIOJCQBK"
+          alt="Background Image"
+          className="w-full h-auto max-h-44 rounded-sm mb-2"
+        />
+        <div className=" py-2 px-1 flex flex-col gap-2">
+          <Label className="text-black text-lg">Donate to cause:</Label>
+          <div className="flex items-center border border-gray-300 rounded-none p-2">
+            <img
+              src="https://utfs.io/f/PKy8oE1GN2J3ovmAor45P1iTwAUWSgurlXmB0cxH485C3q2s"
+              alt="APTOS"
+              className="w-5 h-5 mr-2"
+            />
+            <Input
+              name="donationAmount"
+              type="number"
+              value={donationAmount}
+              onChange={(e) => setDonationAmount(e.target.value)}
+              placeholder="Enter amount"
+              className="flex-1 bg-transparent focus:outline-none placeholder:text-sm rounded-none text-gray-800"
+            />
+          </div>
+          <button
+            onClick={handleClick}
+            disabled={loading}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${
+              loading ? "bg-gradient-to-r from-blue-500 to-white animate-pulse" : ""
+            } ${success ? "bg-blue-500" : ""}`}
+          >
+            {loading ? "Donating..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Donate APTOS"}
+          </button>
+          <div className="flex justify-between mt-2">
+            {predefinedAmounts.map((amount) => (
+              <button
+                key={amount}
+                onClick={() => handlePredefinedDonation(amount)}
+                className="mx-1 text-black font-bold py-1 rounded-sm w-full border border-black "
+              >
+                Donate {amount}
+              </button>
+            ))}
           </div>
         </div>
       </div>
-    
+    </div>
   );
 };
 

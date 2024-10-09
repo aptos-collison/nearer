@@ -176,12 +176,7 @@ const DynamicMint = () => {
   console.log(tokenHash);
 
   return (
-    <div className="bg-white rounded-none w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
-      <div className="h-6 bg-[#89e219] w-full flex justify-between px-2">
-        <p className="text-base font-semibold text-black">Token Template</p>
-        <img src="https://utfs.io/f/PKy8oE1GN2J3JMeRo2HVozIYU8DFRWmkp7SC4bh16KiGHZfv" alt="Logo" />
-      </div>
-
+    <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 p-3 overflow-y-auto">
       <div className="p-4">
         <div className=" flex  items-center justify-center rounded-sm">
           <img
@@ -326,10 +321,10 @@ const DynamicMint = () => {
               disabled={loading}
               className={`w-full ${
                 loading
-                  ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse"
+                  ? "bg-gradient-to-r from-blue-400 to-white animate-pulse"
                   : success
-                    ? "bg-[#89e219]"
-                    : "bg-[#89e219] hover:bg-[#58cc02]"
+                    ? "bg-blue-500"
+                    : "bg-blue-500 hover:bg-blue-400"
               } text-white font-bold py-2 px-4 rounded`}
             >
               {loading ? "Processing..." : success ? "✓ Done!" : isCreatingToken ? "Create Token" : "Mint Token"}
@@ -356,18 +351,15 @@ const DynamicMint = () => {
               </div>
 
               <div className="flex flex-col gap-3 p-2 rounded-lg">
-               
-
                 <div className="flex space-x-3 items-center text-start justify-between">
-
-                <div>
-                  <p className="font-medium text-gray-700">Mint Limit</p>
-                  <p className="text-xl font-bold text-black ">
-                    {Math.min(userMintBalance, maxSupply - currentSupply)}
-                    <span className=" font-medium text-gray-900 ml-1">{asset?.symbol}</span>
-                  </p>
-                  <p className="text-xs text-gray-700">Maximum to mint</p>
-                </div>
+                  <div>
+                    <p className="font-medium text-gray-700">Mint Limit</p>
+                    <p className="text-xl font-bold text-black ">
+                      {Math.min(userMintBalance, maxSupply - currentSupply)}
+                      <span className=" font-medium text-gray-900 ml-1">{asset?.symbol}</span>
+                    </p>
+                    <p className="text-xs text-gray-700">Maximum to mint</p>
+                  </div>
 
                   <div>
                     <p className="font-medium text-gray-700">Your Balance</p>
@@ -393,11 +385,7 @@ const DynamicMint = () => {
                   onClick={mintFA}
                   disabled={loading}
                   className={`w-full ${
-                    loading
-                      ? "bg-gradient-to-r from-[#58cc02] to-white animate-pulse"
-                      : success
-                        ? ""
-                        : ""
+                    loading ? "bg-gradient-to-r from-blue-400 to-white animate-pulse" : success ? "" : ""
                   } text-black text-xl font-bold py-1 px-4 rounded border border-black `}
                 >
                   {loading ? "Minting..." : success ? "✓ Minted Successfully!" : "Mint Tokens"}

@@ -58,7 +58,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#ffffff] text-black;
+    @apply bg-gray-950 text-black;
     /* background-image: url('/icons/black.png');  */
     background-size: cover; /* Ensure it covers the entire area */
     background-position: center; /* Center the image */

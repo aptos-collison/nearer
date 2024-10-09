@@ -23,7 +23,6 @@ export const Menu: React.FC = () => {
       setCurrentBlinkObject={setCurrentBlinkObject}
       handleNextClick={handleNextClick}
       setNewIPFShash={setNewIPFShash}
-      newIPFShash={newIPFShash}
     />,
     <DeployDapp
       currentBlinkObject={currentBlinkObject}
@@ -38,7 +37,7 @@ export const Menu: React.FC = () => {
   const sectionDescriptions = [
     "Leverage our available blink templates to get started creating your Aptos blink within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
 
-    "Customize your Dapp to taste. Adjust the design, functionalities, and user experience to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your Dapp truly unique has never been easier.",
+    "Customize your Dapp to taste. Adjust the color, text, or image to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your Dapp truly unique has never been easier.",
 
     "Review your configurations and hit deploy when you’re ready! Ensure everything is set up correctly by double-checking your settings. Once you're satisfied, click deploy to make your Dapp live on the Aptos network and share your innovation with the world.",
   ];
@@ -47,8 +46,8 @@ export const Menu: React.FC = () => {
     <>
       <div className="mt-6">
         <div>
-          <p className="text-3xl font-semibold ">{sectionTitles[currentSection]}</p>
-          <p className="text-base text-gray-700 mt-3">{sectionDescriptions[currentSection]}</p>
+          <p className="text-3xl text-gray-100 font-semibold ">{sectionTitles[currentSection]}</p>
+          <p className="text-base text-gray-500 mt-3">{sectionDescriptions[currentSection]}</p>
         </div>
       </div>
 

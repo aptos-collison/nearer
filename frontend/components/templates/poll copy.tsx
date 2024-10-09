@@ -191,7 +191,7 @@ const Polls: React.FC = () => {
               <Button
                 onClick={handleInitialize}
                 disabled={loading || !newCandidate}
-                className="bg-[#89e219] text-white font-bold py-2 rounded-sm w-full mt-2"
+                className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full mt-2"
               >
                 Initialize Poll
               </Button>
@@ -211,7 +211,7 @@ const Polls: React.FC = () => {
                     <Button
                       onClick={() => handleAddCandidate()}
                       disabled={loading || !newCandidate}
-                      className="bg-[#89e219] text-white font-bold py-2 rounded-sm"
+                      className="bg-blue-500 text-white font-bold py-2 rounded-sm"
                     >
                       Add
                     </Button>
@@ -230,7 +230,7 @@ const Polls: React.FC = () => {
                         key={index}
                         onClick={() => handleVote(candidate)}
                         disabled={loading}
-                        className="bg-[#89e219] text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
+                        className="bg-blue-500 text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
                       >
                         <span>{candidate}</span>
                         <span>{votePercentage}</span>
@@ -243,7 +243,7 @@ const Polls: React.FC = () => {
               <Button
                 onClick={handleDeclareWinner}
                 disabled={loading || timer > 0}
-                className="bg-[#89e219] text-white font-bold py-3 rounded-sm w-full"
+                className="bg-blue-500 text-white font-bold py-3 rounded-sm w-full"
               >
                 Declare Winner
               </Button>
@@ -254,7 +254,7 @@ const Polls: React.FC = () => {
             {timer > 0 ? (
               <div className="bg-gray-800 rounded-md p-3">
                 <h1 className="font-medium text-white">Current Timer</h1>
-                <span className="font-semibold text-lg text-[#89e219]">{formatTime(timer)}</span>
+                <span className="font-semibold text-lg text-blue-500">{formatTime(timer)}</span>
               </div>
             ) : (
               <h1 className="font-bold text-lg">No Active Timer</h1>
