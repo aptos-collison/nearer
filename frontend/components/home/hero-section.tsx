@@ -9,7 +9,7 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center mt-12">
+    <div className="flex flex-col gap-4 items-center mt-12">
       <p className="md:text-6xl text-3xl text-center font-semibold text-gray-50">
         Run <span className="text-blue-500">Aptos</span> Dapps on any web environment
       </p>
@@ -23,7 +23,7 @@ export const HeroSection = () => {
       </Button>
 
       {/* Todo; add image  */}
-      <img src="/icons/bg.png" className="rounded-md mt-6 mb-1" />
+      <img src="/icons/bg.png" className="rounded-md mt-10 mb-1" />
     </div>
   );
 };
