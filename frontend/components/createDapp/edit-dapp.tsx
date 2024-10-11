@@ -387,10 +387,10 @@ const EditDapp: React.FC<EditDappProps> = ({
   return (
     <div className="">
       {isLoading ? (
-        <div className="flex justify-center items-center mt-20 flex-col">
+        <div className="flex justify-center items-center mt-32 flex-col">
           {/* <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" /> */}
           <Loader className="animate-spin h-20 w-20 text-white" />
-          <p className="text-white">Deploying Your APT-Link To IPFS</p>
+          <p className="text-white mt-6">Deploying Your Blink To IPFS</p>
         </div>
       ) : (
         <>

@@ -32,15 +32,20 @@ export const Menu: React.FC = () => {
     />,
   ];
 
-  const sectionTitles = ["Create Your First Aptos Blink", "Edit Your Aptos Blink", "Your APTOS Blink Is Ready"];
+  const sectionTitles = [
+    "Create Your First Aptos Blink", 
+    "Edit Your Aptos Blink", 
+    "Your APTOS Blink Is Ready 🎉"
+];
 
-  const sectionDescriptions = [
+const sectionDescriptions = [
     "Leverage our available blink templates to get started creating your Aptos blink within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
-
+    
     "Customize your Dapp to taste. Adjust the color, text, or image to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your Dapp truly unique has never been easier.",
+    
+    "Hurray! 🎉 Your Dapp has been successfully deployed! 🚀 You can access it via the links below. Your dApp is now live for the world to see! 🌍 Don’t forget to share your creation!"
+];
 
-    "Hurray! Your Dapp has been successfully deployed and can be accessed via the links below.",
-  ];
 
   return (
     <>
