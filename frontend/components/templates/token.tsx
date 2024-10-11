@@ -30,7 +30,7 @@ const DynamicMint = () => {
     return "";
   }, [fas]);
 
-  console.log(fas);
+  console.log(`token - ${fas}`);
 
   const [formData, setFormData] = useState({
     name: "",
