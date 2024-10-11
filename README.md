@@ -1,39 +1,66 @@
-## Create Aptos Dapp Boilerplate Template
+# AptosLink
 
-The Boilerplate template provides a starter dapp with all necessary dapp infrastructure and a simple wallet info implementation, transfer APT and a simple message board functionality to send and read a message on chain.
+AptosLink is a Web3 plugin and generator for enabling Aptos blockchain interactions anywhere on the web.
 
-## Read the Boilerplate template docs
-To get started with the Boilerplate template and learn more about the template functionality and usage, head over to the [Boilerplate template docs](https://aptos.dev/en/build/create-aptos-dapp/templates/boilerplate) 
+## 🌟 Features
 
+- **Universal Web3 Integration**: Embed Aptos blockchain actions in any web2 environment
+- **Browser Extension**: Render dynamic HTML context windows for Aptos interactions
+- **IPFS-Powered**: Store and retrieve interaction components via IPFS
+- **Custom Generator**: Create preset or custom Aptos interaction blinks
+- **Seamless Blockchain Interaction**: Integrate Aptos transactions into favorite apps
 
-## The Boilerplate template provides:
+## 🛠️ How It Works
 
-- **Folder structure** - A pre-made dapp folder structure with a `frontend` and `contract` folders.
-- **Dapp infrastructure** - All required dependencies a dapp needs to start building on the Aptos network.
-- **Wallet Info implementation** - Pre-made `WalletInfo` components to demonstrate how one can use to read a connected Wallet info.
-- **Trasnfer APT implementation** - Pre-made `transfer` components to send APT to an address.
-- **Message board functionality implementation** - Pre-made `message` components to send and read a message on chain
+1. **Create Components**: 
+   - Build custom HTML and JavaScript components for Aptos interactions
+   - Use our blink generator for easy component creation
 
+2. **IPFS Storage**: 
+   - Post components to IPFS for decentralized, censorship-resistant storage
 
-## What tools the template uses?
+3. **Browser Extension**:
+   - Automatically renders IPFS-stored components
+   - Interprets special blinks and displays context windows
 
-- React framework
-- Vite development tool
-- shadcn/ui + tailwind for styling
-- Aptos TS SDK
-- Aptos Wallet Adapter
-- Node based Move commands
+4. **User Interaction**:
+   - Users interact with rendered components
+   - Sign Aptos transactions directly within the context window
 
-## What Move commands are available?
+## 🚀 Use Cases
 
-The tool utilizes [aptos-cli npm package](https://github.com/aptos-labs/aptos-cli) that lets us run Aptos CLI in a Node environment.
+- **Token Transfers**: Send APT or other Aptos-based tokens
+- **NFT Minting**: Create and distribute NFTs on Aptos
+- **DeFi Interactions**: Interact with Aptos-based DeFi protocols
+- **Governance**: Participate in DAOs built on Aptos
+- **Social Media Integration**: Embed Aptos actions in posts, comments, and profiles
 
-Some commands are built-in the template and can be ran as a npm script, for example:
+## 🧩 Components
 
-- `npm run move:publish` - a command to publish the Move contract
-- `npm run move:test` - a command to run Move unit tests
-- `npm run move:compile` - a command to compile the Move contract
-- `npm run move:upgrade` - a command to upgrade the Move contract
-- `npm run deploy` - a command to deploy the dapp to Vercel
+- **IPFS Storage**: Decentralized component storage
+- **Browser Extension**: Seamless rendering of Aptos interactions
+- **Blink Generator**: Easy creation of custom Aptos interaction components
+- **Aptos SDK Integration**: Direct interaction with the Aptos blockchain
 
-For all other available CLI commands, can run `npx aptos` and see a list of all available commands.
+## 🌐 Why AptosLink?
+
+AptosLink brings the power of the Aptos blockchain to everyday internet applications, making it accessible and user-friendly for everyone. By leveraging IPFS and customizable components, we're removing barriers to Aptos adoption and opening up new possibilities for Web3 interactions.
+
+## 🛣️ Roadmap
+
+- [ ] Multi-chain support (starting with Aptos)
+- [ ] Enhanced component templates
+- [ ] Developer SDK for easy integration
+- [ ] Mobile app for on-the-go Aptos interactions
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
+
+## 📄 License
+
+AptosLink is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+Join us in revolutionizing how we interact with the Aptos blockchain! 🚀

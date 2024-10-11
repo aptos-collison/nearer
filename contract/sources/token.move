@@ -97,7 +97,8 @@ module launchpad_addr::launchpad {
 
     /// Global per contract
     struct Registry has key {
-        fa_objects: vector<Object<Metadata>>,
+        // Change this to a Table mapping addresses to vectors of FA objects
+        user_fa_objects: Table<address, vector<Object<Metadata>>>,
     }
 
     /// Global per contract
@@ -114,7 +115,7 @@ module launchpad_addr::launchpad {
     /// If you deploy the moduelr under your own account, sender is your account's signer
     fun init_module(sender: &signer) {
         move_to(sender, Registry {
-            fa_objects: vector::empty()
+            user_fa_objects: table::new(),
         });
         move_to(sender, Config {
             creator_addr: @initial_creator_addr,
@@ -187,7 +188,7 @@ module launchpad_addr::launchpad {
     ) acquires Registry, Config, FAController {
         let sender_addr = signer::address_of(sender);
         let config = borrow_global<Config>(@launchpad_addr);
-        assert!(is_admin(config, sender_addr) || is_creator(config, sender_addr), EONLY_ADMIN_OR_CREATOR_CAN_CREATE_FA);
+        // assert!(is_admin(config, sender_addr) || is_creator(config, sender_addr), EONLY_ADMIN_OR_CREATOR_CAN_CREATE_FA);
 
         let fa_owner_obj_constructor_ref = &object::create_object(@launchpad_addr);
         let fa_owner_obj_signer = &object::generate_signer(fa_owner_obj_constructor_ref);
@@ -240,7 +241,11 @@ module launchpad_addr::launchpad {
         });
 
         let registry = borrow_global_mut<Registry>(@launchpad_addr);
-        vector::push_back(&mut registry.fa_objects, fa_obj);
+        if (!table::contains(&registry.user_fa_objects, sender_addr)) {
+            table::add(&mut registry.user_fa_objects, sender_addr, vector::empty());
+        };
+        let user_fas = table::borrow_mut(&mut registry.user_fa_objects, sender_addr);
+        vector::push_back(user_fas, fa_obj);
 
         event::emit(CreateFAEvent {
             creator_addr: sender_addr,
@@ -311,11 +316,16 @@ module launchpad_addr::launchpad {
         config.mint_fee_collector_addr
     }
 
-    #[view]
     /// Get all fungible assets created using this contract
-    public fun get_registry(): vector<Object<Metadata>> acquires Registry {
+    // Replace the get_registry function with a new one to get user-specific FAs
+    #[view]
+    public fun get_user_fas(user: address): vector<Object<Metadata>> acquires Registry {
         let registry = borrow_global<Registry>(@launchpad_addr);
-        registry.fa_objects
+        if (table::contains(&registry.user_fa_objects, user)) {
+            *table::borrow(&registry.user_fa_objects, user)
+        } else {
+            vector::empty()
+        }
     }
 
     #[view]
@@ -447,10 +457,4 @@ module launchpad_addr::launchpad {
         }
     }
 
-    // ================================= Uint Tests ================================== //
-
-    #[test_only]
-    public fun init_module_for_test(sender: &signer) {
-        init_module(sender);
-    }
 }

@@ -52,7 +52,7 @@ const Polls: React.FC = () => {
   // Update the updateCandidatesAndScores function
   const updateCandidatesAndScores = async () => {
     const result = await fetchScores();
-    console.log(result);
+    // console.log(result);
     if (result) {
       const [candidateNames, scoreStrings] = result;
       setCandidates(candidateNames);
@@ -117,7 +117,7 @@ const Polls: React.FC = () => {
 
     try {
       const result = await fetchScores();
-      console.log(result);
+      // console.log(result);
       if (result && result[0].length > 0) {
         setIsInitialized(true);
       }

@@ -18,6 +18,8 @@ import { toast } from "@/hooks/use-toast";
 // import { toast } from "../ui/use-toast";
 
 const DynamicMint = () => {
+  const { account } = useWallet();
+
   const fas = useGetAssetMetadata();
 
   // Get the last asset_type
@@ -27,6 +29,8 @@ const DynamicMint = () => {
     }
     return "";
   }, [fas]);
+
+  console.log(fas);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -43,7 +47,7 @@ const DynamicMint = () => {
   });
 
   const queryClient = useQueryClient();
-  const { account, signAndSubmitTransaction } = useWallet();
+  const { signAndSubmitTransaction } = useWallet();
   const aptosWallet = useWallet();
 
   const [tokenHash, setTokenHash] = useState<string>("");
