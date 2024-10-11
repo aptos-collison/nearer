@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import templatesJson from '../../utils/Templates.json';
+import React, { useState, useEffect } from "react";
+import templatesJson from "../../utils/Templates.json";
+import { Button } from "../ui/button";
 
 interface Template {
   html: string;
@@ -43,7 +44,7 @@ const DeployDapp: React.FC<DeployDappProps> = ({
       setLinkCopied(true);
       setTimeout(() => setLinkCopied(false), 2000);
     } catch (error) {
-      console.error('Error copying link:', error);
+      console.error("Error copying link:", error);
     }
   };
 
@@ -54,30 +55,30 @@ const DeployDapp: React.FC<DeployDappProps> = ({
       setSocialLinkCopied(true);
       setTimeout(() => setSocialLinkCopied(false), 2000);
     } catch (error) {
-      console.error('Error copying social link:', error);
+      console.error("Error copying social link:", error);
     }
   };
 
+  //<blk ipfs://QmcApc3Zx4yoo9UxGWsg2QfoKDYAdLz92E4zXPePdzo4NH blk>
+
   return (
-    <div className="p-5 zoom-75">
-      <h4 className="text-lg font-bold">Your Blink Is Ready</h4>
-      <p className="text-base">It has been deployed and can be accessed via IPFS using the link below</p>
-      <div className="mt-3 flex gap-2">
-        <button
-          className="bg-skyblue text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out hover:bg-sky-600 w-1/2"
+    <div className="p-5 mt-8">
+      <div className="flex gap-2">
+        <Button
+          className=" text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out  w-1/2"
           onClick={copyLink}
         >
-          {linkCopied ? 'IPFS Link Copied To Clipboard' : 'Copy Link'}
-        </button>
-        <button
-          className="bg-blue-600 text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out hover:bg-blue-700 w-1/2"
+          {linkCopied ? "IPFS Link Copied To Clipboard" : "Copy Link"}
+        </Button>
+        <Button
+          className="bg-blue-500 text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out hover:bg-blue-700 w-1/2"
           onClick={copySocialLink}
         >
-          {socialLinkCopied ? 'Social Link Copied To Clipboard' : 'Post To Socials'}
-        </button>
+          {socialLinkCopied ? "Social Link Copied To Clipboard" : "Post To Socials"}
+        </Button>
       </div>
       {selectedTemplate && (
-        <div className="flex flex-row bg-white bg-opacity-80 rounded-lg shadow-lg p-4 mt-12 mb-5 backdrop-blur-md">
+        <div className="flex flex-row bg-white rounded-lg  p-4 mt-12 mb-5 ">
           <div
             className="flex-1 rounded-lg p-5 mr-5"
             dangerouslySetInnerHTML={{ __html: templates[selectedTemplate].html }}

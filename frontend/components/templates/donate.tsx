@@ -102,17 +102,15 @@ const Donate: React.FC = () => {
   };
 
   return (
-    <div>
-      <p className="text-lg font-medium text-gray-400 ">Donation Template</p>
-
-      <div className="relative bg-white rounded-none p-4 w-full max-w-md shadow-md h-[460px]">
+    <div className="relative bg-white rounded-md border-2 border-black w-full max-w-md shadow-md h-[460px] font-vt323 overflow-y-auto">
+      <div className="p-4">
         <img
           src="https://utfs.io/f/PKy8oE1GN2J3NcDS9MmqTwZLGavY36FuE8XmyPAoRIOJCQBK"
           alt="Background Image"
-          className="w-full h-auto max-h-52 rounded-sm mb-2"
+          className="w-full h-auto max-h-44 rounded-sm mb-2"
         />
         <div className=" py-2 px-1 flex flex-col gap-2">
-          <Label className="text-gray-700">Donate to cause:</Label>
+          <Label className="text-black text-lg">Donate to cause:</Label>
           <div className="flex items-center border border-gray-300 rounded-none p-2">
             <img
               src="https://utfs.io/f/PKy8oE1GN2J3ovmAor45P1iTwAUWSgurlXmB0cxH485C3q2s"
@@ -128,24 +126,24 @@ const Donate: React.FC = () => {
               className="flex-1 bg-transparent focus:outline-none placeholder:text-sm rounded-none text-gray-800"
             />
           </div>
-          <Button
+          <button
             onClick={handleClick}
             disabled={loading}
-            className={`bg-teal-500 text-white font-bold py-2 rounded-sm w-full transition duration-300 ${
-              loading ? "bg-gradient-to-r from-teal-400 to-pink-400 animate-pulse" : ""
-            } ${success ? "bg-green-500" : ""}`}
+            className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${
+              loading ? "bg-gradient-to-r from-blue-500 to-white animate-pulse" : ""
+            } ${success ? "bg-blue-500" : ""}`}
           >
             {loading ? "Donating..." : success ? <span className="text-white text-2xl mr-2">✓</span> : "Donate APTOS"}
-          </Button>
+          </button>
           <div className="flex justify-between mt-2">
             {predefinedAmounts.map((amount) => (
-              <Button
+              <button
                 key={amount}
                 onClick={() => handlePredefinedDonation(amount)}
-                className="flex-1 mx-1 bg-teal-300 text-teal-800 text-xs hover:text-white font-semibold p-1 rounded-sm"
+                className="mx-1 text-black font-bold py-1 rounded-sm w-full border border-black "
               >
                 Donate {amount}
-              </Button>
+              </button>
             ))}
           </div>
         </div>

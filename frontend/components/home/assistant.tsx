@@ -24,10 +24,10 @@ export const Assistant: React.FC = () => {
     <div className="fixed bottom-4 right-6">
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-teal-100 rounded-md p-3 shadow-lg focus:outline-none flex items-center space-x-3 cursor-pointer"
+        className="bg-blue-200 rounded-md p-3 shadow-lg focus:outline-none flex items-center space-x-3 cursor-pointer"
       >
-        <img src="/public/icons/robot.svg" alt="Chat Icon" className="h-12 w-12" />
-        {isOpen && <p className="text-xl font-medium text-gray-700 mt-2">Hi friend, I'm MoJi </p>}
+        <img src="/icons/robot.svg" alt="Chat Icon" className="h-12 w-12" />
+        {isOpen && <p className="text-xl font-medium text-gray-900 mt-2">Hi friend, I'm MoJi </p>}
       </div>
 
       {/* Chat dialog */}

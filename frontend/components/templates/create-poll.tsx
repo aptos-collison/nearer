@@ -1,25 +1,23 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { toast } from "@/components/ui/use-toast";
 import { aptosClient } from "@/utils/aptosClient";
 import { VOTING_MODULE_ADDRESS } from "@/constants";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { InputTransactionData } from "@aptos-labs/wallet-adapter-react";
 
-const Polls: React.FC = () => {
+const InitializePoll: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<string[]>([]);
   const [scores, setScores] = useState<number[]>([]);
   const [newCandidate, setNewCandidate] = useState("");
-  const [winner, setWinner] = useState<string | null>(null);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(60);
 
   const { account, signAndSubmitTransaction } = useWallet();
 
-  const [storeAddress, setStoreAddress] = useState<string | undefined>(account?.address);
+  const storeAddr = account?.address; // This is the addr of the campaign creator should be added to show where the voting campaign is stored. show init when the link is created.
 
   const formatTime = useCallback((time: number): string => {
     const hours = String(Math.floor(time / 60)).padStart(2, "0");
@@ -27,19 +25,18 @@ const Polls: React.FC = () => {
     return `${hours} : ${minutes} : 00`;
   }, []);
 
-  // Function to calculate percentage
   const calculatePercentage = (votes: number, totalVotes: number): string => {
     if (totalVotes === 0) return "0%";
     return ((votes / totalVotes) * 100).toFixed(1) + "%";
   };
 
   const fetchScores = async () => {
-    if (!account) return null;
+    if (!storeAddr) return null;
     try {
       const result = await aptosClient().view<[string[], string[]]>({
         payload: {
           function: `${VOTING_MODULE_ADDRESS}::Voting::view_current_scores`,
-          functionArguments: [account.address],
+          functionArguments: [storeAddr],
         },
       });
       return result;
@@ -49,10 +46,9 @@ const Polls: React.FC = () => {
     }
   };
 
-  // Update the updateCandidatesAndScores function
   const updateCandidatesAndScores = async () => {
     const result = await fetchScores();
-    console.log(result);
+   
     if (result) {
       const [candidateNames, scoreStrings] = result;
       setCandidates(candidateNames);
@@ -117,7 +113,7 @@ const Polls: React.FC = () => {
 
     try {
       const result = await fetchScores();
-      console.log(result);
+   
       if (result && result[0].length > 0) {
         setIsInitialized(true);
       }
@@ -148,111 +144,84 @@ const Polls: React.FC = () => {
     );
   }, [account, newCandidate, handleTransaction]);
 
-  const handleVote = useCallback(
-    (candidate: string) => {
-      if (!account?.address) return;
-      handleTransaction("vote", [candidate, account.address], "Vote cast successfully!");
-    },
-    [account, handleTransaction],
-  );
-
-  const handleDeclareWinner = useCallback(() => {
-    if (!account?.address) return;
-    handleTransaction("declare_winner", [account.address], "Winner declared successfully!");
-  }, [account, handleTransaction]);
-
   useEffect(() => {
     if (account?.address) {
       checkInitialization();
       updateCandidatesAndScores();
     }
-  }, [account, updateCandidatesAndScores]);
+  }, [account]);
 
   return (
-    <div>
-      <p className="text-lg font-medium text-gray-400">Dynamic Poll Template</p>
-      <div className="bg-white p-4 shadow-md mx-auto border-gray-400 h-[460px] overflow-y-auto">
+    <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
+      <div className="p-4">
         <img
           src="https://utfs.io/f/PKy8oE1GN2J3cXPyS4JnrjPmytFlpWZ2Y3gkRdK087boqXfG"
           alt="Poll"
-          className="w-full h-auto max-h-48 object-contain mb-4"
+          className="w-full h-auto max-h-40 object-contain mb-2"
         />
 
         <div className="py-2 px-1 flex flex-col gap-4">
-          {!isInitialized ? (
+          {candidates.length === 0 && (
             <div>
-              <Label className="text-gray-700">Initialize Poll:</Label>
+              <Label className="text-black text-lg">Initialize Poll:</Label>
               <Input
                 value={newCandidate}
                 onChange={(e) => setNewCandidate(e.target.value)}
                 placeholder="Enter first candidate"
-                className="mt-1 text-black"
+                className="mt-1 text-black bg-transparent rounded-none"
               />
-              <Button
+              <button
                 onClick={handleInitialize}
                 disabled={loading || !newCandidate}
-                className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full mt-2"
+                className="text-black text-xl border border-black font-bold py-1 rounded-sm w-full mt-4"
               >
                 Initialize Poll
-              </Button>
+              </button>
             </div>
-          ) : (
-            <>
-              {candidates.length < 4 && (
-                <div>
-                  <Label className="text-gray-700">Add Candidate:</Label>
-                  <div className="flex gap-2 mt-1">
-                    <Input
-                      value={newCandidate}
-                      onChange={(e) => setNewCandidate(e.target.value)}
-                      placeholder="Enter candidate name"
-                      className="text-black"
-                    />
-                    <Button
-                      onClick={() => handleAddCandidate()}
-                      disabled={loading || !newCandidate}
-                      className="bg-blue-500 text-white font-bold py-2 rounded-sm"
-                    >
-                      Add
-                    </Button>
-                  </div>
-                </div>
-              )}
+          )}
 
-              <div>
-                <Label className="text-gray-700">Vote for a candidate:</Label>
-                <div className="space-y-2 mt-2">
+          {candidates.length < 4 && (
+            <div>
+              <Label className="text-black">Add Candidate:</Label>
+              <div className="flex gap-2 mt-1">
+                <Input
+                  value={newCandidate}
+                  onChange={(e) => setNewCandidate(e.target.value)}
+                  placeholder="Enter candidate name"
+                  className="text-black rounded-none bg-transparent"
+                />
+                <button
+                  onClick={() => handleAddCandidate()}
+                  disabled={loading || !newCandidate}
+                  className=" text-black font-bold py-1 px-4 border border-black rounded-sm"
+                >
+                  Add
+                </button>
+              </div>
+
+              <div className="space-y-2 mt-2">
                   {candidates.map((candidate, index) => {
                     const totalVotes = scores.reduce((sum, score) => sum + score, 0);
                     const votePercentage = calculatePercentage(scores[index] || 0, totalVotes);
                     return (
-                      <Button
+                      <button
                         key={index}
-                        onClick={() => handleVote(candidate)}
+                        
                         disabled={loading}
-                        className="bg-blue-500 text-white font-bold py-3 rounded-sm w-full flex justify-between items-center"
+                        className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center px-4"
                       >
                         <span>{candidate}</span>
-                        <span>{votePercentage}</span>
-                      </Button>
+                        <span className="hidden hover:block">{votePercentage}</span>
+                      </button>
                     );
                   })}
                 </div>
-              </div>
-
-              <Button
-                onClick={handleDeclareWinner}
-                disabled={loading || timer > 0}
-                className="bg-blue-500 text-white font-bold py-3 rounded-sm w-full"
-              >
-                Declare Winner
-              </Button>
-            </>
+            </div>
           )}
 
-          <div className="text-center text-gray-800 mt-4">
+          <div className="text-center text-gray-800 mt-2">
             {timer > 0 ? (
-              <div className="bg-gray-800 rounded-md p-3">
+              <div className="bg-gray-900 rounded-none p-3">
                 <h1 className="font-medium text-white">Current Timer</h1>
                 <span className="font-semibold text-lg text-blue-500">{formatTime(timer)}</span>
               </div>
@@ -266,4 +235,4 @@ const Polls: React.FC = () => {
   );
 };
 
-export default Polls;
+export default InitializePoll;
