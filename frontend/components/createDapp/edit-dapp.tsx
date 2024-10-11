@@ -2,6 +2,33 @@ import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
 import templatesJson from "../../utils/Templates.json";
 
+// Types for different configurations
+interface TokenConfig {
+  name: string;
+  symbol: string;
+  contractAddress: string;
+  iconUri: string;
+  maxSupply: number;
+  mintLimit: number;
+}
+
+interface NFTConfig {
+  collectionName: string;
+  collectionDescription: string;
+  collectionImage: string;
+  contractAddress: string;
+  maxSupply: number;
+  mintLimitPerAccount: number;
+  mintFee: number;
+  isMintActive: boolean;
+}
+
+interface PollsConfig {
+  address: string;
+  name: string;
+  creator: string;
+}
+
 interface Template {
   html: string;
   js: string;
@@ -36,23 +63,96 @@ const EditDapp: React.FC<EditDappProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
+
+  // Configuration states
+  const [tokenConfig, setTokenConfig] = useState<TokenConfig>({
+    name: "",
+    symbol: "",
+    contractAddress: "",
+    iconUri: "",
+    maxSupply: 0,
+    mintLimit: 0,
+  });
+
+  const [nftConfig, setNftConfig] = useState<NFTConfig>({
+    collectionName: "",
+    collectionDescription: "",
+    collectionImage: "",
+    contractAddress: "",
+    maxSupply: 0,
+    mintLimitPerAccount: 0,
+    mintFee: 0,
+    isMintActive: false,
+  });
+
+  const [pollsConfig, setPollsConfig] = useState<PollsConfig>({
+    address: "",
+    name: "",
+    creator: "",
+  });
+
+  // Payment/Donation states
+  const [recipient, setRecipient] = useState<string>("0x000000000000");
   const [price, setPrice] = useState<string>("");
   const [supply, setSupply] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("0x000000000000");
 
   useEffect(() => {
     if (currentBlinkObject.templateName) {
       setSelectedTemplate(currentBlinkObject.templateName);
-      // Extract initial values from the template
       const template = templates[currentBlinkObject.templateName];
-      // setRecipient(extractRecipient(template.js));
+
+      // Extract configurations based on template type
+      try {
+        switch (currentBlinkObject.templateName.toLowerCase()) {
+          case "token":
+            const extractedTokenConfig = extractConfigFromTemplate("token", template.js);
+            setTokenConfig(extractedTokenConfig as TokenConfig);
+            break;
+          case "nft":
+            const extractedNFTConfig = extractConfigFromTemplate("nft", template.js);
+            setNftConfig(extractedNFTConfig as NFTConfig);
+            break;
+          case "polls":
+            const extractedPollsConfig = extractConfigFromTemplate("polls", template.js);
+            setPollsConfig(extractedPollsConfig as PollsConfig);
+            break;
+          case "donation":
+          case "payment":
+            setRecipient(extractRecipient(template.js));
+            break;
+        }
+      } catch (error) {
+        console.error("Error extracting config:", error);
+      }
     }
   }, [currentBlinkObject]);
 
-  const handleTemplateSelect = (templateName: string) => {
-    setSelectedTemplate(templateName);
-    setEditingElement(null);
+  // Add new handlers for updating configs
+  const handleTokenConfigUpdate = (field: keyof TokenConfig, value: string | number) => {
+    setTokenConfig((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
+
+  const handleNFTConfigUpdate = (field: keyof NFTConfig, value: string | number | boolean) => {
+    setNftConfig((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handlePollsConfigUpdate = (field: keyof PollsConfig, value: string) => {
+    setPollsConfig((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // const handleTemplateSelect = (templateName: string) => {
+  //   setSelectedTemplate(templateName);
+  //   setEditingElement(null);
+  // };
 
   const handleElementClick = (element: HTMLElement) => {
     setEditingElement(element);
@@ -108,12 +208,27 @@ const EditDapp: React.FC<EditDappProps> = ({
     if (!selectedTemplate) return;
 
     const editedHtml = document.querySelector(".templateContainer")?.innerHTML || "";
-    const htmlContent = `${editedHtml}`;
-
     const template = templates[selectedTemplate];
-    const modifiedJs = updateTemplateJs(template.js);
+    let modifiedJs = template.js;
 
-    const iFrame = { iframe: { html: htmlContent, js: modifiedJs } };
+    // Update JS based on template type
+    switch (selectedTemplate.toLowerCase()) {
+      case "token":
+        modifiedJs = updateTemplateConfig("token", template.js, tokenConfig);
+        break;
+      case "nft":
+        modifiedJs = updateTemplateConfig("nft", template.js, nftConfig);
+        break;
+      case "polls":
+        modifiedJs = updateTemplateConfig("polls", template.js, pollsConfig);
+        break;
+      case "donation":
+      case "payment":
+        modifiedJs = updateTemplateJs(template.js);
+        break;
+    }
+
+    const iFrame = { iframe: { html: editedHtml, js: modifiedJs } };
     const res = await fetch("http://localhost:8000/storeToIpfs", {
       method: "POST",
       body: JSON.stringify(iFrame),
@@ -121,6 +236,8 @@ const EditDapp: React.FC<EditDappProps> = ({
         "Content-Type": "application/json",
       },
     });
+
+    console.log(iFrame)
 
     let ipfsText = await res.text();
     setNewIPFShash(ipfsText);
@@ -145,11 +262,134 @@ const EditDapp: React.FC<EditDappProps> = ({
     return match ? match[1] : "";
   };
 
+  const extractTokenConfig = (js: string): TokenConfig => {
+    // Extract TOKEN_CONFIG object using regex
+    const configMatch = js.match(/const TOKEN_CONFIG = ({[\s\S]*?});/);
+    if (!configMatch) throw new Error("Token configuration not found");
+
+    // Parse the matched configuration
+    const configText = configMatch[1].replace(/\n/g, "");
+    // Safely evaluate the configuration object
+    const config = eval(`(${configText})`);
+
+    return {
+      name: config.name,
+      symbol: config.symbol,
+      contractAddress: config.contractAddress,
+      iconUri: config.iconUri,
+      maxSupply: config.maxSupply,
+      mintLimit: config.mintLimit,
+    };
+  };
+
+  const extractNFTConfig = (js: string): NFTConfig => {
+    // Extract NFT_CONFIG object using regex
+    const configMatch = js.match(/const NFT_CONFIG = ({[\s\S]*?});/);
+    if (!configMatch) throw new Error("NFT configuration not found");
+    // Parse the matched configuration
+    const configText = configMatch[1].replace(/\n/g, "");
+    // Safely evaluate the configuration object
+
+    const config = eval(`(${configText})`);
+
+    return {
+      collectionName: config.collectionName,
+      collectionDescription: config.collectionDescription,
+      collectionImage: config.collectionImage,
+      contractAddress: config.contractAddress,
+      maxSupply: config.maxSupply,
+      mintLimitPerAccount: config.mintLimitPerAccount,
+      mintFee: config.mintFee,
+      isMintActive: config.isMintActive,
+    };
+  };
+
+  const extractPollsConfig = (js: string): PollsConfig => {
+    // Extract individual constants using regex
+    const addressMatch = js.match(/const address = "(.*?)"/);
+    const nameMatch = js.match(/const name = "(.*?)"/);
+    const creatorMatch = js.match(/const creator = "(.*?)"/);
+
+    if (!addressMatch || !nameMatch || !creatorMatch) {
+      throw new Error("Polls configuration not found");
+    }
+
+    return {
+      address: addressMatch[1],
+      name: nameMatch[1],
+      creator: creatorMatch[1],
+    };
+  };
+
+  // Usage example:
+  const extractConfigFromTemplate = (templateName: string, js: string) => {
+    switch (templateName.toLowerCase()) {
+      case "token":
+        return extractTokenConfig(js);
+      case "nft":
+        return extractNFTConfig(js);
+      case "polls":
+        return extractPollsConfig(js);
+      default:
+        throw new Error(`Unknown template type: ${templateName}`);
+    }
+  };
+
+  // Helper function to update configurations in template code
+  const updateTemplateConfig = (
+    templateName: string,
+    js: string,
+    newConfig: TokenConfig | NFTConfig | PollsConfig,
+  ): string => {
+    switch (templateName.toLowerCase()) {
+      case "token": {
+        const config = newConfig as TokenConfig;
+        return js.replace(
+          /const TOKEN_CONFIG = {[\s\S]*?};/,
+          `const TOKEN_CONFIG = {
+  name: '${config.name}',
+  symbol: '${config.symbol}',
+  contractAddress: '${config.contractAddress}',
+  iconUri: '${config.iconUri}',
+  maxSupply: ${config.maxSupply},
+  mintLimit: ${config.mintLimit}
+};`,
+        );
+      }
+      case "nft": {
+        const config = newConfig as NFTConfig;
+        return js.replace(
+          /const NFT_CONFIG = {[\s\S]*?};/,
+          `const NFT_CONFIG = {
+  collectionName: '${config.collectionName}',
+  collectionDescription: '${config.collectionDescription}',
+  collectionImage: '${config.collectionImage}',
+  contractAddress: '${config.contractAddress}',
+  maxSupply: ${config.maxSupply},
+  mintLimitPerAccount: ${config.mintLimitPerAccount},
+  mintFee: ${config.mintFee},
+  isMintActive: ${config.isMintActive}
+};`,
+        );
+      }
+      case "polls": {
+        const config = newConfig as PollsConfig;
+        return js
+          .replace(/const address = "[^"]*"/, `const address = "${config.address}"`)
+          .replace(/const name = "[^"]*"/, `const name = "${config.name}"`)
+          .replace(/const creator = "[^"]*"/, `const creator = "${config.creator}"`);
+      }
+      default:
+        throw new Error(`Unknown template type: ${templateName}`);
+    }
+  };
+
   return (
     <div className="">
       {isLoading ? (
         <div className="flex justify-center items-center mt-20 flex-col">
-          <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" />
+          {/* <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" /> */}
+          <Loader className="animate-spin h-20 w-20 text-white" />
           <p className="text-white">Deploying Your APT-Link To IPFS</p>
         </div>
       ) : (
@@ -298,6 +538,155 @@ const EditDapp: React.FC<EditDappProps> = ({
                 onChange={(e) => setSupply(e.target.value)}
                 className="p-2 border border-gray-300 rounded mb-2 w-full"
               />
+            </div>
+          )}
+
+          {selectedTemplate === "token" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Token Configuration</h5>
+              <div className="space-y-3">
+                <div>
+                  <label className="block mb-1">Token Name</label>
+                  <input
+                    type="text"
+                    value={tokenConfig.name}
+                    onChange={(e) => handleTokenConfigUpdate("name", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Symbol</label>
+                  <input
+                    type="text"
+                    value={tokenConfig.symbol}
+                    onChange={(e) => handleTokenConfigUpdate("symbol", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Contract Address</label>
+                  <input
+                    type="text"
+                    value={tokenConfig.contractAddress}
+                    onChange={(e) => handleTokenConfigUpdate("contractAddress", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Max Supply</label>
+                  <input
+                    type="number"
+                    value={tokenConfig.maxSupply}
+                    onChange={(e) => handleTokenConfigUpdate("maxSupply", parseInt(e.target.value))}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Mint Limit</label>
+                  <input
+                    type="number"
+                    value={tokenConfig.mintLimit}
+                    onChange={(e) => handleTokenConfigUpdate("mintLimit", parseInt(e.target.value))}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTemplate === "nft" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit NFT Configuration</h5>
+              <div className="space-y-3">
+                <div>
+                  <label className="block mb-1">Collection Name</label>
+                  <input
+                    type="text"
+                    value={nftConfig.collectionName}
+                    onChange={(e) => handleNFTConfigUpdate("collectionName", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Description</label>
+                  <textarea
+                    value={nftConfig.collectionDescription}
+                    onChange={(e) => handleNFTConfigUpdate("collectionDescription", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Contract Address</label>
+                  <input
+                    type="text"
+                    value={nftConfig.contractAddress}
+                    onChange={(e) => handleNFTConfigUpdate("contractAddress", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Mint Fee (APT)</label>
+                  <input
+                    type="number"
+                    value={nftConfig.mintFee}
+                    onChange={(e) => handleNFTConfigUpdate("mintFee", parseFloat(e.target.value))}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Max Supply</label>
+                  <input
+                    type="number"
+                    value={nftConfig.maxSupply}
+                    onChange={(e) => handleNFTConfigUpdate("maxSupply", parseInt(e.target.value))}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={nftConfig.isMintActive}
+                    onChange={(e) => handleNFTConfigUpdate("isMintActive", e.target.checked)}
+                    className="mr-2"
+                  />
+                  <label>Minting Active</label>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTemplate === "polls" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Polls Configuration</h5>
+              <div className="space-y-3">
+                <div>
+                  <label className="block mb-1">Poll Name</label>
+                  <input
+                    type="text"
+                    value={pollsConfig.name}
+                    onChange={(e) => handlePollsConfigUpdate("name", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Contract Address</label>
+                  <input
+                    type="text"
+                    value={pollsConfig.address}
+                    onChange={(e) => handlePollsConfigUpdate("address", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1">Creator Address</label>
+                  <input
+                    type="text"
+                    value={pollsConfig.creator}
+                    onChange={(e) => handlePollsConfigUpdate("creator", e.target.value)}
+                    className="p-2 border border-gray-300 rounded w-full"
+                  />
+                </div>
+              </div>
             </div>
           )}
         </>

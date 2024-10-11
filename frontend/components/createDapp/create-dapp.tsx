@@ -70,18 +70,18 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
       </div>
 
       <div className="flex justify-center space-x-3 w-full mt-8">
-        {selectedTemplate === "tokenMinter" && (
+        {selectedTemplate === "token" && (
           <Button
-            className="bg-[#89e219] text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
+            className="bg-[#89e219] text-lg text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
             onClick={() => openDialog(<CreateToken />)}
           >
             Create Token
           </Button>
         )}
 
-        {selectedTemplate === "nftMinter" && (
+        {selectedTemplate === "nft" && (
           <Button
-            className="bg-[#89e219] text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
+            className="bg-[#89e219] text-lg text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
             onClick={() => openDialog(<CreateNFT />)}
           >
             Create NFT
@@ -90,7 +90,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
 
         {selectedTemplate === "polls" && (
           <Button
-            className="bg-[#89e219] text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
+            className="bg-[#89e219] text-lg text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
             onClick={() => openDialog(<InitializePoll />)}
           >
             Initialize Vote
@@ -110,7 +110,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{selectedTemplate === "nftMinter" ? "Create NFT" : selectedTemplate === "tokenMinter" ? "Create Token" : "Initialize Vote"}</DialogTitle>
+            <DialogTitle>{selectedTemplate === "nft" ? "Create NFT" : selectedTemplate === "token" ? "Create Token" : "Initialize Vote"}</DialogTitle>
           </DialogHeader>
           {dialogComponent}
         </DialogContent>

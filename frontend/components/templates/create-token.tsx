@@ -2,13 +2,22 @@ import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "lucide-react";
+import { Upload, Copy } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { aptosClient } from "@/utils/aptosClient";
 import { checkIfFund, uploadFile } from "@/utils/Irys";
 import { createAsset } from "@/entry-functions/create_asset";
 import { toast } from "@/components/ui/use-toast";
+
+interface TokenConfig {
+  name: string;
+  symbol: string;
+  contractAddress: string;
+  iconUri: string;
+  maxSupply: number;
+  mintLimit: number;
+}
 
 const CreateToken = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +42,7 @@ const CreateToken = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
+  const [tokenConfig, setTokenConfig] = useState<TokenConfig | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -101,6 +111,16 @@ const CreateToken = () => {
           description: `Transaction succeeded, hash: ${committedTx.hash}`,
         });
         setSuccess(true);
+
+        // Set the token configuration after successful creation
+        setTokenConfig({
+          name: formData.name,
+          symbol: formData.symbol,
+          contractAddress: account?.address || "",
+          iconUri: iconURL,
+          maxSupply: Number(formData.max_supply),
+          mintLimit: Number(formData.mint_limit_per_addr),
+        });
       }
     } catch (error) {
       console.error(error);
@@ -113,6 +133,22 @@ const CreateToken = () => {
       setIsUploading(false);
     }
   };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        toast({
+          title: "Copied",
+          description: "Text copied to clipboard",
+        });
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
+
 
   return (
     <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 p-3 overflow-y-auto">
@@ -260,7 +296,31 @@ const CreateToken = () => {
           >
             {loading ? "Processing..." : success ? "✓ Done!" : "Create Token"}
           </Button>
+
+
         </>
+
+        {tokenConfig && (
+          <div className="mt-4 p-4 border rounded-md">
+            <h3 className="text-lg font-semibold mb-2">Token Configuration</h3>
+            {Object.entries(tokenConfig).map(([key, value]) => (
+              <div key={key} className="flex items-center justify-between mb-2">
+                <span className="font-medium">{key}:</span>
+                <div className="flex items-center">
+                  <span className="mr-2">{value}</span>
+                  <Button
+                    onClick={() => copyToClipboard(String(value))}
+                    variant="ghost"
+                    size="sm"
+                    className="p-1"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
