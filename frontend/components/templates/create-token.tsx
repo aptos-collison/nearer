@@ -28,8 +28,8 @@ const CreateToken = () => {
     project_uri: "",
     mint_fee_per_smallest_unit_of_fa: "",
     pre_mint_amount: "",
-    mint_limit_per_addr: "",
-    max_supply: "",
+    mint_limit_per_addr: "5",
+    max_supply: "100",
   });
 
   const { account, signAndSubmitTransaction } = useWallet();
@@ -43,6 +43,13 @@ const CreateToken = () => {
   const [image, setImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
   const [tokenConfig, setTokenConfig] = useState<TokenConfig | null>(null);
+
+  const shortenValue = (value: string) => {
+    if (value.length > 10) {
+      return value.slice(0, 6) + "..." + value.slice(-4);
+    }
+    return value;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -144,11 +151,9 @@ const CreateToken = () => {
       },
       (err) => {
         console.error("Could not copy text: ", err);
-      }
+      },
     );
   };
-
-
 
   return (
     <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 p-3 overflow-y-auto">
@@ -266,7 +271,7 @@ const CreateToken = () => {
                     type="number"
                     value={formData.mint_limit_per_addr}
                     onChange={handleInputChange}
-                    placeholder="Mint limit per address"
+                    placeholder="Mint limit per address (optional)"
                   />
                 </div>
                 <div className="mb-4">
@@ -296,8 +301,6 @@ const CreateToken = () => {
           >
             {loading ? "Processing..." : success ? "✓ Done!" : "Create Token"}
           </Button>
-
-
         </>
 
         {tokenConfig && (
@@ -307,13 +310,10 @@ const CreateToken = () => {
               <div key={key} className="flex items-center justify-between mb-2">
                 <span className="font-medium">{key}:</span>
                 <div className="flex items-center">
-                  <span className="mr-2">{value}</span>
-                  <Button
-                    onClick={() => copyToClipboard(String(value))}
-                    variant="ghost"
-                    size="sm"
-                    className="p-1"
-                  >
+                  <span className="mr-2">
+                    {key === "contractAddress" || key === "iconUri" ? shortenValue(value) : value}
+                  </span>
+                  <Button onClick={() => copyToClipboard(String(value))} variant="ghost" size="sm" className="p-1">
                     <Copy className="h-4 w-4" />
                   </Button>
                 </div>

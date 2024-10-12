@@ -38,6 +38,13 @@ const CreateNFT = () => {
   const [publicMintFeePerNFT, setPublicMintFeePerNFT] = useState<number>();
   const [nftConfig, setNftConfig] = useState<NFTConfig | null>(null);
 
+  const shortenValue = (value: string) => {
+    if (value.length > 10) {
+      return value.slice(0, 6) + "..." + value.slice(-4);
+    }
+    return value;
+  };
+
   const onCreateCollection = async () => {
     try {
       if (!account) throw new Error("Please connect your wallet");
@@ -85,7 +92,7 @@ const CreateNFT = () => {
         setNftConfig({
           collectionName,
           collectionDescription,
-          collectionImage: "https://utfs.io/f/PKy8oE1GN2J3pihxJUVwi394rogIqdXzW56n8bYJTPQ1MAjv", // You might want to update this with the actual image URL
+          collectionImage: "https://utfs.io/f/PKy8oE1GN2J3pihxJUVwi394rogIqdXzW56n8bYJTPQ1MAjv",
           contractAddress: account.address,
           maxSupply,
           mintLimitPerAccount: publicMintLimitPerAccount,
@@ -219,7 +226,11 @@ const CreateNFT = () => {
                 <div key={key} className="flex items-center justify-between mb-2">
                   <span className="font-medium">{key}:</span>
                   <div className="flex items-center">
-                    <span className="mr-2">{String(value)}</span>
+                    <span className="mr-2">
+                      {key === "contractAddress" || key === "collectionImage"
+                        ? shortenValue(String(value))
+                        : String(value)}
+                    </span>
                     <Button onClick={() => copyToClipboard(String(value))} variant="ghost" size="sm" className="p-1">
                       <Copy className="h-4 w-4" />
                     </Button>
