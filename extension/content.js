@@ -1,7 +1,7 @@
 // Function to inject a script into the page context
 function injectScript(code) {
-  const script = document.createElement('script');
-  script.setAttribute('type', 'text/javascript');
+  const script = document.createElement("script");
+  script.setAttribute("type", "text/javascript");
   script.textContent = code;
   (document.head || document.documentElement).appendChild(script);
   script.onload = function () {
@@ -11,19 +11,19 @@ function injectScript(code) {
 
 const makeid = () => {
   return Math.floor(Math.random() * 100000000);
-}
+};
 
 function updateIds(htmlString, number) {
-  const tempDiv = document.createElement('div');
+  const tempDiv = document.createElement("div");
   tempDiv.innerHTML = htmlString;
 
-  const elementsWithId = tempDiv.querySelectorAll('[id]');
-  elementsWithId.forEach(element => {
+  const elementsWithId = tempDiv.querySelectorAll("[id]");
+  elementsWithId.forEach((element) => {
     element.id += number;
   });
 
-  const styleTags = tempDiv.querySelectorAll('style');
-  styleTags.forEach(styleTag => {
+  const styleTags = tempDiv.querySelectorAll("style");
+  styleTags.forEach((styleTag) => {
     styleTag.innerHTML = styleTag.innerHTML.replace(/#(\w+)\s*\{/g, (match, id) => {
       return `#${id}${number}{`;
     });
@@ -46,13 +46,13 @@ function reloadAptosSdk() {
 
   const aptosSdkScript = document.createElement("script");
   aptosSdkScript.src = "https://unpkg.com/aptos@1.3.16/dist/index.global.js";
-  
+
   aptosSdkScript.onload = function () {
     console.log("Aptos SDK reloaded");
   };
 
-  aptosSdkScript.onerror = function(error) {
-    console.error('Error loading Aptos SDK:', error);
+  aptosSdkScript.onerror = function (error) {
+    console.error("Error loading Aptos SDK:", error);
   };
 
   document.head.appendChild(aptosSdkScript);
@@ -60,10 +60,10 @@ function reloadAptosSdk() {
 
 async function replaceBlkTags() {
   try {
-    const spans = document.querySelectorAll('span');
+    const spans = document.querySelectorAll("span");
     const fetchPromises = [];
 
-    spans.forEach(span => {
+    spans.forEach((span) => {
       const blkRegex = /(&lt;|<)blk\s*(.*?)\s*blk(&gt;|>)/g;
       let match;
 
@@ -86,13 +86,13 @@ async function replaceBlkTags() {
 
         fetchPromises.push(
           fetch(url)
-            .then(response => {
+            .then((response) => {
               if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
               return response.json();
             })
-            .then(result => {
+            .then((result) => {
               if (!result?.iframe?.html || !result?.iframe?.js) {
-                throw new Error('Invalid response format');
+                throw new Error("Invalid response format");
               }
               reloadAptosSdk(); // Reload the Aptos SDK after fetching
 
@@ -100,13 +100,13 @@ async function replaceBlkTags() {
                 span,
                 matchText,
                 htmlText: result.iframe.html,
-                jsCode: result.iframe.js
+                jsCode: result.iframe.js,
               };
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(`Error processing ${url}:`, error);
               return null;
-            })
+            }),
         );
       }
     });
@@ -115,7 +115,7 @@ async function replaceBlkTags() {
 
     const results = await Promise.all(fetchPromises);
 
-    results.forEach(result => {
+    results.forEach((result) => {
       if (!result || !result.matchText) return;
 
       try {
@@ -127,7 +127,7 @@ async function replaceBlkTags() {
 
         // Modify the JS code to be wallet-agnostic
         let newJS = updateIdsInJsCode(result.jsCode, randomNumber);
-        
+
         // Add wallet detection logic
         newJS = `
           const detectWallet = async () => {
@@ -160,15 +160,15 @@ async function replaceBlkTags() {
           try {
             injectScript(newJS);
           } catch (error) {
-            console.error('Error injecting script:', error);
+            console.error("Error injecting script:", error);
           }
         }, 500);
       } catch (error) {
-        console.error('Error processing result:', error);
+        console.error("Error processing result:", error);
       }
     });
   } catch (error) {
-    console.error('Error in replaceBlkTags:', error);
+    console.error("Error in replaceBlkTags:", error);
   }
 }
 
