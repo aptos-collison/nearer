@@ -1,7 +1,6 @@
 import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { aptosClient } from "@/utils/aptosClient";
 import { NFT_MODULE_ADDRESS, T_MINTING_MODULE } from "@/constants";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 
 

@@ -36,7 +36,7 @@ const CreateToken = () => {
   const aptosWallet = useWallet();
 
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loading = false;
   const [success, setSuccess] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -165,6 +165,7 @@ const CreateToken = () => {
             className=" max-w-24 h-auto max-h-40 object-contain mb-4 rounded-full overflow-hidden"
           />
         </div>
+        <div>{isUploading ? isUploading : null}</div>
 
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

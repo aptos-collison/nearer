@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 const Marketplace = () => {
   const [amount, setAmount] = useState("");
-  const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 

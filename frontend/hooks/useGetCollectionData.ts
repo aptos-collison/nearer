@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { aptosClient } from "@/utils/aptosClient";
 // import { getActiveOrNextMintStage } from "@/view-functions/getActiveOrNextMintStage";
 // import { getMintStageStartAndEndTime } from "@/view-functions/getMintStageStartAndEndTime";
-import { getUserMintBalance, getUserMintBalanceNFT } from "@/view-functions/getUserMintBalance";
+import { getUserMintBalanceNFT } from "@/view-functions/getUserMintBalance";
 // import { COLLECTION_ADDRESS } from "@/constants";
-import { getMintEnabled, getMintEnabledNFT } from "@/view-functions/getMintEnabled";
+import { getMintEnabledNFT } from "@/view-functions/getMintEnabled";
 import { getActiveOrNextMintStage } from "@/view-functions/getActiveOrNextMintStage";
 import { getMintStageStartAndEndTime } from "@/view-functions/getMintStageStartAndEndTime";
 

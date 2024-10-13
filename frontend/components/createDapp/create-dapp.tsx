@@ -4,10 +4,8 @@ import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import CreateNFT from "../templates/create-nft";
 import CreateToken from "../templates/create-token";

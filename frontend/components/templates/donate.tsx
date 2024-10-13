@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { toast } from "../ui/use-toast";
 import { transferAPT } from "@/entry-functions/transferAPT";

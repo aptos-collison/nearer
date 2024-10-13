@@ -34,10 +34,10 @@ const NFT = () => {
   const { data } = useGetCollectionData(isCollectionCreated?.collection_id);
   const queryClient = useQueryClient();
   const [amount, setAmount] = useState<number>(1);
-  const [address, setAddress] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [files, setFiles] = useState<FileList | null>(null);
+  // const [address, setAddress] = useState("");
+  const loading = false;
+  const success =false;
+  const files = null;
   const [preMintAmount, setPreMintAmount] = useState<number>();
   const [publicMintStartDate, setPublicMintStartDate] = useState<Date>();
   const [publicMintStartTime, setPublicMintStartTime] = useState<string>();
@@ -254,7 +254,7 @@ const NFT = () => {
               title="Create Collection"
               className="self-start w-full bg-blue-500"
               onSubmit={onCreateCollection}
-              disabled={!account || !files?.length || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
+              disabled={!account || !publicMintStartDate || !publicMintLimitPerAccount || isUploading}
               confirmMessage={
                 <>
                   <p>The upload process requires at least 2 message signatures</p>

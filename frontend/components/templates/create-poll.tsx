@@ -13,7 +13,7 @@ const InitializePoll: React.FC = () => {
   const [candidates, setCandidates] = useState<string[]>([]);
   const [scores, setScores] = useState<number[]>([]);
   const [newCandidate, setNewCandidate] = useState("");
-  const [timer, setTimer] = useState(60);
+  const timer = 60;
 
   const { account, signAndSubmitTransaction } = useWallet();
 
@@ -160,6 +160,8 @@ const InitializePoll: React.FC = () => {
           className="w-full h-auto max-h-40 object-contain mb-2"
         />
 
+        <div>{isInitialized ? isInitialized : null}</div>
+
         <div className="py-2 px-1 flex flex-col gap-4">
           {candidates.length === 0 && (
             <div>
@@ -200,22 +202,21 @@ const InitializePoll: React.FC = () => {
               </div>
 
               <div className="space-y-2 mt-2">
-                  {candidates.map((candidate, index) => {
-                    const totalVotes = scores.reduce((sum, score) => sum + score, 0);
-                    const votePercentage = calculatePercentage(scores[index] || 0, totalVotes);
-                    return (
-                      <button
-                        key={index}
-                        
-                        disabled={loading}
-                        className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center px-4"
-                      >
-                        <span>{candidate}</span>
-                        <span className="hidden hover:block">{votePercentage}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                {candidates.map((candidate, index) => {
+                  const totalVotes = scores.reduce((sum, score) => sum + score, 0);
+                  const votePercentage = calculatePercentage(scores[index] || 0, totalVotes);
+                  return (
+                    <button
+                      key={index}
+                      disabled={loading}
+                      className="bg-blue-500 text-white font-bold py-2 rounded-sm w-full flex justify-between items-center px-4"
+                    >
+                      <span>{candidate}</span>
+                      <span className="hidden hover:block">{votePercentage}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
 

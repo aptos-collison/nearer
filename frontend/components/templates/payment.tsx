@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { toast } from "../ui/use-toast";
-import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
+// import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
 import { transferAPT } from "@/entry-functions/transferAPT";
 import { aptosClient } from "@/utils/aptosClient";
 
@@ -13,28 +12,28 @@ const Payment: React.FC = () => {
   const { account, signAndSubmitTransaction } = useWallet();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const [recipient, setRecipient] = useState("0xf9424969a5cfeb4639c4c75c2cd0ca62620ec624f4f28d76c4881a1e567d753f");
+  const recipient = "0xf9424969a5cfeb4639c4c75c2cd0ca62620ec624f4f28d76c4881a1e567d753f";
   const [transferAmount, setTransferAmount] = useState<number | undefined>();
   const [serviceType, setServiceType] = useState("Gig Payment");
 
-  const { data } = useQuery({
-    queryKey: ["apt-balance", account?.address],
-    refetchInterval: 10_000,
-    queryFn: async () => {
-      if (!account) throw new Error("Account not connected");
-      try {
-        const balance = await getAccountAPTBalance({ accountAddress: account.address });
-        return { balance };
-      } catch (error: any) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message || "Failed to fetch balance",
-        });
-        return { balance: 0 };
-      }
-    },
-  });
+  // const { data } = useQuery({
+  //   queryKey: ["apt-balance", account?.address],
+  //   refetchInterval: 10_000,
+  //   queryFn: async () => {
+  //     if (!account) throw new Error("Account not connected");
+  //     try {
+  //       const balance = await getAccountAPTBalance({ accountAddress: account.address });
+  //       return { balance };
+  //     } catch (error: any) {
+  //       toast({
+  //         variant: "destructive",
+  //         title: "Error",
+  //         description: error.message || "Failed to fetch balance",
+  //       });
+  //       return { balance: 0 };
+  //     }
+  //   },
+  // });
 
   const handlePayment = async () => {
     if (!account || !recipient || !transferAmount) {

@@ -3,7 +3,6 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { toast } from "@/components/ui/use-toast";
 import { aptosClient } from "@/utils/aptosClient";
 import { VOTING_MODULE_ADDRESS } from "@/constants";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { InputTransactionData } from "@aptos-labs/wallet-adapter-react";
@@ -14,8 +13,7 @@ const Polls: React.FC = () => {
   const [candidates, setCandidates] = useState<string[]>([]);
   const [scores, setScores] = useState<number[]>([]);
   const [newCandidate, setNewCandidate] = useState("");
-  const [winner, setWinner] = useState<string | null>(null);
-  const [timer, setTimer] = useState(60);
+  const timer = 60;
 
   const { account, signAndSubmitTransaction } = useWallet();
 
