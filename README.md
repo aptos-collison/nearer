@@ -1,6 +1,6 @@
 # AptosLink
 
-AptosLink is a Web3 plugin and generator for enabling Aptos blockchain interactions anywhere on the web.
+AptosLink is a Web3 plugin and link generator for enabling Aptos blockchain interactions anywhere on the web. Apt-link draws inspiration from solana actions and frames on farcaster, bringing to the Aptos ecosystem the ability to run Aptos dapps on any web environment
 
 ## 🌟 Features
 
@@ -12,14 +12,17 @@ AptosLink is a Web3 plugin and generator for enabling Aptos blockchain interacti
 
 ## 🛠️ How It Works
 
-1. **Create Components**: 
+1. **Create Components**:
+
    - Build custom HTML and JavaScript components for Aptos interactions
    - Use our blink generator for easy component creation
 
-2. **IPFS Storage**: 
+2. **IPFS Storage**:
+
    - Post components to IPFS for decentralized, censorship-resistant storage
 
 3. **Browser Extension**:
+
    - Automatically renders IPFS-stored components
    - Interprets special blinks and displays context windows
 
@@ -52,6 +55,64 @@ AptosLink brings the power of the Aptos blockchain to everyday internet applicat
 - [ ] Enhanced component templates
 - [ ] Developer SDK for easy integration
 - [ ] Mobile app for on-the-go Aptos interactions
+
+## Requirements
+
+Before you begin, you need to install the following tools:
+
+- [Node (v18)](https://nodejs.org/en/download/)
+- [Git](https://git-scm.com/downloads)
+- [Foundry](https://book.getfoundry.sh/getting-started/installation)
+
+## Quick start
+
+**Clone the Repository**
+
+```bash
+git clone git@github.com/aptos-collison/apt-links.git
+```
+
+### Setting Up Backend
+
+1. Setup the environment
+
+Create a .env file (see the .env.example)
+
+2. Install Dependencies
+
+```bash
+cd backend/
+npm install
+```
+
+3. Run the server
+
+```bash
+npm run start
+```
+
+### Setting Up the Frontend
+
+1. Install Dependencies
+
+```bash
+
+npm install
+
+```
+
+2. Run App
+
+```bash
+npm run dev
+```
+
+### Add Extension
+
+1. In browser extension window enable developer mode
+
+2. Click on `load from unpacked` and select extension folder
+
 
 ## 🤝 Contributing
 
