@@ -10,7 +10,7 @@ export function LFooter() {
         <div>
           <p className="font-semibold text-xl">APT-link</p>
           <p className="text-sm w-48 lg:w-96">
-            Create and get shareable dapp links on any web environment. Access all the possibilities on Aptos.
+            Create and get shareable dapp links on any web environment. Access all the possibilities on Base.
           </p>
         </div>
         <div className="flex space-x-3 items-center">

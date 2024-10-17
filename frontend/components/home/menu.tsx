@@ -33,13 +33,13 @@ export const Menu: React.FC = () => {
   ];
 
   const sectionTitles = [
-    "Create Your First Aptos Blink", 
-    "Edit Your Aptos Blink", 
+    "Create Your First Base Blink", 
+    "Edit Your Base Blink", 
     "Your APTOS Blink Is Ready 🎉"
 ];
 
 const sectionDescriptions = [
-    "Leverage our available blink templates to get started creating your Aptos blink within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
+    "Leverage our available blink templates to get started creating your Base blink within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
     
     "Customize your Dapp to taste. Adjust the color, text, or image to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your Dapp truly unique has never been easier.",
     

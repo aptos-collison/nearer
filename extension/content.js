@@ -48,11 +48,11 @@ function reloadAptosSdk() {
   aptosSdkScript.src = "https://unpkg.com/aptos@1.3.16/dist/index.global.js";
 
   aptosSdkScript.onload = function () {
-    console.log("Aptos SDK reloaded");
+    console.log("Base SDK reloaded");
   };
 
   aptosSdkScript.onerror = function (error) {
-    console.error("Error loading Aptos SDK:", error);
+    console.error("Error loading Base SDK:", error);
   };
 
   document.head.appendChild(aptosSdkScript);
@@ -94,7 +94,7 @@ async function replaceBlkTags() {
               if (!result?.iframe?.html || !result?.iframe?.js) {
                 throw new Error("Invalid response format");
               }
-              reloadAptosSdk(); // Reload the Aptos SDK after fetching
+              reloadAptosSdk(); // Reload the Base SDK after fetching
 
               return {
                 span,
@@ -172,8 +172,8 @@ async function replaceBlkTags() {
   }
 }
 
-// Initialize script with only Aptos SDK
-reloadAptosSdk(); // Load the Aptos SDK initially
+// Initialize script with only Base SDK
+reloadAptosSdk(); // Load the Base SDK initially
 
 // Run the function every 1 second
 setInterval(replaceBlkTags, 1000);

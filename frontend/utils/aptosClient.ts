@@ -1,9 +1,9 @@
 import { NETWORK } from "@/constants";
-import { Aptos, AptosConfig } from "@aptos-labs/ts-sdk";
+import { Base, AptosConfig } from "@aptos-labs/ts-sdk";
 
-const aptos = new Aptos(new AptosConfig({ network: NETWORK }));
+const aptos = new Base(new AptosConfig({ network: NETWORK }));
 
-// Reuse same Aptos instance to utilize cookie based sticky routing
+// Reuse same Base instance to utilize cookie based sticky routing
 export function aptosClient() {
   return aptos;
 }
