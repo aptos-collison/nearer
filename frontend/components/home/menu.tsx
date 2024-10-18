@@ -33,17 +33,17 @@ export const Menu: React.FC = () => {
   ];
 
   const sectionTitles = [
-    "Create Your First Base link", 
+    "Create Your First BaseRL", 
     "Edit Your Base link", 
     "Your Base link Is Ready 🎉"
 ];
 
 const sectionDescriptions = [
-    "Leverage our available blink templates to get started creating your Base blink within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
+    "Leverage our available templates to get started creating your BaseRL within minutes. Explore a variety of customizable options designed to help you launch your project effortlessly, regardless of your skill level.",
     
-    "Customize your Dapp to taste. Adjust the color, text, or image to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your Dapp truly unique has never been easier.",
+    "Customize your BaseRL to taste. Adjust the color, text, or image to align with your vision. With a user-friendly interface and powerful tools at your disposal, making your BaseRL truly unique has never been easier.",
     
-    "Hurray! 🎉 Your Dapp has been successfully deployed! 🚀 You can access it via the links below. Your dApp is now live for the world to see! 🌍 Don’t forget to share your creation!"
+    "Hurray! 🎉 Your BaseRL has been successfully deployed! 🚀 You can access it via the links below. Your BaseRL is now live for the world to see! 🌍 Don’t forget to share your creation!"
 ];
 
 
