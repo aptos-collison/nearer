@@ -15,3 +15,5 @@ export const mintABI = [
     type: 'function',
   },
 ] as const;
+
+export const BASE_CONTRACT = "0x0466A29D90D95365E98FC477AD39D7c00E31Dc3C";
