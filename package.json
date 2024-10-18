@@ -4,10 +4,6 @@
   "version": "0.0.0",
   "license": "Apache-2.0",
   "scripts": {
-    "move:test": "node ./scripts/move/test",
-    "move:compile": "node ./scripts/move/compile",
-    "move:publish": "node ./scripts/move/publish",
-    "move:upgrade": "node ./scripts/move/upgrade",
     "dev": "vite",
     "build": "tsc && vite build",
     "deploy": "vercel",
@@ -17,6 +13,20 @@
     "fmt": "npm run _fmt -- --write"
   },
   "dependencies": {
+    "viem": "latest",
+    "wagmi": "latest",
+    "axios": "^1.7.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^118.0.0",
+    "nodemon": "^3.1.7",
+    "qrcode": "^1.5.3",
+    "qrcode.react": "^3.1.0",
+    "@coinbase/onchainkit": "^0.33.6",
+    "permissionless": "^0.1.26",
+    "siwe": "^2.3.2",
     "@aptos-labs/ts-sdk": "^1.28.0",
     "@aptos-labs/wallet-adapter-react": "^3.6.2",
     "@irys/sdk": "^0.2.1",
@@ -74,6 +84,20 @@
     "vercel": "^35.2.4",
     "vite": "^5.2.0",
     "vite-plugin-node-polyfills": "^0.22.0",
-    "vite-plugin-notifier": "^0.1.5"
+    "vite-plugin-notifier": "^0.1.5",
+    "@biomejs/biome": "^1.8.0",
+    "@vitest/coverage-v8": "^2.0.2",
+    "@vitest/ui": "^2.0.1",
+    "@wagmi/cli": "latest",
+    "bufferutil": "^4.0.7",
+    "encoding": "^0.1.13",
+    "lokijs": "^1.5.12",
+    "jsdom": "^24.1.0",
+    "pino-pretty": "^10.2.0",
+    "supports-color": "^9.4.0",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^14.2.0",
+    "utf-8-validate": "^6.0.3",
+    "buffer": "^6.0.3"
   }
 }

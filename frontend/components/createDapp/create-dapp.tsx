@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import templatesJson from "../../utils/Templates.json";
+import templatesJson from "../../utils/template.json";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -7,9 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CreateNFT from "../templates/create-nft";
-import CreateToken from "../templates/create-token";
-import InitializePoll from "../templates/create-poll";
 
 interface Template {
   html: string;
@@ -68,7 +65,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
       </div>
 
       <div className="flex justify-center space-x-3 w-full mt-8">
-        {selectedTemplate === "token" && (
+        {/* {selectedTemplate === "token" && (
           <Button
             className="bg-[#89e219] text-lg text-white font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
             onClick={() => openDialog(<CreateToken />)}
@@ -93,7 +90,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
           >
             Initialize Vote
           </Button>
-        )}
+        )} */}
 
         <Button
           className={`text-white font-semibold text-lg py-2 rounded-lg cursor-pointer 

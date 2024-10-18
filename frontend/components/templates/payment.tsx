@@ -5,11 +5,11 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { toast } from "../ui/use-toast";
 // import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
-import { transferAPT } from "@/entry-functions/transferAPT";
-import { aptosClient } from "@/utils/aptosClient";
+// import { transferAPT } from "@/entry-functions/transferAPT";
+// import { aptosClient } from "@/utils/aptosClient";
 
 const Payment: React.FC = () => {
-  const { account, signAndSubmitTransaction } = useWallet();
+  // const { account, signAndSubmitTransaction } = useWallet();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const recipient = "0xf9424969a5cfeb4639c4c75c2cd0ca62620ec624f4f28d76c4881a1e567d753f";
@@ -35,38 +35,38 @@ const Payment: React.FC = () => {
   //   },
   // });
 
-  const handlePayment = async () => {
-    if (!account || !recipient || !transferAmount) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please ensure all fields are filled",
-      });
-      return;
-    }
+  // const handlePayment = async () => {
+  //   if (!account || !recipient || !transferAmount) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Error",
+  //       description: "Please ensure all fields are filled",
+  //     });
+  //     return;
+  //   }
 
-    setLoading(true);
-    try {
-      const committedTransaction = await signAndSubmitTransaction(
-        transferAPT({
-          to: recipient,
-          amount: Math.floor(transferAmount * 1e8), // Convert to Octas
-        }),
-      );
-      await aptosClient().waitForTransaction({ transactionHash: committedTransaction.hash });
-      queryClient.invalidateQueries();
-      toast({ title: "Success", description: `Transaction succeeded, hash: ${committedTransaction.hash}` });
-    } catch (error: any) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        title: "Transaction Failed",
-        description: error.message || "An error occurred during the transaction",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   setLoading(true);
+  //   try {
+  //     const committedTransaction = await signAndSubmitTransaction(
+  //       transferAPT({
+  //         to: recipient,
+  //         amount: Math.floor(transferAmount * 1e8), // Convert to Octas
+  //       }),
+  //     );
+  //     await aptosClient().waitForTransaction({ transactionHash: committedTransaction.hash });
+  //     queryClient.invalidateQueries();
+  //     toast({ title: "Success", description: `Transaction succeeded, hash: ${committedTransaction.hash}` });
+  //   } catch (error: any) {
+  //     console.error(error);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Transaction Failed",
+  //       description: error.message || "An error occurred during the transaction",
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="bg-white rounded-md w-full shadow-md mx-auto border-2 border-black h-[460px] font-vt323 overflow-y-auto">
@@ -98,7 +98,7 @@ const Payment: React.FC = () => {
           />
 
           <button
-            onClick={handlePayment}
+           
             disabled={loading}
             className={`mt-3 text-black text-xl font-bold py-1 rounded-sm w-full border border-black transition duration-300 ${loading ? "bg-gradient-to-r from-blue-400 to-white animate-pulse" : ""}`}
           >

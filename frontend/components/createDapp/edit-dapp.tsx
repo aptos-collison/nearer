@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
-import templatesJson from "../../utils/Templates.json";
+import templatesJson from "../../utils/template.json";
 
 // Types for different configurations
 interface TokenConfig {

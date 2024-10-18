@@ -33,9 +33,9 @@ export const Menu: React.FC = () => {
   ];
 
   const sectionTitles = [
-    "Create Your First Base Blink", 
-    "Edit Your Base Blink", 
-    "Your APTOS Blink Is Ready 🎉"
+    "Create Your First Base link", 
+    "Edit Your Base link", 
+    "Your Base link Is Ready 🎉"
 ];
 
 const sectionDescriptions = [

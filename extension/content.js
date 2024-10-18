@@ -38,24 +38,24 @@ function updateIdsInJsCode(jsCode, number) {
   });
 }
 
-function reloadAptosSdk() {
-  const existingScript = document.querySelector('script[src="https://unpkg.com/aptos@1.3.16/dist/index.global.js"]');
+function reloadEthereumSdk() {
+  const existingScript = document.querySelector('script[src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"]');
   if (existingScript) {
     existingScript.remove();
   }
 
-  const aptosSdkScript = document.createElement("script");
-  aptosSdkScript.src = "https://unpkg.com/aptos@1.3.16/dist/index.global.js";
+  const ethereumSdkScript = document.createElement("script");
+  ethereumSdkScript.src = "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js";
 
-  aptosSdkScript.onload = function () {
-    console.log("Base SDK reloaded");
+  ethereumSdkScript.onload = function () {
+    console.log("Ethereum SDK reloaded");
   };
 
-  aptosSdkScript.onerror = function (error) {
-    console.error("Error loading Base SDK:", error);
+  ethereumSdkScript.onerror = function (error) {
+    console.error("Error loading Ethereum SDK:", error);
   };
 
-  document.head.appendChild(aptosSdkScript);
+  document.head.appendChild(ethereumSdkScript);
 }
 
 async function replaceBlkTags() {
@@ -94,7 +94,7 @@ async function replaceBlkTags() {
               if (!result?.iframe?.html || !result?.iframe?.js) {
                 throw new Error("Invalid response format");
               }
-              reloadAptosSdk(); // Reload the Base SDK after fetching
+              reloadEthereumSdk(); // Reload the Ethereum SDK after fetching
 
               return {
                 span,
@@ -125,21 +125,26 @@ async function replaceBlkTags() {
         // Replace the matched content
         result.span.innerHTML = result.span.innerHTML.replace(result.matchText, newHtml);
 
-        // Modify the JS code to be wallet-agnostic
+        // Modify the JS code to be wallet-agnostic for Ethereum/Base
         let newJS = updateIdsInJsCode(result.jsCode, randomNumber);
 
-        // Add wallet detection logic
+        // Add wallet detection logic for Ethereum/Base
         newJS = `
           const detectWallet = async () => {
-            if (window.aptos) return window.aptos;
-            if (window.petra) return window.petra;
-            if (window.martian) return window.martian;
-            if (window.pontem) return window.pontem;
-            if (window.fewcha) return window.fewcha;
+            if (window.ethereum) {
+              // Check if the wallet is connected to Base
+              const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+              if (chainId === '8453' || '84532') { // Chain ID for Base
+                return window.ethereum;
+              } else {
+                console.log('Please connect to the Base network');
+                return null;
+              }
+            }
             return null;
           };
 
-          const waitForAptosWallet = async () => {
+          const waitForEthereumWallet = async () => {
             return new Promise((resolve) => {
               const checkWallet = async () => {
                 const wallet = await detectWallet();
@@ -151,6 +156,21 @@ async function replaceBlkTags() {
               };
               checkWallet();
             });
+          };
+
+   ]
+          const connectWallet = async () => {
+            const wallet = await waitForEthereumWallet();
+            if (wallet) {
+              try {
+                await wallet.request({ method: 'eth_requestAccounts' });
+                console.log('Wallet connected');
+              } catch (error) {
+                console.error('Failed to connect wallet:', error);
+              }
+            } else {
+              console.log('No Base-compatible wallet found');
+            }
           };
 
           ${newJS}
@@ -172,8 +192,8 @@ async function replaceBlkTags() {
   }
 }
 
-// Initialize script with only Base SDK
-reloadAptosSdk(); // Load the Base SDK initially
+// Initialize script with Ethereum SDK
+reloadEthereumSdk(); // Load the Ethereum SDK initially
 
 // Run the function every 1 second
 setInterval(replaceBlkTags, 1000);

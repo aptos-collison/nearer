@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { WalletSelector } from "./WalletSelector";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export function Header() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export function Header() {
         </h3>
 
         <div className="">
-          <WalletSelector />
+          <ConnectButton/>
         </div>
       </div>
     </>

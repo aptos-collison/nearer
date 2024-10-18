@@ -4,11 +4,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Input } from "../ui/input";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { toast } from "../ui/use-toast";
-import { transferAPT } from "@/entry-functions/transferAPT";
-import { aptosClient } from "@/utils/aptosClient";
+
 
 const Donate: React.FC = () => {
-  const { account, signAndSubmitTransaction } = useWallet();
+  // const { account, signAndSubmitTransaction } = useWallet();
   const queryClient = useQueryClient();
   const [donationAmount, setDonationAmount] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,73 +18,73 @@ const Donate: React.FC = () => {
 
   const handlePredefinedDonation = (amount: number): void => {
     setDonationAmount(amount.toString());
-    handleDonation(amount);
+    // handleDonation(amount);
   };
 
-  const handleDonation = async (amount: number): Promise<void> => {
-    if (!account) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please connect your wallet first.",
-      });
-      return;
-    }
+  // const handleDonation = async (amount: number): Promise<void> => {
+  //   if (!account) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Error",
+  //       description: "Please connect your wallet first.",
+  //     });
+  //     return;
+  //   }
 
-    setLoading(true);
-    setSuccess(false);
+  //   setLoading(true);
+  //   setSuccess(false);
 
-    try {
-      const committedTransaction = await signAndSubmitTransaction(
-        transferAPT({
-          to: recipientAddress,
-          amount: Math.floor(amount * Math.pow(10, 8)), // Convert to Octas (8 decimal places)
-        }),
-      );
+  //   try {
+  //     const committedTransaction = await signAndSubmitTransaction(
+  //       transferAPT({
+  //         to: recipientAddress,
+  //         amount: Math.floor(amount * Math.pow(10, 8)), // Convert to Octas (8 decimal places)
+  //       }),
+  //     );
 
-      await checkTransactionStatus(committedTransaction.hash);
-    } catch (error: any) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        title: "Donation Failed",
-        description: error.message || "An error occurred during the donation",
-      });
-      setLoading(false);
-    }
-  };
+  //     await checkTransactionStatus(committedTransaction.hash);
+  //   } catch (error: any) {
+  //     console.error(error);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Donation Failed",
+  //       description: error.message || "An error occurred during the donation",
+  //     });
+  //     setLoading(false);
+  //   }
+  // };
 
-  const checkTransactionStatus = async (hash: string): Promise<void> => {
-    try {
-      const transaction = await aptosClient().waitForTransaction({
-        transactionHash: hash,
-      });
+  // const checkTransactionStatus = async (hash: string): Promise<void> => {
+  //   try {
+  //     const transaction = await aptosClient().waitForTransaction({
+  //       transactionHash: hash,
+  //     });
 
-      if (transaction.success) {
-        setLoading(false);
-        setSuccess(true);
-        queryClient.invalidateQueries();
-        toast({
-          title: "Success",
-          description: `Donation successful! Transaction hash: ${hash}`,
-        });
-        setTimeout(() => {
-          setSuccess(false);
-          setDonationAmount("");
-        }, 3000);
-      } else {
-        throw new Error("Transaction failed");
-      }
-    } catch (error) {
-      console.error("Error checking transaction status:", error);
-      setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Transaction Failed",
-        description: "The donation transaction failed to process.",
-      });
-    }
-  };
+  //     if (transaction.success) {
+  //       setLoading(false);
+  //       setSuccess(true);
+  //       queryClient.invalidateQueries();
+  //       toast({
+  //         title: "Success",
+  //         description: `Donation successful! Transaction hash: ${hash}`,
+  //       });
+  //       setTimeout(() => {
+  //         setSuccess(false);
+  //         setDonationAmount("");
+  //       }, 3000);
+  //     } else {
+  //       throw new Error("Transaction failed");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking transaction status:", error);
+  //     setLoading(false);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Transaction Failed",
+  //       description: "The donation transaction failed to process.",
+  //     });
+  //   }
+  // };
 
   const handleClick = (): void => {
     const amount = parseFloat(donationAmount);
@@ -97,7 +96,7 @@ const Donate: React.FC = () => {
       });
       return;
     }
-    handleDonation(amount);
+    // handleDonation(amount);
   };
 
   return (

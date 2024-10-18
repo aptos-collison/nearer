@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import templatesJson from "../../utils/Templates.json";
+import templatesJson from "../../utils/template.json";
 import { Button } from "../ui/button";
 
 interface Template {
