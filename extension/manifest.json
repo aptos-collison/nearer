@@ -5,12 +5,14 @@
   "description": "Fetches HTML content from URLs within custom blk tags and replaces the tags with the fetched HTML.",
   "permissions": [
     "activeTab",
+    "*://*/*",
     "http://*/*",
     "https://*/*"
   ],
   "background": {
     "scripts": ["background.js"]
   },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com; object-src 'self'",
   "content_scripts": [
     {
       "matches": [

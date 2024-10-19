@@ -10,7 +10,7 @@ import { base, baseSepolia } from 'wagmi/chains';
 // Replace this with your actual environment variable import method for Vite
 const VITE_WC_PROJECT_ID = import.meta.env.VITE_WC_PROJECT_ID;
 
-const projectId = VITE_WC_PROJECT_ID || '1cb585a69298ab4343bf1678b1efdded';
+const projectId = VITE_WC_PROJECT_ID;
 
 if (!projectId) {
   const providerErrMessage =

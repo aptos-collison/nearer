@@ -56,6 +56,9 @@ const EditDapp: React.FC<EditDappProps> = ({
   // Payment/Donation states
   const [recipient, setRecipient] = useState<string>("0x000000000000");
   const [link, setLink] = useState<string>("your link");
+  const [id, setId] = useState<string>("your cloudflare ID");
+  const [token, setToken] = useState<string>("your cloudflare api token");
+  const [nameSpace, setNameSpace] = useState<string>("your cloudflare name space");
 
   useEffect(() => {
     if (currentBlinkObject.templateName) {
@@ -76,8 +79,13 @@ const EditDapp: React.FC<EditDappProps> = ({
             setRecipient(extractRecipient(template.js));
             break;
           case "portfolio":
+            setLink(extractLink(template.js));
+            break;
           case "review":
             setLink(extractLink(template.js));
+            setId(extractID(template.js));
+            setToken(extractToken(template.js));
+            setNameSpace(extractNameSpace(template.js));
             break;
         }
       } catch (error) {
@@ -236,8 +244,13 @@ const EditDapp: React.FC<EditDappProps> = ({
         modifiedJs = updateRecipientTemplateJs(template.js);
         break;
       case "portfolio":
-      case "review":
         modifiedJs = updateLinkTemplateJs(template.js);
+        break;
+      case "review":
+        modifiedJs = updateLinkTemplateJs(template.js); // Update LINK
+        modifiedJs = updateToken(modifiedJs); // Update TOKEN based on modifiedJs
+        modifiedJs = updateID(modifiedJs); // Update ID based on modifiedJs
+        modifiedJs = updateNameSpace(modifiedJs); // Update NAME SPACE based on modifiedJs
         break;
       case "marketplace":
         modifiedJs = updateMarketplaceConfig(template.js, marketplaceConfig);
@@ -279,19 +292,51 @@ const EditDapp: React.FC<EditDappProps> = ({
     return updatedJs;
   };
 
+  const updateID = (js: string): string => {
+    let updatedJs = js;
+    updatedJs = updatedJs.replace(/const CLOUDFLARE_ACCOUNT_ID = "[^"]*"/, `const CLOUDFLARE_ACCOUNT_ID = "${id}"`);
+    return updatedJs;
+  };
+  const updateToken = (js: string): string => {
+    let updatedJs = js;
+    updatedJs = updatedJs.replace(/const CLOUDFLARE_API_TOKEN = "[^"]*"/, `const CLOUDFLARE_API_TOKEN = "${token}"`);
+    return updatedJs;
+  };
+  const updateNameSpace = (js: string): string => {
+    let updatedJs = js;
+    updatedJs = updatedJs.replace(
+      /const CLOUDFLARE_NAMESPACE_ID = "[^"]*"/,
+      `const CLOUDFLARE_NAMESPACE_ID = "${nameSpace}"`,
+    );
+    return updatedJs;
+  };
+
   const extractRecipient = (js: string): string => {
     const match = js.match(/const RECIPIENT = "([^"]*)"/);
     return match ? match[1] : "";
   };
 
+  const extractID = (js: string): string => {
+    const match = js.match(/const CLOUDFLARE_ACCOUNT_ID = "([^"]*)"/);
+    return match ? match[1] : "";
+  };
+
+  const extractToken = (js: string): string => {
+    const match = js.match(/const CLOUDFLARE_API_TOKEN = "([^"]*)"/);
+    return match ? match[1] : "";
+  };
   const extractLink = (js: string): string => {
     const match = js.match(/const LINK = "([^"]*)"/);
     return match ? match[1] : "";
   };
+  const extractNameSpace = (js: string): string => {
+    const match = js.match(/const CLOUDFLARE_NAMESPACE_ID = "([^"]*)"/);
+    return match ? match[1] : "";
+  };
 
   const extractMarketplaceConfig = (js: string): MarketplaceConfig => {
-    const nftImagesMatch = js.match(/const NFT_IMAGES = \[(.*?)\]/s);
-    const nftPricesMatch = js.match(/const NFT_PRICES = \[(.*?)\]/s);
+    const nftImagesMatch = js.match(/const PRODUCT_IMAGES = \[(.*?)\]/s);
+    const nftPricesMatch = js.match(/const PRODUCT_PRICES = \[(.*?)\]/s);
     const match = js.match(/const RECIPIENT = "([^"]*)"/);
 
     if (!nftImagesMatch || !nftPricesMatch || !match) {
@@ -313,12 +358,12 @@ const EditDapp: React.FC<EditDappProps> = ({
   const updateMarketplaceConfig = (js: string, newConfig: MarketplaceConfig): string => {
     const updatedJs = js
       .replace(
-        /const NFT_IMAGES = \[(.*?)\]/s,
-        `const NFT_IMAGES = [${newConfig.nfts.map((nft) => `"${nft.image}"`).join(", ")}]`,
+        /const PRODUCT_IMAGES = \[(.*?)\]/s,
+        `const PRODUCT_IMAGES = [${newConfig.nfts.map((nft) => `"${nft.image}"`).join(", ")}]`,
       )
       .replace(
-        /const NFT_PRICES = \[(.*?)\]/s,
-        `const NFT_PRICES = [${newConfig.nfts.map((nft) => nft.price).join(", ")}]`,
+        /const PRODUCT_PRICES = \[(.*?)\]/s,
+        `const PRODUCT_PRICES = [${newConfig.nfts.map((nft) => nft.price).join(", ")}]`,
       )
 
       .replace(/const RECIPIENT = "[^"]*"/, `const RECIPIENT = "${recipient}"`);
@@ -329,10 +374,10 @@ const EditDapp: React.FC<EditDappProps> = ({
   return (
     <div className="">
       {isLoading ? (
-        <div className="flex justify-center items-center mt-32 flex-col">
+        <div className="flex justify-center items-center flex-col h-[80vh]">
           {/* <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" /> */}
           <Loader className="animate-spin h-20 w-20 text-white" />
-          <p className="text-white mt-6">Deploying Your Blink To IPFS</p>
+          <p className="text-white mt-6">Deploying Your BaseRL</p>
         </div>
       ) : (
         <>
@@ -443,6 +488,33 @@ const EditDapp: React.FC<EditDappProps> = ({
             </div>
           )}
 
+          {selectedTemplate === "review" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Review Fields</h5>
+              <label className="block mb-1">Cloudflare Account ID</label>
+              <input
+                type="text"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+              <label className="block mb-1">Cloudflare API Token</label>
+              <input
+                type="text"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+              <label className="block mb-1">Cloudflare NameSpace ID</label>
+              <input
+                type="text"
+                value={nameSpace}
+                onChange={(e) => setNameSpace(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
+            </div>
+          )}
+
           {selectedTemplate === "payment" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
               <h5 className="text-lg font-bold mb-2 text-center">Edit Payment Field</h5>
@@ -492,25 +564,6 @@ const EditDapp: React.FC<EditDappProps> = ({
 
                 <div>
                   <label className="block mb-1">Contact Link ( calendly, meet.. )</label>
-                  <input
-                    type="text"
-                    value={link}
-                    onChange={(e) => setLink(e.target.value)}
-                    className="p-2 border border-gray-300 rounded w-full"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {selectedTemplate === "review" && (
-            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
-              <h5 className="text-lg font-bold mb-2 text-center">Edit Review </h5>
-              <div className="space-y-3">
-                {/* Profile Fields */}
-
-                <div>
-                  <label className="block mb-1">Wall of love (link)</label>
                   <input
                     type="text"
                     value={link}

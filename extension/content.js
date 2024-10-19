@@ -1,4 +1,3 @@
-// Function to inject a script into the page context
 function injectScript(code) {
   const script = document.createElement("script");
   script.setAttribute("type", "text/javascript");
@@ -17,6 +16,16 @@ function updateIds(htmlString, number) {
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = htmlString;
 
+  // Replace onclick handlers with data attributes
+  const elementsWithOnclick = tempDiv.querySelectorAll("[onclick]");
+  elementsWithOnclick.forEach((element) => {
+    const onclickValue = element.getAttribute("onclick");
+    element.removeAttribute("onclick");
+    element.setAttribute("data-click", onclickValue);
+    element.setAttribute("class", (element.getAttribute("class") || "") + " js-click-handler");
+  });
+
+  // Update IDs
   const elementsWithId = tempDiv.querySelectorAll("[id]");
   elementsWithId.forEach((element) => {
     element.id += number;
@@ -39,13 +48,13 @@ function updateIdsInJsCode(jsCode, number) {
 }
 
 function reloadEthereumSdk() {
-  const existingScript = document.querySelector('script[src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"]');
+  const existingScript = document.querySelector('script[src*="ethers"]');
   if (existingScript) {
     existingScript.remove();
   }
 
   const ethereumSdkScript = document.createElement("script");
-  ethereumSdkScript.src = "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js";
+  ethereumSdkScript.src = "https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js";
 
   ethereumSdkScript.onload = function () {
     console.log("Ethereum SDK reloaded");
@@ -71,7 +80,7 @@ async function replaceBlkTags() {
         if (!match || match.length < 3) continue;
 
         let url = null;
-        const matchText = match[0]; // Store the full matched text
+        const matchText = match[0];
         const url1 = match[2].trim();
 
         if (url1.startsWith("http")) {
@@ -81,8 +90,6 @@ async function replaceBlkTags() {
         }
 
         if (!url) continue;
-
-        console.log(`Fetching URL: ${url}`);
 
         fetchPromises.push(
           fetch(url)
@@ -94,7 +101,7 @@ async function replaceBlkTags() {
               if (!result?.iframe?.html || !result?.iframe?.js) {
                 throw new Error("Invalid response format");
               }
-              reloadEthereumSdk(); // Reload the Ethereum SDK after fetching
+              reloadEthereumSdk();
 
               return {
                 span,
@@ -106,7 +113,7 @@ async function replaceBlkTags() {
             .catch((error) => {
               console.error(`Error processing ${url}:`, error);
               return null;
-            }),
+            })
         );
       }
     });
@@ -122,63 +129,90 @@ async function replaceBlkTags() {
         const randomNumber = makeid();
         const newHtml = updateIds(result.htmlText, randomNumber);
 
-        // Replace the matched content
         result.span.innerHTML = result.span.innerHTML.replace(result.matchText, newHtml);
 
-        // Modify the JS code to be wallet-agnostic for Ethereum/Base
         let newJS = updateIdsInJsCode(result.jsCode, randomNumber);
 
-        // Add wallet detection logic for Ethereum/Base
-        newJS = `
-          const detectWallet = async () => {
-            if (window.ethereum) {
-              // Check if the wallet is connected to Base
-              const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-              if (chainId === '8453' || '84532') { // Chain ID for Base
-                return window.ethereum;
-              } else {
-                console.log('Please connect to the Base network');
+        // Create namespaced wallet handling code
+        const walletCode = `
+          (function() {
+            const walletHandler${randomNumber} = {
+              detectWallet: async function() {
+                if (window.ethereum) {
+                  try {
+                    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                    if (chainId === '8453' || chainId === '84532') {
+                      return window.ethereum;
+                    } else {
+                      console.log('Please connect to the Base network');
+                      return null;
+                    }
+                  } catch (error) {
+                    console.error('Error detecting wallet:', error);
+                    return null;
+                  }
+                }
+                return null;
+              },
+
+              waitForEthereumWallet: async function() {
+                return new Promise((resolve) => {
+                  const checkWallet = async () => {
+                    const wallet = await this.detectWallet();
+                    if (wallet) {
+                      resolve(new ethers.providers.Web3Provider(wallet));
+                    } else {
+                      setTimeout(checkWallet.bind(this), 100);
+                    }
+                  };
+                  checkWallet.bind(this)();
+                });
+              },
+
+              connectWallet: async function() {
+                const provider = await this.waitForEthereumWallet();
+                if (provider) {
+                  try {
+                    await provider.send('eth_requestAccounts', []);
+                    console.log('Wallet connected');
+                    return provider;
+                  } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                    return null;
+                  }
+                }
                 return null;
               }
-            }
-            return null;
-          };
+            };
 
-          const waitForEthereumWallet = async () => {
-            return new Promise((resolve) => {
-              const checkWallet = async () => {
-                const wallet = await detectWallet();
-                if (wallet) {
-                  resolve(wallet);
-                } else {
-                  setTimeout(checkWallet, 100);
+            // Add click event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+              document.querySelectorAll('.js-click-handler').forEach(element => {
+                const clickFunction = element.getAttribute('data-click');
+                if (clickFunction) {
+                  element.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const provider = await walletHandler${randomNumber}.connectWallet();
+                    if (provider) {
+                      // Execute the original function in the context of the wallet handler
+                      const func = new Function('return ' + clickFunction)();
+                      func.call(window);
+                    }
+                  });
                 }
-              };
-              checkWallet();
+              });
             });
-          };
 
-   ]
-          const connectWallet = async () => {
-            const wallet = await waitForEthereumWallet();
-            if (wallet) {
-              try {
-                await wallet.request({ method: 'eth_requestAccounts' });
-                console.log('Wallet connected');
-              } catch (error) {
-                console.error('Failed to connect wallet:', error);
-              }
-            } else {
-              console.log('No Base-compatible wallet found');
-            }
-          };
+            // Make wallet handler available globally with unique name
+            window.walletHandler${randomNumber} = walletHandler${randomNumber};
 
-          ${newJS}
+            ${newJS}
+          })();
         `;
 
         setTimeout(() => {
           try {
-            injectScript(newJS);
+            injectScript(walletCode);
           } catch (error) {
             console.error("Error injecting script:", error);
           }
@@ -193,7 +227,7 @@ async function replaceBlkTags() {
 }
 
 // Initialize script with Ethereum SDK
-reloadEthereumSdk(); // Load the Ethereum SDK initially
+reloadEthereumSdk();
 
 // Run the function every 1 second
 setInterval(replaceBlkTags, 1000);
