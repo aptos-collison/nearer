@@ -34,8 +34,8 @@ export const Menu: React.FC = () => {
 
   const sectionTitles = [
     "Create Your First BaseRL", 
-    "Edit Your Base link", 
-    "Your Base link Is Ready 🎉"
+    "Edit Your BaseRL", 
+    "Your BaseRL Is Ready 🎉"
 ];
 
 const sectionDescriptions = [

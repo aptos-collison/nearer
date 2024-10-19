@@ -68,6 +68,7 @@ const EditDapp: React.FC<EditDappProps> = ({
           case "marketplace":
             const extractedMarketplaceConfig = extractMarketplaceConfig(template.js);
             setMarketplaceConfig(extractedMarketplaceConfig);
+            setRecipient(extractRecipient(template.js));
             break;
 
           case "donation":
@@ -291,8 +292,9 @@ const EditDapp: React.FC<EditDappProps> = ({
   const extractMarketplaceConfig = (js: string): MarketplaceConfig => {
     const nftImagesMatch = js.match(/const NFT_IMAGES = \[(.*?)\]/s);
     const nftPricesMatch = js.match(/const NFT_PRICES = \[(.*?)\]/s);
+    const match = js.match(/const RECIPIENT = "([^"]*)"/);
 
-    if (!nftImagesMatch || !nftPricesMatch) {
+    if (!nftImagesMatch || !nftPricesMatch || !match) {
       throw new Error("Marketplace configuration not found");
     }
 
@@ -303,6 +305,7 @@ const EditDapp: React.FC<EditDappProps> = ({
       nfts: images.map((image: string, index: number) => ({
         image,
         price: prices[index].toString(),
+        recipient: match ? match[1] : "",
       })),
     };
   };
@@ -316,7 +319,9 @@ const EditDapp: React.FC<EditDappProps> = ({
       .replace(
         /const NFT_PRICES = \[(.*?)\]/s,
         `const NFT_PRICES = [${newConfig.nfts.map((nft) => nft.price).join(", ")}]`,
-      );
+      )
+
+      .replace(/const RECIPIENT = "[^"]*"/, `const RECIPIENT = "${recipient}"`);
 
     return updatedJs;
   };
@@ -454,6 +459,13 @@ const EditDapp: React.FC<EditDappProps> = ({
           {selectedTemplate === "marketplace" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
               <h5 className="text-lg font-bold mb-2 text-center">Edit Shop Items</h5>
+              <label className="block mb-1">Recipient</label>
+              <input
+                type="text"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                className="p-2 border border-gray-300 rounded mb-2 w-full"
+              />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {marketplaceConfig.nfts.map((nft, index) => (
                   <div key={index} className="p-4 border border-gray-300 rounded bg-white shadow">
