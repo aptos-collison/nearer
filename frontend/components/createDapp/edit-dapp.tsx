@@ -2,25 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
 import templatesJson from "../../utils/template.json";
 
-// Types for different configurations
-interface PortfolioConfig {
-  profile: {
-    name: string;
-    bio: string;
-    image: string;
-    calendlyLink: string;
-  };
-  socialLinks: Array<{
-    platform: string;
-    url: string;
-    icon: string;
-  }>;
-  works: Array<{
-    title: string;
+interface MarketplaceConfig {
+  nfts: Array<{
     image: string;
     price: string;
   }>;
-
 }
 
 interface Template {
@@ -58,23 +44,18 @@ const EditDapp: React.FC<EditDappProps> = ({
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
 
-  // Configuration states
-  const [portfolioConfig, setPortfolioConfig] = useState<PortfolioConfig>({
-    profile: {
-      name: "Creative Name",
-      bio: "Digital Artist & Creator based in New York",
-      image: "/api/placeholder/120/120",
-      calendlyLink: "https://calendly.com/your-link",
-    },
-    socialLinks: [],
-    works: [],
-  
+  const [marketplaceConfig, setMarketplaceConfig] = useState<MarketplaceConfig>({
+    nfts: [
+      { image: "", price: "" },
+      { image: "", price: "" },
+      { image: "", price: "" },
+      { image: "", price: "" },
+    ],
   });
 
   // Payment/Donation states
   const [recipient, setRecipient] = useState<string>("0x000000000000");
-  const [price, setPrice] = useState<string>("");
-  const [supply, setSupply] = useState<string>("");
+  const [link, setLink] = useState<string>("your link");
 
   useEffect(() => {
     if (currentBlinkObject.templateName) {
@@ -84,14 +65,18 @@ const EditDapp: React.FC<EditDappProps> = ({
       // Extract configurations based on template type
       try {
         switch (currentBlinkObject.templateName.toLowerCase()) {
-          case "portfolio":
-            const extractedTokenConfig = extractConfigFromTemplate("portfolio", template.js);
-            setPortfolioConfig(extractedTokenConfig as PortfolioConfig);
+          case "marketplace":
+            const extractedMarketplaceConfig = extractMarketplaceConfig(template.js);
+            setMarketplaceConfig(extractedMarketplaceConfig);
             break;
 
           case "donation":
           case "payment":
             setRecipient(extractRecipient(template.js));
+            break;
+          case "portfolio":
+          case "review":
+            setLink(extractLink(template.js));
             break;
         }
       } catch (error) {
@@ -99,20 +84,6 @@ const EditDapp: React.FC<EditDappProps> = ({
       }
     }
   }, [currentBlinkObject]);
-
-  // Add new handlers for updating configs
-  const handlePortfolioConfigUpdate = (
-    section: keyof PortfolioConfig["profile"] | "works" | "socialLinks",
-    value: any,
-  ) => {
-    setPortfolioConfig((prev) => ({
-      ...prev,
-      profile: {
-        ...prev.profile,
-        [section]: value,
-      },
-    }));
-  };
 
   // const handleTemplateSelect = (templateName: string) => {
   //   setSelectedTemplate(templateName);
@@ -160,13 +131,94 @@ const EditDapp: React.FC<EditDappProps> = ({
 
   const updateImageUrl = () => {
     if (editingElement instanceof HTMLImageElement) {
-      editingElement.src = imageUrl;
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+
+      fileInput.onchange = async (event) => {
+        const file = (event.target as HTMLInputElement).files?.[0];
+        if (file) {
+          // Create FormData to upload the image
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "baserl");
+
+          try {
+            const response = await fetch("https://api.cloudinary.com/v1_1/dgaw6tnra/image/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            const data = await response.json();
+            if (data.secure_url) {
+              const newImageUrl = data.secure_url;
+              editingElement.src = newImageUrl;
+            }
+
+            setShowTooltip(false);
+          } catch (error) {
+            console.error("Error uploading image:", error);
+          }
+        }
+      };
+
+      fileInput.click();
     }
-    setShowTooltip(false);
   };
 
   const cancelImageUpdate = () => {
     setShowTooltip(false);
+  };
+
+  // const handleNftImageClick = async (index: number) => {
+  //   const fileInput = document.createElement("input");
+  //   fileInput.type = "file";
+  //   fileInput.accept = "image/*";
+
+  //   fileInput.onchange = async (event) => {
+  //     const file = (event.target as HTMLInputElement).files?.[0];
+  //     if (file) {
+  //       // Create FormData to upload the image
+  //       const formData = new FormData();
+  //       formData.append("file", file);
+  //       formData.append("upload_preset", "baserl");
+
+  //       try {
+  //         const response = await fetch("https://api.cloudinary.com/v1_1/dgaw6tnra/image/upload", {
+  //           method: "POST",
+  //           body: formData,
+  //         });
+
+  //         const data = await response.json();
+  //         if (data.secure_url) {
+  //           const newImageUrl = data.secure_url;
+
+  //           setMarketplaceConfig((prev) => {
+  //             const updatedNfts = [...prev.nfts];
+  //             updatedNfts[index].image = newImageUrl;
+  //             return { ...prev, nfts: updatedNfts };
+  //           });
+
+  //           const imgElement = document.querySelector(`.templateContainer img:nth-child(${index + 1})`);
+  //           if (imgElement instanceof HTMLImageElement) {
+  //             imgElement.src = newImageUrl;
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.error("Error uploading image:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fileInput.click();
+  // };
+
+  const handleNftPriceChange = (index: number, newPrice: string) => {
+    setMarketplaceConfig((prev) => {
+      const updatedNfts = [...prev.nfts];
+      updatedNfts[index].price = newPrice;
+      return { ...prev, nfts: updatedNfts };
+    });
   };
 
   const createBlink = async () => {
@@ -178,12 +230,16 @@ const EditDapp: React.FC<EditDappProps> = ({
 
     // Update JS based on template type
     switch (selectedTemplate.toLowerCase()) {
-      case "portfolio":
-        modifiedJs = updateTemplateConfig("portfolio", template.js, portfolioConfig);
-        break;
       case "donation":
       case "payment":
-        modifiedJs = updateTemplateJs(template.js);
+        modifiedJs = updateRecipientTemplateJs(template.js);
+        break;
+      case "portfolio":
+      case "review":
+        modifiedJs = updateLinkTemplateJs(template.js);
+        break;
+      case "marketplace":
+        modifiedJs = updateMarketplaceConfig(template.js, marketplaceConfig);
         break;
     }
 
@@ -210,9 +266,15 @@ const EditDapp: React.FC<EditDappProps> = ({
     setIsLoading(false);
   };
 
-  const updateTemplateJs = (js: string): string => {
+  const updateRecipientTemplateJs = (js: string): string => {
     let updatedJs = js;
     updatedJs = updatedJs.replace(/const RECIPIENT = "[^"]*"/, `const RECIPIENT = "${recipient}"`);
+    return updatedJs;
+  };
+
+  const updateLinkTemplateJs = (js: string): string => {
+    let updatedJs = js;
+    updatedJs = updatedJs.replace(/const LINK = "[^"]*"/, `const LINK = "${link}"`);
     return updatedJs;
   };
 
@@ -221,87 +283,42 @@ const EditDapp: React.FC<EditDappProps> = ({
     return match ? match[1] : "";
   };
 
-  const extractPortfolioConfig = (js: string): PortfolioConfig => {
-    // Extract the portfolioConfig object using regex
-    const configMatch = js.match(
-      /const PORTFOLIO_CONFIG = {([\s\S]*?)};/,
-    );
-    if (!configMatch) throw new Error("Portfolio configuration not found");
-  
-    // Parse the matched configuration
-    const configText = configMatch[1].replace(/\n/g, "").trim();
-  
-    // Replace single quotes with double quotes for JSON parsing
-    const jsonText = configText.replace(/'/g, '"');
-  
-    try {
-      // Safely parse the JSON configuration object
-      const config = JSON.parse(`{${jsonText}}`);
-      
-      return {
-        profile: {
-          name: config.profile.name,
-          bio: config.profile.bio,
-          image: config.profile.image,
-          calendlyLink: config.profile.calendlyLink,
-        },
-        socialLinks: config.socialLinks.map((link: { platform: any; url: any; icon: any }) => ({
-          platform: link.platform,
-          url: link.url,
-          icon: link.icon,
-        })),
-        works: config.works.map((work: { title: any; image: any; price: any }) => ({
-          title: work.title,
-          image: work.image,
-          price: work.price,
-        })),
-      };
-    } catch (error) {
-      console.error("Error parsing configuration:", error);
-      throw new Error("Error extracting config: " + error);
-    }
-  };
-  
-
-  // Usage example:
-  const extractConfigFromTemplate = (templateName: string, js: string) => {
-    switch (templateName.toLowerCase()) {
-      case "portfolio":
-        return extractPortfolioConfig(js);
-
-      default:
-        throw new Error(`Unknown template type: ${templateName}`);
-    }
+  const extractLink = (js: string): string => {
+    const match = js.match(/const LINK = "([^"]*)"/);
+    return match ? match[1] : "";
   };
 
-  // Helper function to update configurations in template code
-  const updateTemplateConfig = (
-    templateName: string,
-    js: string,
-    newConfig: PortfolioConfig,
-  ): string => {
-    switch (templateName.toLowerCase()) {
-      case 'portfolio': {
-        const config = newConfig;
-  
-        return js.replace(
-          /const PORTFOLIO_CONFIG = {([\s\S]*?)};/,
-          `const PORTFOLIO_CONFIG = {
-    profile: {
-      name: '${config.profile.name}',
-      bio: '${config.profile.bio}',
-      image: '${config.profile.image}',
-      calendlyLink: '${config.profile.calendlyLink}'
-    },
-    socialLinks: ${JSON.stringify(config.socialLinks)},
-    works: ${JSON.stringify(config.works)},
-  };`
-        );
-      }
-      
-      default:
-        throw new Error(`Unknown template type: ${templateName}`);
+  const extractMarketplaceConfig = (js: string): MarketplaceConfig => {
+    const nftImagesMatch = js.match(/const NFT_IMAGES = \[(.*?)\]/s);
+    const nftPricesMatch = js.match(/const NFT_PRICES = \[(.*?)\]/s);
+
+    if (!nftImagesMatch || !nftPricesMatch) {
+      throw new Error("Marketplace configuration not found");
     }
+
+    const images = JSON.parse(`[${nftImagesMatch[1]}]`);
+    const prices = JSON.parse(`[${nftPricesMatch[1]}]`);
+
+    return {
+      nfts: images.map((image: string, index: number) => ({
+        image,
+        price: prices[index].toString(),
+      })),
+    };
+  };
+
+  const updateMarketplaceConfig = (js: string, newConfig: MarketplaceConfig): string => {
+    const updatedJs = js
+      .replace(
+        /const NFT_IMAGES = \[(.*?)\]/s,
+        `const NFT_IMAGES = [${newConfig.nfts.map((nft) => `"${nft.image}"`).join(", ")}]`,
+      )
+      .replace(
+        /const NFT_PRICES = \[(.*?)\]/s,
+        `const NFT_PRICES = [${newConfig.nfts.map((nft) => nft.price).join(", ")}]`,
+      );
+
+    return updatedJs;
   };
 
   return (
@@ -315,7 +332,7 @@ const EditDapp: React.FC<EditDappProps> = ({
       ) : (
         <>
           {selectedTemplate && (
-            <div className="flex bg-white rounded-lg shadow-md p-4 mt-12">
+            <div className="flex bg-white rounded-lg shadow-md p-4 mt-12 overflow-y-auto">
               <div
                 className="templateContainer flex-1 rounded-lg p-4 mr-4"
                 dangerouslySetInnerHTML={{ __html: templates[selectedTemplate].html }}
@@ -436,207 +453,59 @@ const EditDapp: React.FC<EditDappProps> = ({
 
           {selectedTemplate === "marketplace" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
-              <h5 className="text-lg font-bold mb-2 text-center">Edit Payment Field</h5>
-              <label className="block mb-1">NFT Address</label>
-              <input
-                type="text"
-                value={recipient}
-                onChange={(e) => setRecipient(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
-              <label className="block mb-1">Price</label>
-              <input
-                type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
-              <label className="block mb-1">Max Supply</label>
-              <input
-                type="text"
-                value={supply}
-                onChange={(e) => setSupply(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-2 w-full"
-              />
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Shop Items</h5>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {marketplaceConfig.nfts.map((nft, index) => (
+                  <div key={index} className="p-4 border border-gray-300 rounded bg-white shadow">
+                    <h6 className="font-semibold">Item Price {index + 1}</h6>
+                    <div>
+                      <input
+                        type="text"
+                        value={nft.price}
+                        onChange={(e) => handleNftPriceChange(index, e.target.value)}
+                        className="p-2 border border-gray-300 rounded w-full"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
           {selectedTemplate === "portfolio" && (
             <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
-              <h5 className="text-lg font-bold mb-2 text-center">Edit Portfolio Configuration</h5>
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Portfolio</h5>
               <div className="space-y-3">
                 {/* Profile Fields */}
+
                 <div>
-                  <label className="block mb-1">Name</label>
+                  <label className="block mb-1">Contact Link ( calendly, meet.. )</label>
                   <input
                     type="text"
-                    value={portfolioConfig.profile.name}
-                    onChange={(e) => handlePortfolioConfigUpdate("name", e.target.value)}
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
                     className="p-2 border border-gray-300 rounded w-full"
                   />
                 </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTemplate === "review" && (
+            <div className="mt-5 p-4 rounded-lg bg-gray-100 shadow-md">
+              <h5 className="text-lg font-bold mb-2 text-center">Edit Review </h5>
+              <div className="space-y-3">
+                {/* Profile Fields */}
+
                 <div>
-                  <label className="block mb-1">Bio</label>
-                  <textarea
-                    value={portfolioConfig.profile.bio}
-                    onChange={(e) => handlePortfolioConfigUpdate("bio", e.target.value)}
-                    className="p-2 border border-gray-300 rounded w-full"
-                  />
-                </div>
-                <div>
-                  <label className="block mb-1">Profile Image URL</label>
+                  <label className="block mb-1">Wall of love (link)</label>
                   <input
                     type="text"
-                    value={portfolioConfig.profile.image}
-                    onChange={(e) => handlePortfolioConfigUpdate("image", e.target.value)}
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
                     className="p-2 border border-gray-300 rounded w-full"
                   />
                 </div>
-                <div>
-                  <label className="block mb-1">Calendly Link</label>
-                  <input
-                    type="text"
-                    value={portfolioConfig.profile.calendlyLink}
-                    onChange={(e) => handlePortfolioConfigUpdate("calendlyLink", e.target.value)}
-                    className="p-2 border border-gray-300 rounded w-full"
-                  />
-                </div>
-
-                {/* Social Links */}
-                <h6 className="text-md font-semibold mb-2">Social Links</h6>
-                {portfolioConfig.socialLinks.map((link, index) => (
-                  <div key={index} className="space-y-2">
-                    <div>
-                      <label className="block mb-1">Platform</label>
-                      <input
-                        type="text"
-                        value={link.platform}
-                        onChange={(e) => {
-                          const updatedLinks = [...portfolioConfig.socialLinks];
-                          updatedLinks[index].platform = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            socialLinks: updatedLinks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                    <div>
-                      <label className="block mb-1">URL</label>
-                      <input
-                        type="text"
-                        value={link.url}
-                        onChange={(e) => {
-                          const updatedLinks = [...portfolioConfig.socialLinks];
-                          updatedLinks[index].url = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            socialLinks: updatedLinks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                    <div>
-                      <label className="block mb-1">Icon</label>
-                      <input
-                        type="text"
-                        value={link.icon}
-                        onChange={(e) => {
-                          const updatedLinks = [...portfolioConfig.socialLinks];
-                          updatedLinks[index].icon = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            socialLinks: updatedLinks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-
-                {/* Add button for more social links */}
-                <button
-                  onClick={() => {
-                    setPortfolioConfig((prev) => ({
-                      ...prev,
-                      socialLinks: [...prev.socialLinks, { platform: "", url: "", icon: "" }],
-                    }));
-                  }}
-                  className="mt-2 p-2 bg-blue-500 text-white rounded"
-                >
-                  Add Social Link
-                </button>
-
-                {/* Works Section */}
-                <h6 className="text-md font-semibold mb-2">Works</h6>
-                {portfolioConfig.works.map((work, index) => (
-                  <div key={index} className="space-y-2">
-                    <div>
-                      <label className="block mb-1">Title</label>
-                      <input
-                        type="text"
-                        value={work.title}
-                        onChange={(e) => {
-                          const updatedWorks = [...portfolioConfig.works];
-                          updatedWorks[index].title = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            works: updatedWorks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                    <div>
-                      <label className="block mb-1">Image URL</label>
-                      <input
-                        type="text"
-                        value={work.image}
-                        onChange={(e) => {
-                          const updatedWorks = [...portfolioConfig.works];
-                          updatedWorks[index].image = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            works: updatedWorks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                    <div>
-                      <label className="block mb-1">Price</label>
-                      <input
-                        type="text"
-                        value={work.price}
-                        onChange={(e) => {
-                          const updatedWorks = [...portfolioConfig.works];
-                          updatedWorks[index].price = e.target.value;
-                          setPortfolioConfig((prev) => ({
-                            ...prev,
-                            works: updatedWorks,
-                          }));
-                        }}
-                        className="p-2 border border-gray-300 rounded w-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-
-                {/* Add button for more works */}
-                <button
-                  onClick={() => {
-                    setPortfolioConfig((prev) => ({
-                      ...prev,
-                      works: [...prev.works, { title: "", image: "", price: "" }],
-                    }));
-                  }}
-                  className="mt-2 p-2 bg-blue-500 text-white rounded"
-                >
-                  Add Work
-                </button>
               </div>
             </div>
           )}
