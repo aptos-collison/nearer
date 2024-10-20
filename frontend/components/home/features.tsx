@@ -12,7 +12,7 @@ export const Features = () => {
   return (
     <>
       <div className="bg-black p-6">
-        <p className="text-center text-gray-100 text-4xl font-semibold w-2/4 mx-auto mt-6">Discover Key Use Cases for APT-Links</p>
+        <p className="text-center text-gray-100 text-4xl font-semibold w-2/4 mx-auto mt-6">Discover Key Use Cases for BaseRL</p>
         <div className="grid grid-cols-2 gap-3 mt-6">
           <Card className="bg-transparent text-gray-500 border-gray-800 border-2 rounded-none">
             <CardHeader>

@@ -32,17 +32,18 @@ BaseRL is a Web3 plugin and link generator for enabling Base blockchain interact
 
 ## 🚀 Use Cases
 
-- **Token Transfers**: Send APT or other Base-based tokens
-- **NFT Minting**: Create and distribute NFTs on Base
-- **DeFi Interactions**: Interact with Base-based DeFi protocols
-- **Governance**: Participate in DAOs built on Base
-- **Social Media Integration**: Embed Base actions in posts, comments, and profiles
+- **shopping & Ecommerce**: Launch an online global store within minutes
+- **Payment**: Recieve payment from clients across the globe on Base
+- **Donate**: Launch a decentralized fundraiser on base and share on any platform
+- **Governance**: Participate in DAO voting on Base
+- **Portfolio**: Showcase you work as a creative. As simple as sharing a link
+- **Social Media Integration**: Collect reviews and feedback from clients and customers
 
 ## 🧩 Components
 
 - **IPFS Storage**: Decentralized component storage
 - **Browser Extension**: Seamless rendering of Base interactions
-- **Blink Generator**: Easy creation of custom Base interaction components
+- **BaseRL Generator**: Easy creation of custom Base interaction components
 - **Base SDK Integration**: Direct interaction with the Base blockchain
 
 ## 🌐 Why BaseRL?
@@ -53,7 +54,8 @@ BaseRL brings the power of the Base blockchain to everyday internet applications
 
 - [ ] Multi-chain support (starting with Base)
 - [ ] Enhanced component templates
-- [ ] Developer SDK for easy integration
+- [ ] Developer support (allowing developers to build theor own templates and earn commision on usage)
+- [ ] More templates for everday activities
 - [ ] Mobile app for on-the-go Base interactions
 
 ## Requirements
@@ -69,7 +71,7 @@ Before you begin, you need to install the following tools:
 **Clone the Repository**
 
 ```bash
-git clone git@github.com/aptos-collison/apt-links.git
+git clone git@github.com/aptos-collison/baserl.git
 ```
 
 ### Setting Up Backend

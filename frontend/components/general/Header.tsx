@@ -3,20 +3,17 @@ import { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import Payment from "../templates/payment";
 
 export function Header() {
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogComponent, setDialogComponent] = useState<JSX.Element | null>(null);
 
   const handleHome = () => {
     navigate("/");
   };
 
-  const openDialog = (component: JSX.Element) => {
-    setDialogComponent(component);
-    setDialogOpen(true);
+  const openDialog = () => {
+    setDialogOpen(true)
   };
 
   return (
@@ -33,11 +30,8 @@ export function Header() {
         </h3>
 
         <div className="flex items-center space-x-2">
-          <Button
-            onClick={() => openDialog(<Payment />)}
-            className="rounded-xl font-semibold text-base px-6 bg-transparent"
-          >
-           🏗️ {''}Developer Program
+          <Button onClick={() => openDialog()} className="rounded-xl font-semibold text-base px-6 bg-transparent">
+            🏗️ {""}Developer Program
           </Button>
           <ConnectButton />
         </div>
