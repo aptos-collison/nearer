@@ -24,8 +24,8 @@ export const HeroSection = () => {
         dApps on any web environment
       </p>
       <p className="text-gray-400 font-medium max-w-2xl mx-auto text-center">
-        Access Base dApps across Web2 and Web3 environments. Easily create and share APT-links on platforms like X,
-        YouTube, and Reddit to unlock webAPTOS 🌟.
+        Access Base dApps across Web2 and Web3 environments. Easily create and share BaseRLs on platforms like X,
+        YouTube, and Reddit to unlock the future of Blockchain 🌟.
       </p>
 
       <Button
