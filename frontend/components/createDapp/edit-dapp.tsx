@@ -377,7 +377,7 @@ const EditDapp: React.FC<EditDappProps> = ({
         <div className="flex justify-center items-center flex-col h-[80vh]">
           {/* <img src="/icons/loader.svg" className="animate-spin h-12 w-12 text-white" alt="Loading" /> */}
           <Loader className="animate-spin h-20 w-20 text-white" />
-          <p className="text-white mt-6">Deploying Your BaseRL</p>
+          <p className="text-white mt-6">Deploying Your Nearer</p>
         </div>
       ) : (
         <>

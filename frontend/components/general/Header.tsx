@@ -26,7 +26,7 @@ export function Header() {
 
       <div className="flex items-center justify-between px-4 py-2 max-w-screen-xl mx-auto w-full flex-wrap lg:px-20 mt-2">
         <h3 onClick={handleHome} className="text-xl font-bold cursor-pointer text-white">
-          BaseRL
+          Nearer
         </h3>
 
         <div className="flex items-center space-x-2">
@@ -40,14 +40,14 @@ export function Header() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="h-fit ">
           <DialogHeader>
-            <DialogTitle>Build On BaseRL Program</DialogTitle>
+            <DialogTitle>Build On Nearer Program</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center">
             <img src="/icons/dev.jpeg" className="rounded" alt="Developers at Work" />
 
             <div className="text-sm space-y-1 mt-3">
               <p>
-                We’re excited to announce that BaseRL is now open for a select group of developers to create innovative
+                We’re excited to announce that Nearer is now open for a select group of developers to create innovative
                 applications! This is your chance to build across categories like finance, public goods, and e-commerce.
               </p>
               <p>

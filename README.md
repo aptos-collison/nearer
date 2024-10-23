@@ -1,20 +1,20 @@
-# BaseRL
+# Nearer
 
-BaseRL is a Web3 plugin and link generator for enabling Base blockchain interactions anywhere on the web. BaseRL draws inspiration from solana actions and frames on farcaster, bringing to the Base ecosystem the ability to run Base dapps on any web environment
+Nearer is a Web3 plugin and link generator for enabling Near blockchain interactions anywhere on the web. Nearer draws inspiration from solana actions and frames on farcaster, bringing to the Near ecosystem the ability to run Near dapps on any web environment
 
 ## 🌟 Features
 
-- **Universal Web3 Integration**: Embed Base blockchain actions in any web2 environment
-- **Browser Extension**: Render dynamic HTML context windows for Base interactions
+- **Universal Web3 Integration**: Embed Near blockchain actions in any web2 environment
+- **Browser Extension**: Render dynamic HTML context windows for Near interactions
 - **IPFS-Powered**: Store and retrieve interaction components via IPFS
-- **Custom Generator**: Create preset or custom Base interaction blinks
-- **Seamless Blockchain Interaction**: Integrate Base transactions into favorite apps
+- **Custom Generator**: Create preset or custom Near interaction blinks
+- **Seamless Blockchain Interaction**: Integrate Near transactions into favorite apps
 
 ## 🛠️ How It Works
 
 1. **Create Components**:
 
-   - Build custom HTML and JavaScript components for Base interactions
+   - Build custom HTML and JavaScript components for Near interactions
    - Use our blink generator for easy component creation
 
 2. **IPFS Storage**:
@@ -28,35 +28,35 @@ BaseRL is a Web3 plugin and link generator for enabling Base blockchain interact
 
 4. **User Interaction**:
    - Users interact with rendered components
-   - Sign Base transactions directly within the context window
+   - Sign Near transactions directly within the context window
 
 ## 🚀 Use Cases
 
 - **shopping & Ecommerce**: Launch an online global store within minutes
-- **Payment**: Recieve payment from clients across the globe on Base
+- **Payment**: Recieve payment from clients across the globe on Near
 - **Donate**: Launch a decentralized fundraiser on base and share on any platform
-- **Governance**: Participate in DAO voting on Base
+- **Governance**: Participate in DAO voting on Near
 - **Portfolio**: Showcase you work as a creative. As simple as sharing a link
 - **Social Media Integration**: Collect reviews and feedback from clients and customers
 
 ## 🧩 Components
 
 - **IPFS Storage**: Decentralized component storage
-- **Browser Extension**: Seamless rendering of Base interactions
-- **BaseRL Generator**: Easy creation of custom Base interaction components
-- **Base SDK Integration**: Direct interaction with the Base blockchain
+- **Browser Extension**: Seamless rendering of Near interactions
+- **Nearer Generator**: Easy creation of custom Near interaction components
+- **Near SDK Integration**: Direct interaction with the Near blockchain
 
-## 🌐 Why BaseRL?
+## 🌐 Why Nearer?
 
-BaseRL brings the power of the Base blockchain to everyday internet applications, making it accessible and user-friendly for everyone. By leveraging IPFS and customizable components, we're removing barriers to Base adoption and opening up new possibilities for Web3 interactions.
+Nearer brings the power of the Near blockchain to everyday internet applications, making it accessible and user-friendly for everyone. By leveraging IPFS and customizable components, we're removing barriers to Near adoption and opening up new possibilities for Web3 interactions.
 
 ## 🛣️ Roadmap
 
-- [ ] Multi-chain support (starting with Base)
+- [ ] Multi-chain support (starting with Near)
 - [ ] Enhanced component templates
 - [ ] Developer support (allowing developers to build theor own templates and earn commision on usage)
 - [ ] More templates for everday activities
-- [ ] Mobile app for on-the-go Base interactions
+- [ ] Mobile app for on-the-go Near interactions
 
 ## Requirements
 
@@ -64,14 +64,13 @@ Before you begin, you need to install the following tools:
 
 - [Node (v18)](https://nodejs.org/en/download/)
 - [Git](https://git-scm.com/downloads)
-- [Foundry](https://book.getfoundry.sh/getting-started/installation)
 
 ## Quick start
 
 **Clone the Repository**
 
 ```bash
-git clone git@github.com/aptos-collison/baserl.git
+git clone git@github.com/aptos-collison/nearer.git
 ```
 
 ### Setting Up Backend
@@ -122,8 +121,8 @@ We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for 
 
 ## 📄 License
 
-BaseRL is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
+Nearer is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ---
 
-Join us in revolutionizing how we interact with the Base blockchain! 🚀
+Join us in revolutionizing how we interact with the Near blockchain! 🚀

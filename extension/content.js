@@ -144,7 +144,7 @@ async function replaceBlkTags() {
                     if (chainId === '8453' || chainId === '84532') {
                       return window.ethereum;
                     } else {
-                      console.log('Please connect to the Base network');
+                      console.log('Please connect to the Near network');
                       return null;
                     }
                   } catch (error) {

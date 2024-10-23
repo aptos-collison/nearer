@@ -18,13 +18,13 @@ export const HeroSection = () => {
           </p>
           <img src="/icons/base.svg" className="w-14 h-14" />
           <p className="text-center max-w-4xl font-semibold text-blue-500">
-            Base
+            Near
           </p>
         </div>{" "}
         dApps on any web environment
       </p>
       <p className="text-gray-400 font-medium max-w-2xl mx-auto text-center">
-        Access Base dApps across Web2 and Web3 environments. Easily create and share BaseRLs on platforms like X,
+        Access Near dApps across Web2 and Web3 environments. Easily create and share BaseRLs on platforms like X,
         YouTube, and Reddit to unlock the future of Blockchain 🌟.
       </p>
 
