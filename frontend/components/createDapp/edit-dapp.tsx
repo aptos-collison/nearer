@@ -445,13 +445,13 @@ const EditDapp: React.FC<EditDappProps> = ({
             {!editMode ? (
               <>
                 <button
-                  className="bg-[#5DEB5A] text-white font-semibold py-2 px-14 rounded hover:bg-[#5DEB5A]"
+                  className="bg-[#12383E] text-white font-semibold py-2 px-14 rounded hover:bg-[#12383E]"
                   onClick={() => setEditMode(true)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-[#89e219] text-white font-semibold py-2 px-10 rounded hover:bg-[#5ed63d]"
+                  className=" bg-gradient-to-r from-[#24FE41] to-[#fdfc47] text-black font-semibold py-2 px-10 rounded hover:bg-[#5ed63d]"
                   onClick={handleDeployClick}
                 >
                   Deploy

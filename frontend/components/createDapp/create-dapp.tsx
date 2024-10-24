@@ -68,7 +68,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
       <div className="flex justify-center space-x-3 w-full mt-8">
         {selectedTemplate === "review" && (
           <Button
-            className="bg-[#89e219] text-lg text-black font-semibold py-2 px-10 rounded-lg hover:bg-[#5ed63d]"
+            className="bg-[#12383E] hover:bg-[#12383E] text-lg text-white font-semibold py-2 px-10 rounded-lg "
             onClick={() => openDialog(<ReviewDisplay />)}
           >
             View Past Reviews
@@ -77,7 +77,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
 
         <Button
           className={`text-black font-semibold text-lg py-2 rounded-lg cursor-pointer 
-          ${currentBlinkObjectState ? "bg-[#5DEB5A] hover:bg-[#5DEB5A]" : "bg-black"} px-16`}
+          ${currentBlinkObjectState ? "bg-gradient-to-r from-[#24FE41] to-[#fdfc47]" : "bg-black text-white"} px-16`}
           onClick={handleNextClick}
           disabled={!currentBlinkObjectState}
         >
