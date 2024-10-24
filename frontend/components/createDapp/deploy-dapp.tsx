@@ -71,7 +71,7 @@ const DeployDapp: React.FC<DeployDappProps> = ({
           {linkCopied ? "IPFS Link Copied To Clipboard" : "Copy Link"}
         </Button>
         <Button
-          className="bg-blue-500 text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out hover:bg-blue-700 w-1/2"
+          className="bg-[#5DEB5A] text-white font-semibold text-lg p-2 rounded transition duration-300 ease-in-out hover:bg-blue-700 w-1/2"
           onClick={copySocialLink}
         >
           {socialLinkCopied ? "Social Link Copied To Clipboard" : "Post To Socials"}

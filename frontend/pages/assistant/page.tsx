@@ -91,7 +91,7 @@ export const AssistantPage = () => {
           className="flex-1 border rounded-2xl p-2 text-slate-100 border-gray-300 bg-transparent active:border-none"
           onKeyPress={handleKeyPress}
         />
-        <Button onClick={handleSend} className="ml-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full py-2 px-5">
+        <Button onClick={handleSend} className="ml-2 bg-[#5DEB5A] hover:bg-[#5DEB5A] text-white rounded-full py-2 px-5">
           <p> Send message</p>
         </Button>
       </div>

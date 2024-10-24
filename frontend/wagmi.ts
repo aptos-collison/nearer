@@ -1,11 +1,11 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
-  coinbaseWallet,
+  walletConnectWallet,
   metaMaskWallet,
   rainbowWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { http, createConfig } from 'wagmi';
-import { base, baseSepolia } from 'wagmi/chains';
+import { aurora, auroraTestnet } from './config';
 
 // Replace this with your actual environment variable import method for Vite
 const VITE_WC_PROJECT_ID = import.meta.env.VITE_WC_PROJECT_ID;
@@ -18,29 +18,49 @@ if (!projectId) {
   throw new Error(providerErrMessage);
 }
 
+// Aurora Pass specific options
+const walletConnectOptions = {
+  projectId,
+  options: {
+    qrModalOptions: {
+      desktopWallets: [],
+      mobileWallets: [],
+    },
+    defaultChain: aurora,
+    includeWalletIds: [
+      '76260019aec5a3c44dd2421bf78e80f71a6c090d932c413a287193ed79450694', // AuroraPass
+    ],
+  },
+};
+
 const connectors = connectorsForWallets(
   [
     {
-      groupName: 'Recommended Wallet',
-      wallets: [coinbaseWallet],
+      groupName: 'Recommended',
+      wallets: [
+        () => walletConnectWallet(walletConnectOptions),
+      ],
     },
     {
       groupName: 'Other Wallets',
-      wallets: [rainbowWallet, metaMaskWallet],
+      wallets: [
+        () => rainbowWallet(walletConnectOptions),
+        () => metaMaskWallet(walletConnectOptions),
+      ],
     },
   ],
   {
-    appName: 'SuperBase',
+    appName: 'LaunchBets',
     projectId,
-  },
+  }
 );
 
 export const wagmiConfig = createConfig({
-  chains: [base, baseSepolia],
+  chains: [aurora, auroraTestnet],
   multiInjectedProviderDiscovery: false,
   connectors,
   transports: {
-    [base.id]: http(),
-    [baseSepolia.id]: http(),
+    [aurora.id]: http(),
+    [auroraTestnet.id]: http(),
   },
 });

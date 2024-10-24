@@ -445,7 +445,7 @@ const EditDapp: React.FC<EditDappProps> = ({
             {!editMode ? (
               <>
                 <button
-                  className="bg-blue-500 text-white font-semibold py-2 px-14 rounded hover:bg-blue-600"
+                  className="bg-[#5DEB5A] text-white font-semibold py-2 px-14 rounded hover:bg-[#5DEB5A]"
                   onClick={() => setEditMode(true)}
                 >
                   Edit
@@ -460,7 +460,7 @@ const EditDapp: React.FC<EditDappProps> = ({
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-semibold py-2 px-14 rounded hover:bg-blue-600"
+                  className="bg-[#5DEB5A] text-white font-semibold py-2 px-14 rounded hover:bg-[#5DEB5A]"
                   onClick={() => setEditMode(false)}
                 >
                   Save

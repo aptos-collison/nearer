@@ -17,7 +17,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         teal:
-          "focus:outline-none text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-blue-400 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
+          "focus:outline-none text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring- #5DEB5A dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         icon: "border bg-background hover:bg-accent hover:text-accent-foreground",

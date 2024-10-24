@@ -33,9 +33,9 @@ export const Menu: React.FC = () => {
   ];
 
   const sectionTitles = [
-    "Create Your First Nearer", 
-    "Edit Your Nearer", 
-    "Your Nearer Is Ready 🎉"
+    "Create Your Nearer link", 
+    "Edit Your Nearer link", 
+    "Your Nearer link Is Ready 🎉"
 ];
 
 const sectionDescriptions = [

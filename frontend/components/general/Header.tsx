@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { CustomConnectButton } from "./ConnectButton";
 
 export function Header() {
   const navigate = useNavigate();
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false); 
 
   const handleHome = () => {
     navigate("/");
@@ -18,7 +19,7 @@ export function Header() {
 
   return (
     <>
-      <div className="w-full bg-blue-50 p-1">
+      <div className="w-full bg-green-50 p-1">
         <p className="text-sm text-center text-black">
           We appreciate you exploring our beta! Your feedback helps us grow and improve.
         </p>
@@ -31,9 +32,9 @@ export function Header() {
 
         <div className="flex items-center space-x-2">
           <Button onClick={() => openDialog()} className="rounded-xl font-semibold text-base px-6 bg-transparent">
-            🏗️ {""}Developer Program
+            🏗️ {""}Developers
           </Button>
-          <ConnectButton />
+          <CustomConnectButton/>
         </div>
       </div>
 
@@ -59,7 +60,7 @@ export function Header() {
 
             <Button className="mx-auto mt-3">
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScAdCnBwVaToxA49ieVWVmUcueokiy1e3ljvhsd651VfrpKUg/viewform?usp=pp_url"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScmnU6m7vPL-10-YX3x3dQEbSOQqkOV0rSCuFA0abZPZMAb0g/viewform?usp=pp_url"
                 target="_blank"
               >
                 Sign Up as a Developer
