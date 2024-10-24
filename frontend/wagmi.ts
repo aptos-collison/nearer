@@ -50,7 +50,7 @@ const connectors = connectorsForWallets(
     },
   ],
   {
-    appName: 'LaunchBets',
+    appName: 'Nearer',
     projectId,
   }
 );

@@ -141,10 +141,10 @@ async function replaceBlkTags() {
                 if (window.ethereum) {
                   try {
                     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-                    if (chainId === '8453' || chainId === '84532') {
+                    if (chainId === '0x4E454152' || chainId === '0x4E454153')  {
                       return window.ethereum;
                     } else {
-                      console.log('Please connect to the Near network');
+                      console.log('Please connect to the Aurora network');
                       return null;
                     }
                   } catch (error) {

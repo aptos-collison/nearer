@@ -55,7 +55,7 @@ export const CreateDapp: React.FC<CreateDappProps> = ({
             </p>
             <div
               className={`flex flex-col items-center justify-center px-2 py-4 m-2 rounded-3xl border transition-all cursor-pointer 
-              ${selectedTemplate === template ? "bg-gray-100 border-sky-500" : "bg-white border-transparent"}`}
+              ${selectedTemplate === template ? "bg-gray-100 border-2 border-green-500" : "bg-white border-transparent"}`}
               onClick={() => updateBlinkObjectTemplate(index + 1, template)}
             >
               <span className="mb-4 text-xl font-bold">{templates[template].name}</span>

@@ -1,7 +1,7 @@
 import { abi } from '@/constants';
 import { ethers } from 'ethers';
 
-export const BASE_CONTRACT = "0x0466A29D90D95365E98FC477AD39D7c00E31Dc3C";
+export const address = "0x0466A29D90D95365E98FC477AD39D7c00E31Dc3C";
 
 // Define types for better type safety
 export interface VotingOption {
@@ -12,7 +12,7 @@ export interface VotingOption {
 export interface VotingState {
   isOpen: boolean;
   remainingTime: bigint;
-  options: VotingOption[];
+  options: VotingOption[];  
 }
 
 // Define the contract ABI
@@ -25,7 +25,7 @@ export const contractABI = abi;
  */
 export const getContract = async (provider: ethers.BrowserProvider) => {
   const signer = await provider.getSigner();
-  return new ethers.Contract(BASE_CONTRACT, contractABI, signer);
+  return new ethers.Contract(address, contractABI, signer);
 };
 
 /**
