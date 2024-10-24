@@ -9,7 +9,7 @@ const announcement = [
   "🎉 Join our developer program and earn rewards!",
   "✨ Built on Aurora - Fast, Secure, and Scalable",
   "🚀 Experience the future of decentralized applications",
-].join("       •      "); // Joins messages with bullet points
+].join("             •             "); // Increased spacing around bullet points
 
 export function Header() {
   const navigate = useNavigate();
@@ -38,12 +38,13 @@ export function Header() {
             }
 
             .sliding-text {
-              animation: slide 120s linear infinite;
+              animation: slide 300s linear infinite;
               white-space: nowrap;
               position: absolute;
               width: max-content;
-              margin-left: 20px; /* Adjust as needed */
-              margin-right: 20px; /* Adjust as needed */
+              margin-left: 40px; /* Increased margin */
+              margin-right: 40px; /* Increased margin */
+              letter-spacing: 0.3px; /* Added letter spacing */
             }
           
 
@@ -55,8 +56,8 @@ export function Header() {
           `}
         </style>
         <div className="announcement-container h-6 relative">
-          <p className="sliding-text text-sm text-black">
-            {announcement.repeat(2)} {/* Repeat to ensure continuous flow */}
+          <p className="sliding-text text-xs text-black px-4 py-1"> 
+            {announcement.repeat(6)} {/* Repeat to ensure continuous flow */}
           </p>
         </div>
       </div>
@@ -102,8 +103,8 @@ export function Header() {
                 href="https://docs.google.com/forms/d/e/1FAIpQLScmnU6m7vPL-10-YX3x3dQEbSOQqkOV0rSCuFA0abZPZMAb0g/viewform?usp=pp_url"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
-                Sign Up as a Developer
+              > 
+                Sign Up as a Developer 
               </a>
             </Button>
           </div>
