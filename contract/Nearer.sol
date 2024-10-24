@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract BasedRl {
+contract Nearer {
     address public owner;
     mapping(address => uint256) public payments;
     mapping(address => uint256) public donations;
