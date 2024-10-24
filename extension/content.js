@@ -141,7 +141,7 @@ async function replaceBlkTags() {
                 if (window.ethereum) {
                   try {
                     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-                    if (chainId === '0x4E454152' || chainId === '0x4E454153')  {
+                    if (chainId === '0x4e454152' || '0x4e454153')  {
                       return window.ethereum;
                     } else {
                       console.log('Please connect to the Aurora network');
